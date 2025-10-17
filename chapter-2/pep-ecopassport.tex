@@ -1,0 +1,116 @@
+\section{PEP-Ecopassport}
+Was ist PEP-Ecopassport, was steht drin, was ist interessant für mich
+
+\subsection{PEP-Standard}
+
+Der \emph{PEP~Ecopassport\textsuperscript{\textregistered}} ist ein international anerkanntes Programm zur Erstellung standardisierter Umweltproduktdeklarationen für elektrische, 
+elektronische sowie Heizungs-, Lüftungs-, Klima- und Kälteprodukte (HVAC). Träger des Programms ist die \emph{P.E.P.~Association}, eine gemeinnützige
+Organisation, deren Ziel es ist, ein gemeinsames und verlässliches Referenzsystem für Umweltinformationen dieser Produktkategorien bereitzustellen. 
+Das Programm versteht sich als Branchenspezialisierung innerhalb des Rahmens der \emph{Environmental Product Declarations (EPD)} gemäß ISO~14025 und der 
+Lebenszyklusnormen nach ISO~14040, und basiert somit auf international festgelegten Normen. \cite{PEP}
+
+Ein \emph{PEP~Ecopassport} ist somit eine \emph{Typ~III-Umweltdeklaration} im Sinne der ISO~14025. Diese Deklarationen basieren auf quantitativen Ergebnissen einer
+Lebenszyklusanalyse (\emph{Life Cycle Assessment, LCA}) und dienen der vergleichenden Bewertung von Produkten mit identischer Funktion. 
+Die Datenerhebung und Berechnung erfolgt nach vordefinierten Parametern, die in sogenannten \emph{Product~Category~Rules~(PCR)} und bei Bedarf in 
+\emph{Product~Specific~Rules~(PSR)} festgelegt sind. Jede PEP-Deklaration unterliegt einer unabhängigen Überprüfung der angewandten Methodik und der zugrunde liegenden LCA-Daten. \cite{PEP}
+
+Das Programm zielt auf Transparenz und Vergleichbarkeit ab. Hersteller erhalten ein einheitliches Verfahren, um ökologische Leistungskennwerte ihrer 
+Produkte objektiv und nachvollziehbar zu kommunizieren. Für Anwender, Beschaffer und Energieberater stellen die PEP-Daten eine 
+verlässliche Grundlage für ökologische Bewertungen und Beschaffungsentscheidungen dar.
+
+Die Teilnahme am PEP-Programm ist freiwillig, gewinnt jedoch in der Praxis an Bedeutung, da Umweltproduktdeklarationen zunehmend als Nachweis 
+oder Auswahlkriterium in Ausschreibungen und Produktbewertungen herangezogen werden. Eine gesetzliche Verpflichtung zur Erstellung besteht bislang nur in Einzelfällen, 
+beispielsweise in Frankreich, wenn ein Hersteller aktiv mit Umweltvorteilen wirbt.
+
+Das PEP-Programm unterscheidet sich klar von unternehmensbezogenen Treibhausgas-Bilanzierungen: 
+Es erfasst ausschließlich produktspezifische Umweltwirkungen entlang des Lebenszyklus und folgt dabei den methodischen Vorgaben der ISO~14040-Reihe. 
+Für umfassende \emph{GHG-Assessments} auf Organisationsebene sind PEP-Daten daher nicht geeignet.
+
+
+\subsection{Aufbau typischer PEP-Dokumente}
+
+Ein vollständiges PEP umfasst typischerweise etwa zehn Seiten und gliedert sich in mehrere inhaltlich definierte Abschnitte.
+
+\paragraph{Titel- und Metadatenblatt}
+Das Deckblatt enthält grundlegende Angaben zum Produkt (Name, Version, Sprache, Hersteller), zum Veröffentlichungs- und Revisionsdatum
+sowie zum Status der Erklärung (z.\,B. \emph{in~review} oder \emph{verified}). Darüber hinaus sind Kontaktinformationen, Firmenadresse und 
+Registrierungsnummer enthalten. 
+
+\paragraph{Allgemeine Produktinformationen}
+Dieser Abschnitt beschreibt die funktionale Einheit (\emph{functional~unit}) und die Referenzlebensdauer, hier meist 10~bis~20~Jahre. 
+Weiterhin werden die Produktfunktion, Anwendungsbereiche und gegebenenfalls weitere Varianten aufgeführt. 
+
+\paragraph{Materialzusammensetzung}
+Die Zusammensetzung des Produkts wird tabellarisch nach Hauptgruppen ausgewiesen, z.\,B.\ Kunststoffe, Metalle und weitere Materialien 
+(Elektronik, Sonstiges). Im Beispiel des ABB~EQ~Meter entfallen 28\,\% auf Kunststoffe, 53\,\% auf Metalle und 19\,\% auf weitere Komponenten. 
+Diese Angaben ermöglichen eine spätere Aggregation der Stoffanteile in harmonisierten Datenstrukturen.
+
+\paragraph{Szenarien und Lebenszyklusphasen}
+PEP-Dokumente sind entlang der Phasen des Produktlebenszyklus strukturiert, die den Vorgaben der EN~15804 entsprechen:
+\begin{itemize}
+    \item \textbf{Herstellung (A1--A3)}: Produktion und Vormaterialien, modelliert mit landesspezifischem Strommix (z.\,B.\ italienischer Grid~Mix).
+    \item \textbf{Distribution (A4)}: Transport vom Werk zum Markt; häufig standardisierte Annahmen (z.\,B.\ 1\,000~km Schiff, 3\,300~km Lkw).
+    \item \textbf{Installation (A5)}: Montage, meist nur Verpackungsabfälle berücksichtigt.
+    \item \textbf{Nutzungsphase (B)}: Betrieb des Geräts mit angegebenem Energieverbrauch, z.\,B.\ 126~kWh über 20~Jahre, basierend auf europäischem Netzstrommix.
+    \item \textbf{End-of-Life (C1--C4)}: Entsorgungsszenario gemäß PCR-Vorgaben (Recycling-, Deponie-, Transportanteile).
+    \item \textbf{Optionale Phase (D)}: Rückgewinnung und Wiederverwendung außerhalb des Systemgrenzenmodells.
+\end{itemize}
+In der weiteren Datenaufbereitung werden diese Phasen zu den Kategorien \emph{manufacturing}, \emph{distribution}, \emph{installation}, 
+\emph{use} und \emph{end\_of\_life} zusammengefasst.
+
+\paragraph{Umweltindikatoren}
+Die Umweltwirkungen werden für jede Lebenszyklusphase sowie als Gesamtwert angegeben.  
+Die für diese Arbeit relevanten Indikatoren sind in der Tabelle~\ref{tab:indicators_description} aufgeführt.
+
+\begin{table}[h!]
+\centering
+\caption{Umweltindikatoren}
+\label{tab:indicators_description}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{ll}
+\hline
+\textbf{Indikator} & \textbf{Beschreibung} \\
+\hline
+Acidification & Versauerung von Böden und Gewässern durch säurebildende Emissionen \\
+Climate Change (Fossil) & Treibhauspotenzial durch fossile CO$_2$-Emissionen \\
+Climate Change (Land Use and Land Use Change) & Treibhauspotenzial infolge von Landnutzungsänderungen (LULUC) \\
+Climate Change (Total) & Gesamtes Treibhauspotenzial aus allen Quellen \\
+Eutrophication (Freshwater) & Nährstoffanreicherung in Binnengewässern \\
+Eutrophication (Marine) & Nährstoffanreicherung in marinen Ökosystemen \\
+Eutrophication (Terrestrial) & Nährstoffanreicherung in terrestrischen Ökosystemen \\
+Hazardous Waste Disposed & Entsorgung gefährlicher Abfälle \\
+Ozone Depletion & Abbau der stratosphärischen Ozonschicht durch FCKW-Emissionen \\
+Photochemical Ozone Formation (Human Health) & Bildung von bodennahem Ozon (Sommersmog) \\
+Radioactive Waste Disposed & Entsorgung radioaktiver Abfälle \\
+Resource Use (Fossils) & Nutzung fossiler Energieressourcen \\
+Resource Use (Minerals and Metals) & Verbrauch abiotischer Ressourcen (Metalle und Mineralien) \\
+Water Use & Entnahme und Verbrauch von Frischwasser \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+
+
+
+\paragraph{Verifikations- und Anhangsangaben}
+Im abschließenden Teil werden die angewendeten Regelwerke und Datenquellen genannt, z.\,B.\ \emph{PCR-ed3-EN-2015\_04\_02} und \emph{PSR-0005-ed2-EN-2016\_03\_29}, 
+die eingesetzte Software (z.\,B.\ SimaPro~9.3 mit Ecoinvent~3.8) sowie die Verifizierungsstelle und deren Akkreditierungsnummer. 
+Darüber hinaus enthält dieser Abschnitt Angaben zum \emph{Materialaufbau} und zum verwendeten \emph{Energie\-modell}. 
+Die Materialzusammensetzung wird in der Regel als prozentuale Massenanteile nach Hauptgruppen (Kunststoffe, Metalle, Elektronik, Sonstiges) dargestellt,
+teils in Tabellenform, teils grafisch als Kreisdiagramm. 
+Das Energiemodell beschreibt die angenommenen Strommixe und Spannungsniveaus je Lebenszyklusphase, beispielsweise den nationalen Grid~Mix 
+für die Herstellung und den europäischen Durchschnittsmix für die Nutzungsphase. 
+
+Obwohl der inhaltliche Mindestumfang und die zu berichtenden Umweltindikatoren durch die zugrundeliegenden ISO- und PCR-Vorgaben festgelegt sind, besteht keine feste formale Struktur. 
+Das Layout, die grafische Aufbereitung und die Anordnung der Tabellen können je nach Hersteller, Software und Version variieren. 
+So enthalten einige PEPs tabellarische Aufstellungen sämtlicher Indikatoren, während andere ergänzend oder teilweise ausschließlich Diagramme und grafische Vergleichsdarstellungen beinhalten. 
+
+\paragraph{Einordnung für die Datenanalyse}
+Die standardisierte, aber formal heterogene Gliederung der PEPs ermöglicht eine eindeutige Zuordnung der Informationen zu den Zieldatenfeldern der harmonisierten JSON-Datenbank. 
+\emph{functional\_unit}, \emph{lifetime} und \emph{manufacturing\_country} bilden die Metadatenebene, 
+\emph{material\_composition[]} enthält die Stoffanteile, 
+\emph{indicators\{\}} die Umweltindikatoren pro Phase, 
+und \emph{energy\_model[]} die modellierten Energiemixe je Lebenszyklusphase. 
+Damit stellen PEP-PDFs eine normbasierte, inhaltlich konsistente, aber formal variable Datenquelle für die automatisierte Extraktion und statistische Auswertung dar.
+
