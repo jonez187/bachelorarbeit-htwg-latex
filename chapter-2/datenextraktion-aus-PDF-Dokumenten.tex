@@ -34,7 +34,7 @@ allgemein verbindlichen Standards für die Strukturierung solcher Informationen 
 
 
 
-\subsection{Hauptschwierigkeiten bei der automatisierten Extraktion}
+\subsection{Herausforerungen bei der automatisierten Extraktion}
 
 Die Rekonstruktion des Textflusses und der semantischen Einheiten aus den Positionen einzelner Zeichen ist komplex.
 
@@ -76,5 +76,45 @@ Die Erkennung von Absatzanfängen und -enden ist besonders schwierig:
     Manche Zeichen (insbesondere Ligaturen und Sonderzeichen) werden im PDF nicht als Textobjekte, sondern als Vektorgrafiken gespeichert. 
     Solche Elemente sind mit herkömmlicher Textextraktion nicht identifizierbar und erfordern erweiterte, teils OCR- oder ML-basierte Verfahren. \cite{Bast2017}
 \end{itemize}
+
+
+\subsection{Extraktionsansätze}
+Da diese Probleme weit verbreitet und bekannt sind, ergeben sich mehrere Extraktionsansätze, die das Ziel PDF-Dateien in ein strukturierts Format zu bringen,
+um sie anschließend weiter zu analysieren. 
+
+\paragraph{Klassische Verfahren (regelbasierte Parser)}
+Ein Beispiel für ein klassisches, regelbasiertes Extraktionstool ist die Open-Source-Bibliothek \emph{pdfplumber}. 
+Sie ist vollständig in Python implementiert und baut auf der weit verbreiteten Bibliothek \emph{pdfminer.six} auf. 
+Das Werkzeug wurde speziell für die Text- und Tabellenextraktion aus PDF-Dokumenten entwickelt und gilt als eine 
+der benutzerfreundlichsten Lösungen im Python-Ökosystem. \cite{Adhikari2025}
+
+\emph{pdfplumber} konvertiert beim Einlesen einer PDF-Datei deren Inhalt in ein analysierbares Python-Objekt, das sämtliche Seiteninformationen
+wie Text, Linien, Rechtecke und Bilder enthält. Jede Seite wird dabei als Sammlung geometrischer Objekte behandelt, deren Koordinaten und Stilattribute 
+(z.\,B.\ Schriftart, Farbe, Position) präzise erfasst sind. \cite{Yang2025} 
+Diese Informationen werden über Objektlisten verfügbar gemacht. 
+Für die Erkennung und Extraktion von Tabellen nutzt das Tool einfache visuelle Heuristiken: Standardmäßig werden horizontale und vertikale Linien
+einer Seite als potenzielle Zellgrenzen interpretiert.  \cite{Yang2025}
+Über Parameter wie \texttt{table\_settings} oder \texttt{snap\_tolerance} lässt sich die Erkennung an unterschiedliche Layouts anpassen. 
+So können beispielsweise die Toleranzen für Linienabstände verändert werden, um verschobene Spalten oder leere Zellen zu korrigieren. \cite{Yang2025}
+
+Der regelbasierte Ansatz von \emph{pdfplumber} führt bei klar strukturierten, editierbaren PDF-Dokumenten zu guten Ergebnissen. 
+In Studien zur Leistungsbewertung von Extraktionstools erzielte es in Domänen wie juristischen oder technischen
+Dokumenten hohe F1-Scores (beispielsweise 0{,}98 im Bereich \emph{Law}). \cite{Adhikari2025}
+Die Grenzen des Werkzeugs zeigen sich jedoch vor allem bei komplexen oder unregelmäßig formatierten PDF-Dateien. 
+Insbesondere wissenschaftliche Dokumente mit mathematischen Ausdrücken, eingebetteten Formeln oder verschachtelten Tabellen führen zu deutlichen Leistungseinbußen. 
+In der Kategorie \emph{Scientific} sank der F1-Score auf 0{,}76, was vor allem auf unvollständige Tabellenerkennung und fehlerhafte Segmentierung zurückzuführen ist. 
+Auch bei Patenten oder Dokumenten mit grafischen Strukturen (z.\,B.\ chemischen Formeln oder Bauzeichnungen) stößt der regelbasierte Ansatz an seine Grenzen. \cite{Adhikari2025}
+
+Aus sicht der zuvor beschriebenen Herausforderungen adressiert \emph{pdfplumber} also Probleme auf der Ebene der Zeichen- und Worterkennung weitgehend.
+Die Wiederherstellung der Lesereihenfolge erfolgt allerdings rein geometrisch, ohne semantisches Verständnis, wodurch Textpassagen aus mehrspaltigen Layouts7
+häufig in falscher Reihenfolge extrahiert werden. 
+Absatzgrenzen, semantische Rollen (z.\,B.\ Überschriften, Fließtext, Bildunterschriften) und komplexe Tabellenstrukturen erkennt \emph{pdfplumber} nicht zuverlässig.
+
+Damit steht \emph{pdfplumber} exemplarisch für klassische Extraktionstools, die ohne maschinelles Lernen oder tiefere Dokumentenverständnis-Modelle
+arbeiten und deshalb bei komplexen, visuell strukturierten Dokumenten wie den PEP-Ecopassports an ihre methodischen Grenzen stoßen.
+
+\paragraph{Erweiterte Verfahren}
+
+
 
 
