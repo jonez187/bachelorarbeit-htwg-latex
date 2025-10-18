@@ -160,20 +160,19 @@ Tabelle~\ref{tab:extraktion_vergleich} fasst die Extraktionsfähigkeiten der bei
 \centering
 \caption{Vergleich der Extraktionsfähigkeiten von \textit{pdfplumber} und \textit{Docling}}
 \label{tab:extraktion_vergleich}
-\begin{tabular}{p{5cm}p{4cm}p{4cm}}
+\begin{tabular}{p{5cm}p{3cm}p{3cm}}
 \hline
-\textbf{Extraktionsaspekt} & \textbf{pdfplumber (regelbasiert)} & \textbf{Docling (KI-gestützt)} \\
+\textbf{Aspekt} & \textbf{pdfplumber} & \textbf{Docling} \\
 \hline
-Zeichen- und Worterkennung & Gut: präzise Koordinaten- und Schriftanalyse, robust für editierbare PDFs & Gut: kombiniert geometrische und visuelle Merkmale, tolerant gegenüber Layoutabweichungen \\
-Lesereihenfolge (Reading Order) & Schlecht: rein geometrisch, keine semantische Korrektur bei mehrspaltigen Layouts & Gut: Layout-Analysemodell erkennt Spalten, Absätze und Lesefluss kontextsensitiv \\
-Absatz- und Textstruktur & Teilweise: rekonstruiert Absätze heuristisch anhand von Zeilenabständen & Gut: erkennt logische Abschnitte, Überschriften, Listen und Beschriftungen \\
-Tabellenerkennung & Teilweise: funktioniert bei klaren Linienstrukturen; scheitert bei verschachtelten oder visuellen Tabellen & Gut: rekonstruiert Tabellenstruktur semantisch über das \emph{TableFormer}-Modell \\
-Grafiken und eingebettete Objekte & Nicht gelöst: keine Analyse von Abbildungen oder Vektorobjekten & Teilweise: erkennt Abbildungen und Bildunterschriften, jedoch keine inhaltliche Bildanalyse \\
-Metadatenextraktion & Nicht gelöst: keine Erkennung oder Harmonisierung von Titel, Autor, Referenzen & Gut: Post-Processing extrahiert zentrale Metadaten und Sprachinformationen \\
-Mehrsprachige Dokumente & Eingeschränkt: kein Sprachmodell integriert & Teilweise: automatische Spracherkennung und Layout-Korrektur im Post-Processing \\
-Nicht-textuelle Inhalte (z.\,B.\ OCR) & Nicht gelöst: unterstützt nur editierbare PDFs & Gut: optionale OCR-Erkennung für gescannte Dokumente über \emph{EasyOCR} \\
-Komplexe Layouts (mehrspaltig, technische Doks) & Schwach: häufige Fehlsegmentierung und falsche Lesereihenfolge & Gut: robuste Layout-Analyse durch \emph{DocLayNet}-Modell \\
-Semantische Rollen (z.\,B.\ Caption, Footnote) & Nicht gelöst & Gut: semantische Klassifizierung unterschiedlicher Dokumentelemente \\
+Zeichen- und Worterkennung & gut & gut \\
+Lesereihenfolge (Reading Order) & schlecht & gut \\
+Absatz- und Textstruktur & teilweise & gut \\
+Tabellenerkennung & teilweise & gut \\
+Grafiken und eingebettete Objekte & nicht & teilweise \\
+Metadatenextraktion & nicht & gut \\
+Nicht-textuelle Inhalte (OCR) & nicht & gut \\
+Komplexe Layouts (mehrspaltig, technisch) & schlecht & gut \\
+Semantische Rollen (Caption, Footnote, etc.) & nicht & gut \\
 \hline
 \end{tabular}
 \end{table}
