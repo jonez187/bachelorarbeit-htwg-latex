@@ -1,0 +1,80 @@
+\section{Datenextraktion aus PDF-Dokumenten}
+
+\subsection{Das Portable Document Format (PDF)}
+
+Das \emph{Portable Document Format (PDF)} ist eines der beliebtesten elektronischen Dokumentenformate.  
+Das PDF-Format ist primär ein \emph{layoutbasiertes Format}. 
+Es wurde entwickelt, um das Erscheinungsbild der Originaldokumente plattform- und anwendungsübergreifend zu bewahren. \cite{Lovegrove1995}
+Das Format beschreibt Objekte auf einer niedrigen Strukturebene und legt die \emph{Positionen und Schriftarten der einzelnen Zeichen} fest, aus
+denen der sichtbare Text zusammengesetzt ist. 
+Zu den beschriebenen Objekten gehören:
+\begin{itemize}
+    \item Gruppen von Zeichen (Textobjekte)
+    \item Linien, Kurven und Bilder
+    \item Stilattribute wie Schriftart, Farbe, Strichführung, Füllung und geometrische Formen.
+\end{itemize}
+\cite{Bast2017}
+
+Obwohl PDF die visuelle Darstellung eines Dokuments zuverlässig bewahrt, fehlt den meisten Dateien eine explizite logische Struktur auf höherer Ebene. 
+Die folgenden semantischen Einheiten sind im Format \emph{nicht direkt enthalten} und nur durch die oben genannte niedrige Strukturebene zusammengesetzt:
+\begin{itemize}
+    \item logische Komponenten wie Wörter, Textzeilen, Absätze, Tabellen oder Abbildungen \cite{Chao2004}
+    \item Informationen über die \emph{semantischen Rollen} des Textes (z.\,B.\ Haupttext, Fußnote oder Bildunterschrift), \cite{Bast2017}
+    \item eine eindeutige Lese- und Wortreihenfolge, insbesondere bei mehrspaltigen Layouts oder eingebetteten Elementen. \cite{Bast2017}
+\end{itemize}
+
+Hinzuzufügen ist, dass PDF-Dokumente mit semantischen Informationen \emph{getaggt} werden können. In der Praxis sind diese zusätzlichen Informationen selten gegeben.
+Die für diese Arbeit relevanten PEP-Ecopassport-PDFs sind alle nicht getaggt. \cite{Bast2017}
+
+Das Fehlen dieser semantischen Informationen erschwert die Wiederverwendung, Bearbeitung oder Modifikation des Layouts und Inhalts erheblich. \cite{Corrêa2017}
+Die automatische Extraktion dieser Metadaten und Textinhalte ist daher eine zentrale, aber fehleranfällige Aufgabe, da es keine 
+allgemein verbindlichen Standards für die Strukturierung solcher Informationen in PDF-Dokumenten gibt. \cite{Lipinski2013}
+
+
+
+
+
+\subsection{Hauptschwierigkeiten bei der automatisierten Extraktion}
+
+Die Rekonstruktion des Textflusses und der semantischen Einheiten aus den Positionen einzelner Zeichen ist komplex.
+
+\subparagraph{1. Wortidentifikation}
+Die korrekte Bestimmung von Wortgrenzen ist nicht trivial:
+\begin{itemize}
+    \item \emph{Abstände:} Die Abstände zwischen Zeichen können innerhalb einer Zeile variieren, sodass keine feste Regel existiert, 
+    um Wortgrenzen ausschließlich anhand der Zeichenpositionen zu bestimmen. \cite{Bast2017}
+    \item \emph{Silbentrennung:} In mehrspaltigen Layouts getrennte Wörter müssen korrekt wieder zusammengeführt werden. \cite{Bast2017}
+    \item \emph{Ligaturen:} Zeichenkombinationen wie „fl“ oder „fi“ werden im PDF oft als einzelnes Zeichen gespeichert und 
+    müssen beim Extrahieren in mehrere Zeichen aufgelöst werden. \cite{Lipinski2013}
+    \item \emph{Diakritische Zeichen:} Buchstaben mit Diakritika (z.\,B.\ à, ã) können als zwei separate Zeichen gespeichert sein
+    und müssen beim Parsing zu einem Zeichen zusammengeführt werden. \cite{Bast2017}
+\end{itemize}
+
+\subparagraph{2. Lesereihenfolge (Reading Order)}
+Die korrekte Lesereihenfolge ist entscheidend für die Verständlichkeit des Textes und der weiterführenden Interpretation.  \cite{Bast2017}
+In mehrspaltigen Layouts sind Textzeilen im PDF häufig in einer verschränkten Reihenfolge gespeichert. 
+Ohne Korrekturmechanismen führt dies zu unleserlichem, inhaltlich falsch zusammengesetztem Text.\cite{Lovegrove1995}
+
+\subparagraph{3. Absatzgrenzen (Paragraph Boundaries)}
+Die Erkennung von Absatzanfängen und -enden ist besonders schwierig:
+\begin{itemize}
+    \item \emph{Unterbrechungen:} Text, der zu einem Absatz gehört, kann durch Formeln, Tabellen oder Abbildungen unterbrochen und später auf derselben Seite 
+    fortgesetzt werden.
+    \item \emph{Seitenumbrüche:} Absätze können am Seiten- oder Spaltenende abgeschnitten und auf der folgenden Seite fortgeführt werden, ohne dass dies
+    im PDF strukturell kenntlich gemacht wird.
+\end{itemize}
+\cite{Bast2017}
+
+\subparagraph{4. Technologische und Layout-Herausforderungen}
+\begin{itemize}
+    \item \emph{Überlagerungen (Overlays):} 
+    In grafisch komplexen Dokumenten können Text- und Bildelemente überlappen, etwa wenn Beschriftungen in Abbildungen eingebettet sind. 
+    Dies erschwert die korrekte Segmentierung. \cite{Chao2004}
+    \item \emph{Segmentierungsfehler:} 
+    Bei Tabellen, Karten oder Diagrammen kann Text aus unterschiedlichen logischen Einheiten fälschlicherweise in dieselbe Gruppe aggregiert werden. \cite{Chao2004}
+    \item \emph{Type-3-Fonts:} 
+    Manche Zeichen (insbesondere Ligaturen und Sonderzeichen) werden im PDF nicht als Textobjekte, sondern als Vektorgrafiken gespeichert. 
+    Solche Elemente sind mit herkömmlicher Textextraktion nicht identifizierbar und erfordern erweiterte, teils OCR- oder ML-basierte Verfahren. \cite{Bast2017}
+\end{itemize}
+
+

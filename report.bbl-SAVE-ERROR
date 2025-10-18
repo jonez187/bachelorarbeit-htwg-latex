@@ -19,42 +19,166 @@
 
 \refsection{0}
   \datalist[entry]{ynt/global//global/global/global}
-    \entry{Geim2001}{article}{}{}
-      \name{author}{2}{}{%
-        {{hash=40f0ba5816a970378fff1e96ae8538f7}{%
-           family={Geim},
-           familyi={G\bibinitperiod},
-           given={A.\bibnamedelimi K.},
-           giveni={A\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
-        {{hash=3404920c88c564886551850cee7b9744}{%
-           family={Tisha},
-           familyi={T\bibinitperiod},
-           given={H.\bibnamedelimi A.\bibnamedelimi M.\bibnamedelimi S.},
-           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod},
-           prefix={ter},
-           prefixi={t\bibinitperiod}}}%
+    \entry{Lovegrove1995}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=40b82b1c7a88b46f0d0a805e826b12b9}{%
+           family={William\bibnamedelimb S.\bibnamedelimi Lovegrove},
+           familyi={W\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim L\bibinitperiod},
+           given={David\bibnamedelimb F.\bibnamedelimi Brailsford},
+           giveni={D\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
       }
-      \strng{namehash}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{fullhash}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{fullhashraw}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{bibnamehash}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{authorbibnamehash}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{authornamehash}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{authorfullhash}{258dc4a2e0e71c0d125122c5419c7d97}
-      \strng{authorfullhashraw}{258dc4a2e0e71c0d125122c5419c7d97}
-      \field{labelalpha}{GT01}
+      \strng{namehash}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{fullhash}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{fullhashraw}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{bibnamehash}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{authorbibnamehash}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{authornamehash}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{authorfullhash}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \strng{authorfullhashraw}{40b82b1c7a88b46f0d0a805e826b12b9}
+      \field{labelalpha}{Wil95}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Document analysis of PDF files: methods, results and implications}
+      \field{year}{1995}
+      \verb{urlraw}
+      \verb https://nottingham-repository.worktribe.com/output/1024553
+      \endverb
+      \verb{url}
+      \verb https://nottingham-repository.worktribe.com/output/1024553
+      \endverb
+    \endentry
+    \entry{Chao2004}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=ae9aee6b5755750eedc10aaa548f15fb}{%
+           family={Hui\bibnamedelima Chao},
+           familyi={H\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Jian\bibnamedelima Fan},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{fullhash}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{fullhashraw}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{bibnamehash}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{authorbibnamehash}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{authornamehash}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{authorfullhash}{ae9aee6b5755750eedc10aaa548f15fb}
+      \strng{authorfullhashraw}{ae9aee6b5755750eedc10aaa548f15fb}
+      \field{labelalpha}{Hui04}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Physica B: Condensed Matter}
-      \field{title}{Detection of earth rotation with a diamagnetically levitating gyroscope}
-      \field{volume}{294--295}
-      \field{year}{2001}
-      \field{pages}{736\bibrangedash 739}
-      \range{pages}{4}
+      \field{title}{Layout and Content Extraction for PDF Documents}
+      \field{year}{2004}
       \verb{doi}
-      \verb 10.1016/S0921-4526(00)00753-5
+      \verb 10.1007/978-3-540-28640-0_20
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/chapter/10.1007/978-3-540-28640-0_20
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/chapter/10.1007/978-3-540-28640-0_20
+      \endverb
+    \endentry
+    \entry{Corrêa2017}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4d037fa72cd86db7fe5d849d01eec370}{%
+           family={Andreiwid\bibnamedelimb Sheffer\bibnamedelima Corrêa},
+           familyi={A\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Pär-Ola\bibnamedelima Zander},
+           giveni={P\bibinithyphendelim O\bibinitperiod\bibinitdelim Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{fullhash}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{fullhashraw}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{bibnamehash}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{authorbibnamehash}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{authornamehash}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{authorfullhash}{4d037fa72cd86db7fe5d849d01eec370}
+      \strng{authorfullhashraw}{4d037fa72cd86db7fe5d849d01eec370}
+      \field{labelalpha}{And17}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Unleashing Tabular Content to Open Data: A Survey on PDF Table Extraction Methods and Tools}
+      \field{year}{2017}
+      \verb{doi}
+      \verb 10.1145/3085228.30852
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
+      \endverb
+    \endentry
+    \entry{Bast2017}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=bbc6ed7d9f06f0354308922eb30a1255}{%
+           family={Hannah\bibnamedelima Bast},
+           familyi={H\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Claudius\bibnamedelima Korzen},
+           giveni={C\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      }
+      \strng{namehash}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{fullhash}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{fullhashraw}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{bibnamehash}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{authorbibnamehash}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{authornamehash}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{authorfullhash}{bbc6ed7d9f06f0354308922eb30a1255}
+      \strng{authorfullhashraw}{bbc6ed7d9f06f0354308922eb30a1255}
+      \field{labelalpha}{Han17}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A Benchmark and Evaluation for Text Extraction from PDF}
+      \field{year}{2017}
+      \verb{doi}
+      \verb 10.1109/JCDL.2017.7991564
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/abstract/document/7991564
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/abstract/document/7991564
+      \endverb
+    \endentry
+    \entry{PEP}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=415ef068ea6daeacd28db07d814fe318}{%
+           family={{Association P.E.P.}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{fullhash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{fullhashraw}{415ef068ea6daeacd28db07d814fe318}
+      \strng{bibnamehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authorbibnamehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authornamehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authorfullhash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authorfullhashraw}{415ef068ea6daeacd28db07d814fe318}
+      \field{labelalpha}{Ass24}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Offizielle Website der Initiative für Umweltdeklarationen elektronischer Produkte}
+      \field{title}{PEP Ecopassport}
+      \field{urlday}{18}
+      \field{urlmonth}{10}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.pep-ecopassport.org/
+      \endverb
+      \verb{url}
+      \verb https://www.pep-ecopassport.org/
       \endverb
     \endentry
   \enddatalist

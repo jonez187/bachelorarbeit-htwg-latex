@@ -12,7 +12,7 @@ Lebenszyklusnormen nach ISO~14040, und basiert somit auf international festgeleg
 Ein \emph{PEP~Ecopassport} ist somit eine \emph{Typ~III-Umweltdeklaration} im Sinne der ISO~14025. Diese Deklarationen basieren auf quantitativen Ergebnissen einer
 Lebenszyklusanalyse (\emph{Life Cycle Assessment, LCA}) und dienen der vergleichenden Bewertung von Produkten mit identischer Funktion. 
 Die Datenerhebung und Berechnung erfolgt nach vordefinierten Parametern, die in sogenannten \emph{Product~Category~Rules~(PCR)} und bei Bedarf in 
-\emph{Product~Specific~Rules~(PSR)} festgelegt sind. Jede PEP-Deklaration unterliegt einer unabhängigen Überprüfung der angewandten Methodik und der zugrunde liegenden LCA-Daten. \cite{PEP}
+\emph{Product~Specific~Rules~(PSR)} festgelegt sind. Jede PEP-Deklaration unterliegt einer unabhängigen Überprüfung der angewandten Methodik und der zugrunde liegenden LCA-Daten. \cite{Hassanzadeh2013}
 
 Das Programm zielt auf Transparenz und Vergleichbarkeit ab. Hersteller erhalten ein einheitliches Verfahren, um ökologische Leistungskennwerte ihrer 
 Produkte objektiv und nachvollziehbar zu kommunizieren. Für Anwender, Beschaffer und Energieberater stellen die PEP-Daten eine 
@@ -25,7 +25,7 @@ beispielsweise in Frankreich, wenn ein Hersteller aktiv mit Umweltvorteilen wirb
 Das PEP-Programm unterscheidet sich klar von unternehmensbezogenen Treibhausgas-Bilanzierungen: 
 Es erfasst ausschließlich produktspezifische Umweltwirkungen entlang des Lebenszyklus und folgt dabei den methodischen Vorgaben der ISO~14040-Reihe. 
 Für umfassende \emph{GHG-Assessments} auf Organisationsebene sind PEP-Daten daher nicht geeignet.
-
+\cite{PEP}
 
 \subsection{Aufbau typischer PEP-Dokumente}
 
@@ -105,12 +105,3 @@ für die Herstellung und den europäischen Durchschnittsmix für die Nutzungspha
 Obwohl der inhaltliche Mindestumfang und die zu berichtenden Umweltindikatoren durch die zugrundeliegenden ISO- und PCR-Vorgaben festgelegt sind, besteht keine feste formale Struktur. 
 Das Layout, die grafische Aufbereitung und die Anordnung der Tabellen können je nach Hersteller, Software und Version variieren. 
 So enthalten einige PEPs tabellarische Aufstellungen sämtlicher Indikatoren, während andere ergänzend oder teilweise ausschließlich Diagramme und grafische Vergleichsdarstellungen beinhalten. 
-
-\paragraph{Einordnung für die Datenanalyse}
-Die standardisierte, aber formal heterogene Gliederung der PEPs ermöglicht eine eindeutige Zuordnung der Informationen zu den Zieldatenfeldern der harmonisierten JSON-Datenbank. 
-\emph{functional\_unit}, \emph{lifetime} und \emph{manufacturing\_country} bilden die Metadatenebene, 
-\emph{material\_composition[]} enthält die Stoffanteile, 
-\emph{indicators\{\}} die Umweltindikatoren pro Phase, 
-und \emph{energy\_model[]} die modellierten Energiemixe je Lebenszyklusphase. 
-Damit stellen PEP-PDFs eine normbasierte, inhaltlich konsistente, aber formal variable Datenquelle für die automatisierte Extraktion und statistische Auswertung dar.
-
