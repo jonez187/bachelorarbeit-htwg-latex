@@ -100,6 +100,7 @@ So können beispielsweise die Toleranzen für Linienabstände verändert werden,
 Der regelbasierte Ansatz von \emph{pdfplumber} führt bei klar strukturierten, editierbaren PDF-Dokumenten zu guten Ergebnissen. 
 In Studien zur Leistungsbewertung von Extraktionstools erzielte es in Domänen wie juristischen oder technischen
 Dokumenten hohe F1-Scores (beispielsweise 0{,}98 im Bereich \emph{Law}). \cite{Adhikari2025}
+
 Die Grenzen des Werkzeugs zeigen sich jedoch vor allem bei komplexen oder unregelmäßig formatierten PDF-Dateien. 
 Insbesondere wissenschaftliche Dokumente mit mathematischen Ausdrücken, eingebetteten Formeln oder verschachtelten Tabellen führen zu deutlichen Leistungseinbußen. 
 In der Kategorie \emph{Scientific} sank der F1-Score auf 0{,}76, was vor allem auf unvollständige Tabellenerkennung und fehlerhafte Segmentierung zurückzuführen ist. 
@@ -113,7 +114,71 @@ Absatzgrenzen, semantische Rollen (z.\,B.\ Überschriften, Fließtext, Bildunter
 Damit steht \emph{pdfplumber} exemplarisch für klassische Extraktionstools, die ohne maschinelles Lernen oder tiefere Dokumentenverständnis-Modelle
 arbeiten und deshalb bei komplexen, visuell strukturierten Dokumenten wie den PEP-Ecopassports an ihre methodischen Grenzen stoßen.
 
-\paragraph{Erweiterte Verfahren}
+
+
+\paragraph{Erweiterte Verfahren (z.B. Docling)}
+Ein modernes, KI-gestütztes Gegenbeispiel zu klassischen, regelbasierten Extraktionstools ist das Open-Source-Toolkit \emph{Docling}. 
+Es wurde mit dem Ziel entwickelt, PDF-Dokumente und andere Formate in eine maschinell verarbeitbare, reich strukturierte Repräsentation zu überführen. 
+Im Gegensatz zu Werkzeugen wie \emph{pdfplumber}, die auf geometrischen Heuristiken basieren, kombiniert \emph{Docling} klassische Parsing-Verfahren mit 
+tiefen neuronalen Modellen für Layout- und Strukturerkennung. \cite{Auer2024}
+Das Toolkit ist vollständig in Python implementiert, modular aufgebaut und kann lokal ohne Cloud-Anbindung ausgeführt werden, 
+was es insbesondere für den Einsatz in sensiblen Datenumgebungen geeignet macht. \cite{Auer2025}
+
+Technisch basiert \emph{Docling} auf einer linearen Verarbeitungs-Pipeline, die mehrere spezialisierte Komponenten kombiniert. 
+Nach dem initialen Parsen durch ein PDF-Backend (z.\,B.\ \emph{qpdf} oder \emph{pypdfium}) werden für jede Seite Bitmap-Abbilder erzeugt, 
+auf denen KI-Modelle für Layout- und Strukturerkennung ausgeführt werden. \cite{Auer2024}
+Das zugrunde liegende Layout-Analysemodell \emph{DocLayNet} identifiziert auf Basis eines trainierten Objektdetektors verschiedene 
+Seitenelemente und deren Begrenzungsrahmen – etwa Absätze, Überschriften, Listen, Abbildungen oder Tabellen.  \cite{Auer2024}
+Diese visuellen Einheiten werden mit den extrahierten Text-Tokens verknüpft und zu konsistenten Dokumentstrukturen zusammengeführt. 
+Für erkannte Tabellenobjekte kommt anschließend das Vision-Transformer-Modell \emph{TableFormer} zum Einsatz, das die logische Zeilen- und Spaltenstruktur 
+einer Tabelle rekonstruiert und die Zellen semantisch klassifiziert (z.\,B.\ Kopf- oder Körperzellen).  
+Für gescannte oder bildbasierte Dokumente steht optional eine OCR-Komponente auf Basis von \emph{EasyOCR} zur Verfügung. \cite{Auer2025}
+
+Das Herzstück von \emph{Docling} bildet das Datenmodell \emph{DoclingDocument}, eine vereinheitlichte interne Repräsentation, die sämtliche 
+Inhalte eines Dokuments (Text, Tabellen, Bilder, Layoutinformationen, Hierarchieebenen und Metadaten) in strukturierter Form abbildet. 
+Nach Abschluss aller Erkennungsschritte werden die Ergebnisse zu einem vollständigen \emph{DoclingDocument} zusammengeführt und können in 
+verschiedenen Formaten exportiert werden, darunter JSON, Markdown und HTML. 
+Im Post-Processing ergänzt ein sprachsensitives Modell weitere Merkmale wie die Korrektur der Lesereihenfolge, die automatische Spracherkennung und die 
+Extraktion zentraler Metadaten (Titel, Autoren, Referenzen).
+\cite{Auer2024}
+
+Durch diese Architektur adressiert \emph{Docling} mehrere der in Abschnitt~2.3 beschriebenen Extraktionsprobleme, die klassische Tools nur unzureichend lösen können. 
+Es rekonstruiert eine konsistente Lesereihenfolge auch bei mehrspaltigen Layouts, erkennt logische Dokumentstrukturen und kann Tabellen semantisch 
+interpretieren, anstatt sie rein geometrisch zu segmentieren.  \cite{Auer2025}
+Darüber hinaus bietet es eine robuste Metadaten- und Inhaltsklassifizierung, die zwischen Fließtext, Überschriften, Listen, 
+Bildunterschriften und Formeln unterscheidet. 
+Die erzeugten Ausgaben sind reich strukturiert und dienen als Grundlage für weiterführende Analysen oder Datenpipelines, etwa zur Wissensextraktion, 
+semantischen Suche oder automatisierten Inhaltsklassifikation. \cite{Auer2024}
+
+Im Vergleich zu klassischen, regelbasierten Parsern wie \emph{pdfplumber} kombiniert \emph{Docling} geometrische und visuelle Merkmale mit semantischem Verständnis. 
+Dadurch ermöglicht es eine qualitativ hochwertige, KI-gestützte Dokumentenkonvertierung, die sowohl schnelle 
+als auch stabile Ergebnisse liefert und für komplexe Dokumente wie PEP-Ecopassports einen erheblichen Qualitätsgewinn in der Extraktion bietet. \cite{Auer2024}
+
+Tabelle~\ref{tab:extraktion_vergleich} fasst die Extraktionsfähigkeiten der beiden Ansätze zusammen. 
+
+\begin{table}[h!]
+\centering
+\caption{Vergleich der Extraktionsfähigkeiten von \textit{pdfplumber} und \textit{Docling}}
+\label{tab:extraktion_vergleich}
+\begin{tabular}{p{5cm}p{4cm}p{4cm}}
+\hline
+\textbf{Extraktionsaspekt} & \textbf{pdfplumber (regelbasiert)} & \textbf{Docling (KI-gestützt)} \\
+\hline
+Zeichen- und Worterkennung & Gut: präzise Koordinaten- und Schriftanalyse, robust für editierbare PDFs & Gut: kombiniert geometrische und visuelle Merkmale, tolerant gegenüber Layoutabweichungen \\
+Lesereihenfolge (Reading Order) & Schlecht: rein geometrisch, keine semantische Korrektur bei mehrspaltigen Layouts & Gut: Layout-Analysemodell erkennt Spalten, Absätze und Lesefluss kontextsensitiv \\
+Absatz- und Textstruktur & Teilweise: rekonstruiert Absätze heuristisch anhand von Zeilenabständen & Gut: erkennt logische Abschnitte, Überschriften, Listen und Beschriftungen \\
+Tabellenerkennung & Teilweise: funktioniert bei klaren Linienstrukturen; scheitert bei verschachtelten oder visuellen Tabellen & Gut: rekonstruiert Tabellenstruktur semantisch über das \emph{TableFormer}-Modell \\
+Grafiken und eingebettete Objekte & Nicht gelöst: keine Analyse von Abbildungen oder Vektorobjekten & Teilweise: erkennt Abbildungen und Bildunterschriften, jedoch keine inhaltliche Bildanalyse \\
+Metadatenextraktion & Nicht gelöst: keine Erkennung oder Harmonisierung von Titel, Autor, Referenzen & Gut: Post-Processing extrahiert zentrale Metadaten und Sprachinformationen \\
+Mehrsprachige Dokumente & Eingeschränkt: kein Sprachmodell integriert & Teilweise: automatische Spracherkennung und Layout-Korrektur im Post-Processing \\
+Nicht-textuelle Inhalte (z.\,B.\ OCR) & Nicht gelöst: unterstützt nur editierbare PDFs & Gut: optionale OCR-Erkennung für gescannte Dokumente über \emph{EasyOCR} \\
+Komplexe Layouts (mehrspaltig, technische Doks) & Schwach: häufige Fehlsegmentierung und falsche Lesereihenfolge & Gut: robuste Layout-Analyse durch \emph{DocLayNet}-Modell \\
+Semantische Rollen (z.\,B.\ Caption, Footnote) & Nicht gelöst & Gut: semantische Klassifizierung unterschiedlicher Dokumentelemente \\
+\hline
+\end{tabular}
+\end{table}
+
+
 
 
 
