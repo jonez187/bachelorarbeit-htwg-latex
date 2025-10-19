@@ -20,22 +20,27 @@
 \refsection{0}
   \datalist[entry]{ynt/global//global/global/global}
     \entry{Lovegrove1995}{article}{}{}
-      \name{author}{1}{}{%
-        {{hash=40b82b1c7a88b46f0d0a805e826b12b9}{%
-           family={William\bibnamedelimb S.\bibnamedelimi Lovegrove},
-           familyi={W\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim L\bibinitperiod},
-           given={David\bibnamedelimb F.\bibnamedelimi Brailsford},
-           giveni={D\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      \name{author}{2}{}{%
+        {{hash=e42cfc5cb28745ef53901fbecc5ed89a}{%
+           family={Lovegrove},
+           familyi={L\bibinitperiod},
+           given={William\bibnamedelima S.},
+           giveni={W\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=851f3124944f023635942d85596c415e}{%
+           family={Brailsford},
+           familyi={B\bibinitperiod},
+           given={David\bibnamedelima F.},
+           giveni={D\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
       }
-      \strng{namehash}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{fullhash}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{fullhashraw}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{bibnamehash}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{authorbibnamehash}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{authornamehash}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{authorfullhash}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \strng{authorfullhashraw}{40b82b1c7a88b46f0d0a805e826b12b9}
-      \field{labelalpha}{Wil95}
+      \strng{namehash}{e9318b7d732781e4758513223ec2a906}
+      \strng{fullhash}{e9318b7d732781e4758513223ec2a906}
+      \strng{fullhashraw}{e9318b7d732781e4758513223ec2a906}
+      \strng{bibnamehash}{e9318b7d732781e4758513223ec2a906}
+      \strng{authorbibnamehash}{e9318b7d732781e4758513223ec2a906}
+      \strng{authornamehash}{e9318b7d732781e4758513223ec2a906}
+      \strng{authorfullhash}{e9318b7d732781e4758513223ec2a906}
+      \strng{authorfullhashraw}{e9318b7d732781e4758513223ec2a906}
+      \field{labelalpha}{LB95}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
@@ -50,22 +55,27 @@
       \endverb
     \endentry
     \entry{Chao2004}{article}{}{}
-      \name{author}{1}{}{%
-        {{hash=ae9aee6b5755750eedc10aaa548f15fb}{%
-           family={Hui\bibnamedelima Chao},
-           familyi={H\bibinitperiod\bibinitdelim C\bibinitperiod},
-           given={Jian\bibnamedelima Fan},
-           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      \name{author}{2}{}{%
+        {{hash=66ae12da392ef9f7a878afbd6b38973e}{%
+           family={Chao},
+           familyi={C\bibinitperiod},
+           given={Hui},
+           giveni={H\bibinitperiod}}}%
+        {{hash=9c83573dbbdba22bbfe03cddab3e11b9}{%
+           family={Fan},
+           familyi={F\bibinitperiod},
+           given={Jian},
+           giveni={J\bibinitperiod}}}%
       }
-      \strng{namehash}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{fullhash}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{fullhashraw}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{bibnamehash}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{authorbibnamehash}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{authornamehash}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{authorfullhash}{ae9aee6b5755750eedc10aaa548f15fb}
-      \strng{authorfullhashraw}{ae9aee6b5755750eedc10aaa548f15fb}
-      \field{labelalpha}{Hui04}
+      \strng{namehash}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{fullhash}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{fullhashraw}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{bibnamehash}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{authorbibnamehash}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{authornamehash}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{authorfullhash}{a9d3dcce28fb03d5e6534e210629a79a}
+      \strng{authorfullhashraw}{a9d3dcce28fb03d5e6534e210629a79a}
+      \field{labelalpha}{CF04}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
@@ -82,56 +92,129 @@
       \verb https://link.springer.com/chapter/10.1007/978-3-540-28640-0_20
       \endverb
     \endentry
-    \entry{Corrêa2017}{article}{}{}
-      \name{author}{1}{}{%
-        {{hash=4d037fa72cd86db7fe5d849d01eec370}{%
-           family={Andreiwid\bibnamedelimb Sheffer\bibnamedelima Corrêa},
-           familyi={A\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim C\bibinitperiod},
-           given={Pär-Ola\bibnamedelima Zander},
-           giveni={P\bibinithyphendelim O\bibinitperiod\bibinitdelim Z\bibinitperiod}}}%
+    \entry{Hassanzadeh2013}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=402ff948d7e5e2dc49d2ba212a6471c8}{%
+           family={Hassanzadeh},
+           familyi={H\bibinitperiod},
+           given={Mehrdad},
+           giveni={M\bibinitperiod}}}%
+        {{hash=c96f2ff778fe7f6228499cb77938e0d1}{%
+           family={Theoleyre},
+           familyi={T\bibinitperiod},
+           given={Serge},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d2fb0fb389ab22637a45b14f06593fc4}{%
+           family={Jollain},
+           familyi={J\bibinitperiod},
+           given={Claude},
+           giveni={C\bibinitperiod}}}%
+        {{hash=c4cf83cfb6c343dd55e5918a55c7052f}{%
+           family={Metz},
+           familyi={M\bibinitperiod},
+           given={Renaud},
+           giveni={R\bibinitperiod}}}%
       }
-      \strng{namehash}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{fullhash}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{fullhashraw}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{bibnamehash}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{authorbibnamehash}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{authornamehash}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{authorfullhash}{4d037fa72cd86db7fe5d849d01eec370}
-      \strng{authorfullhashraw}{4d037fa72cd86db7fe5d849d01eec370}
-      \field{labelalpha}{And17}
+      \strng{namehash}{5d8d3f7f8e2e3f1fa588bb170678763b}
+      \strng{fullhash}{fb640cd652761074d5f5f66402a663b4}
+      \strng{fullhashraw}{fb640cd652761074d5f5f66402a663b4}
+      \strng{bibnamehash}{5d8d3f7f8e2e3f1fa588bb170678763b}
+      \strng{authorbibnamehash}{5d8d3f7f8e2e3f1fa588bb170678763b}
+      \strng{authornamehash}{5d8d3f7f8e2e3f1fa588bb170678763b}
+      \strng{authorfullhash}{fb640cd652761074d5f5f66402a663b4}
+      \strng{authorfullhashraw}{fb640cd652761074d5f5f66402a663b4}
+      \field{labelalpha}{Has+13}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Unleashing Tabular Content to Open Data: A Survey on PDF Table Extraction Methods and Tools}
-      \field{year}{2017}
+      \field{title}{Environmental declaration in compliance with ISO 14025 thanks to a collaborative program of electrical and electronic industry: The PEP ecopassport program}
+      \field{year}{2013}
       \verb{doi}
-      \verb 10.1145/3085228.30852
+      \verb 10.1049/cp.2013.0577
       \endverb
       \verb{urlraw}
-      \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
+      \verb https://ieeexplore.ieee.org/abstract/document/6683180
       \endverb
       \verb{url}
-      \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
+      \verb https://ieeexplore.ieee.org/abstract/document/6683180
+      \endverb
+    \endentry
+    \entry{Lipinski2013}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=ac98fd0d67aca3e8bf6f334ddcce299b}{%
+           family={Lipinski},
+           familyi={L\bibinitperiod},
+           given={Mario},
+           giveni={M\bibinitperiod}}}%
+        {{hash=fb9f19b5288ab7e64a56cabcc82af5d9}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+        {{hash=b8a306bd5d528941501810bdb6dece30}{%
+           family={Breitinger},
+           familyi={B\bibinitperiod},
+           given={Corinna},
+           giveni={C\bibinitperiod}}}%
+        {{hash=2e33a4017ed8565e1d62adbc946d27fd}{%
+           family={Beel},
+           familyi={B\bibinitperiod},
+           given={Joeran},
+           giveni={J\bibinitperiod}}}%
+        {{hash=0b95556d74049673135bb563f08ae221}{%
+           family={Gipp},
+           familyi={G\bibinitperiod},
+           given={Bela},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{c6977d378e68d545a1754b0778c5bebd}
+      \strng{fullhash}{441c4587f13bc78e8536c9e333e79c25}
+      \strng{fullhashraw}{441c4587f13bc78e8536c9e333e79c25}
+      \strng{bibnamehash}{c6977d378e68d545a1754b0778c5bebd}
+      \strng{authorbibnamehash}{c6977d378e68d545a1754b0778c5bebd}
+      \strng{authornamehash}{c6977d378e68d545a1754b0778c5bebd}
+      \strng{authorfullhash}{441c4587f13bc78e8536c9e333e79c25}
+      \strng{authorfullhashraw}{441c4587f13bc78e8536c9e333e79c25}
+      \field{labelalpha}{Lip+13}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Evaluation of Header Metadata Extraction Approaches and Tools for Scientific PDF Documents}
+      \field{year}{2013}
+      \verb{doi}
+      \verb 10.1145/2467696.2467753
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/abs/10.1145/2467696.2467753
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/abs/10.1145/2467696.2467753
       \endverb
     \endentry
     \entry{Bast2017}{article}{}{}
-      \name{author}{1}{}{%
-        {{hash=bbc6ed7d9f06f0354308922eb30a1255}{%
-           family={Hannah\bibnamedelima Bast},
-           familyi={H\bibinitperiod\bibinitdelim B\bibinitperiod},
-           given={Claudius\bibnamedelima Korzen},
-           giveni={C\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      \name{author}{2}{}{%
+        {{hash=290975a975be135e8cb0595bc2948be5}{%
+           family={Bast},
+           familyi={B\bibinitperiod},
+           given={Hannah},
+           giveni={H\bibinitperiod}}}%
+        {{hash=3293c17591f12683b160c195a573f5e7}{%
+           family={Korzen},
+           familyi={K\bibinitperiod},
+           given={Claudius},
+           giveni={C\bibinitperiod}}}%
       }
-      \strng{namehash}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{fullhash}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{fullhashraw}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{bibnamehash}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{authorbibnamehash}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{authornamehash}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{authorfullhash}{bbc6ed7d9f06f0354308922eb30a1255}
-      \strng{authorfullhashraw}{bbc6ed7d9f06f0354308922eb30a1255}
-      \field{labelalpha}{Han17}
+      \strng{namehash}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{fullhash}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{fullhashraw}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{bibnamehash}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{authorbibnamehash}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{authornamehash}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{authorfullhash}{b070e22a6948cc543b0c2f5e223bb996}
+      \strng{authorfullhashraw}{b070e22a6948cc543b0c2f5e223bb996}
+      \field{labelalpha}{BK17}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
@@ -146,6 +229,44 @@
       \endverb
       \verb{url}
       \verb https://ieeexplore.ieee.org/abstract/document/7991564
+      \endverb
+    \endentry
+    \entry{Corrêa2017}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=3532335e031377e5fcb27b361dedfa94}{%
+           family={Corrêa},
+           familyi={C\bibinitperiod},
+           given={Andreiwid\bibnamedelima Sheffer},
+           giveni={A\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d385c80d3f346c912114ef1990d898a7}{%
+           family={Zander},
+           familyi={Z\bibinitperiod},
+           given={Pär-Ola},
+           giveni={P\bibinithyphendelim O\bibinitperiod}}}%
+      }
+      \strng{namehash}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{fullhash}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{fullhashraw}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{bibnamehash}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{authorbibnamehash}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{authornamehash}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{authorfullhash}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \strng{authorfullhashraw}{ffebc8bfc7baacdb658f4a33a5a54d77}
+      \field{labelalpha}{CZ17}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Unleashing Tabular Content to Open Data: A Survey on PDF Table Extraction Methods and Tools}
+      \field{year}{2017}
+      \verb{doi}
+      \verb 10.1145/3085228.30852
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
       \endverb
     \endentry
     \entry{PEP}{online}{}{}
@@ -179,6 +300,339 @@
       \endverb
       \verb{url}
       \verb https://www.pep-ecopassport.org/
+      \endverb
+    \endentry
+    \entry{Auer2024}{article}{}{}
+      \name{author}{19}{}{%
+        {{hash=37fb83951ca10956269fce55f021fe29}{%
+           family={Auer},
+           familyi={A\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+        {{hash=69bb017f335e740e60c92a7347b7838e}{%
+           family={Lysak},
+           familyi={L\bibinitperiod},
+           given={Maksym},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ba29638be2fd7788c14e6d218fdae15b}{%
+           family={Nassar},
+           familyi={N\bibinitperiod},
+           given={Ahmed},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4ea71d3e96d9f867aafd7c5c619763eb}{%
+           family={Dolfi},
+           familyi={D\bibinitperiod},
+           given={Michele},
+           giveni={M\bibinitperiod}}}%
+        {{hash=15389391765f1439dcdb5c3fa5cf2e28}{%
+           family={Livathinos},
+           familyi={L\bibinitperiod},
+           given={Nikolaos},
+           giveni={N\bibinitperiod}}}%
+        {{hash=0d598674de390c320f1b5b32bb751b68}{%
+           family={Vagenas},
+           familyi={V\bibinitperiod},
+           given={Panos},
+           giveni={P\bibinitperiod}}}%
+        {{hash=4c6bdea4d9e0b3cfa9b4d79676fae039}{%
+           family={Ramis},
+           familyi={R\bibinitperiod},
+           given={Cesar\bibnamedelima Berrospi},
+           giveni={C\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=08b5a5f8675b496c256d1cda07c4d21f}{%
+           family={Omenetti},
+           familyi={O\bibinitperiod},
+           given={Matteo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=123759075921f84b38e374cca350b0e9}{%
+           family={Lindlbauer},
+           familyi={L\bibinitperiod},
+           given={Fabian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=aee4421474a407625851272b875f8c13}{%
+           family={Dinkla},
+           familyi={D\bibinitperiod},
+           given={Kasper},
+           giveni={K\bibinitperiod}}}%
+        {{hash=fb137f4bdb40e483650d085f9505765b}{%
+           family={Mishra},
+           familyi={M\bibinitperiod},
+           given={Lokesh},
+           giveni={L\bibinitperiod}}}%
+        {{hash=fc3affab6357ef2ce19d997a2b41305f}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Yusik},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=4769bc896627bfe4cc1b0bc2e1867a15}{%
+           family={Gupta},
+           familyi={G\bibinitperiod},
+           given={Shubham},
+           giveni={S\bibinitperiod}}}%
+        {{hash=8cc342dc03a76045d6efcd116772f644}{%
+           family={Lima},
+           familyi={L\bibinitperiod},
+           given={Rafael\bibnamedelima Teixeira},
+           giveni={R\bibinitperiod\bibinitdelim T\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=2c9d658bb4142257ecec20fb78c110e4}{%
+           family={Weber},
+           familyi={W\bibinitperiod},
+           given={Valery},
+           giveni={V\bibinitperiod}}}%
+        {{hash=12487c3740b706ff495b68c0ef789d18}{%
+           family={Morin},
+           familyi={M\bibinitperiod},
+           given={Lucas},
+           giveni={L\bibinitperiod}}}%
+        {{hash=d0d6e857331f07a4b8d808bc0af81eab}{%
+           family={Meijer},
+           familyi={M\bibinitperiod},
+           given={Ingmar},
+           giveni={I\bibinitperiod}}}%
+        {{hash=4c3ca7f8960ea21bd71ab8db57813db9}{%
+           family={Kuropiatnyk},
+           familyi={K\bibinitperiod},
+           given={Viktor},
+           giveni={V\bibinitperiod}}}%
+        {{hash=b450c652d008c6018892a67047421c04}{%
+           family={Staar},
+           familyi={S\bibinitperiod},
+           given={Peter\bibnamedelimb W.\bibnamedelimi J.},
+           giveni={P\bibinitperiod\bibinitdelim W\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{fullhash}{c8aa5e2cbe985726dc797baca7b15461}
+      \strng{fullhashraw}{c8aa5e2cbe985726dc797baca7b15461}
+      \strng{bibnamehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{authorbibnamehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{authornamehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{authorfullhash}{c8aa5e2cbe985726dc797baca7b15461}
+      \strng{authorfullhashraw}{c8aa5e2cbe985726dc797baca7b15461}
+      \field{extraname}{1}
+      \field{labelalpha}{Aue+24}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Docling Technical Report}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.48550/arXiv.2408.09869
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2408.09869
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2408.09869
+      \endverb
+    \endentry
+    \entry{Adhikari2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=1d78b98ac7a580f3fb1678f3a053b098}{%
+           family={Adhikari},
+           familyi={A\bibinitperiod},
+           given={Narayan\bibnamedelima S.},
+           giveni={N\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=e5753b484d5a5ac06687af44f501a50a}{%
+           family={Agarwal},
+           familyi={A\bibinitperiod},
+           given={Shradha},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{3070a1485835337c7f802c3891913801}
+      \strng{fullhash}{3070a1485835337c7f802c3891913801}
+      \strng{fullhashraw}{3070a1485835337c7f802c3891913801}
+      \strng{bibnamehash}{3070a1485835337c7f802c3891913801}
+      \strng{authorbibnamehash}{3070a1485835337c7f802c3891913801}
+      \strng{authornamehash}{3070a1485835337c7f802c3891913801}
+      \strng{authorfullhash}{3070a1485835337c7f802c3891913801}
+      \strng{authorfullhashraw}{3070a1485835337c7f802c3891913801}
+      \field{labelalpha}{AA25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A Comparative Study of PDF Parsing Tools Across Diverse Document Categories}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.48550/arXiv.2410.09871
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2410.09871
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2410.09871
+      \endverb
+    \endentry
+    \entry{Auer2025}{article}{}{}
+      \name{author}{19}{}{%
+        {{hash=37fb83951ca10956269fce55f021fe29}{%
+           family={Auer},
+           familyi={A\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+        {{hash=69bb017f335e740e60c92a7347b7838e}{%
+           family={Lysak},
+           familyi={L\bibinitperiod},
+           given={Maksym},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ba29638be2fd7788c14e6d218fdae15b}{%
+           family={Nassar},
+           familyi={N\bibinitperiod},
+           given={Ahmed},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4ea71d3e96d9f867aafd7c5c619763eb}{%
+           family={Dolfi},
+           familyi={D\bibinitperiod},
+           given={Michele},
+           giveni={M\bibinitperiod}}}%
+        {{hash=15389391765f1439dcdb5c3fa5cf2e28}{%
+           family={Livathinos},
+           familyi={L\bibinitperiod},
+           given={Nikolaos},
+           giveni={N\bibinitperiod}}}%
+        {{hash=0d598674de390c320f1b5b32bb751b68}{%
+           family={Vagenas},
+           familyi={V\bibinitperiod},
+           given={Panos},
+           giveni={P\bibinitperiod}}}%
+        {{hash=4c6bdea4d9e0b3cfa9b4d79676fae039}{%
+           family={Ramis},
+           familyi={R\bibinitperiod},
+           given={Cesar\bibnamedelima Berrospi},
+           giveni={C\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=08b5a5f8675b496c256d1cda07c4d21f}{%
+           family={Omenetti},
+           familyi={O\bibinitperiod},
+           given={Matteo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=123759075921f84b38e374cca350b0e9}{%
+           family={Lindlbauer},
+           familyi={L\bibinitperiod},
+           given={Fabian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=aee4421474a407625851272b875f8c13}{%
+           family={Dinkla},
+           familyi={D\bibinitperiod},
+           given={Kasper},
+           giveni={K\bibinitperiod}}}%
+        {{hash=fb137f4bdb40e483650d085f9505765b}{%
+           family={Mishra},
+           familyi={M\bibinitperiod},
+           given={Lokesh},
+           giveni={L\bibinitperiod}}}%
+        {{hash=fc3affab6357ef2ce19d997a2b41305f}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Yusik},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=4769bc896627bfe4cc1b0bc2e1867a15}{%
+           family={Gupta},
+           familyi={G\bibinitperiod},
+           given={Shubham},
+           giveni={S\bibinitperiod}}}%
+        {{hash=8cc342dc03a76045d6efcd116772f644}{%
+           family={Lima},
+           familyi={L\bibinitperiod},
+           given={Rafael\bibnamedelima Teixeira},
+           giveni={R\bibinitperiod\bibinitdelim T\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=2c9d658bb4142257ecec20fb78c110e4}{%
+           family={Weber},
+           familyi={W\bibinitperiod},
+           given={Valery},
+           giveni={V\bibinitperiod}}}%
+        {{hash=12487c3740b706ff495b68c0ef789d18}{%
+           family={Morin},
+           familyi={M\bibinitperiod},
+           given={Lucas},
+           giveni={L\bibinitperiod}}}%
+        {{hash=d0d6e857331f07a4b8d808bc0af81eab}{%
+           family={Meijer},
+           familyi={M\bibinitperiod},
+           given={Ingmar},
+           giveni={I\bibinitperiod}}}%
+        {{hash=4c3ca7f8960ea21bd71ab8db57813db9}{%
+           family={Kuropiatnyk},
+           familyi={K\bibinitperiod},
+           given={Viktor},
+           giveni={V\bibinitperiod}}}%
+        {{hash=b450c652d008c6018892a67047421c04}{%
+           family={Staar},
+           familyi={S\bibinitperiod},
+           given={Peter\bibnamedelimb W.\bibnamedelimi J.},
+           giveni={P\bibinitperiod\bibinitdelim W\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{fullhash}{c8aa5e2cbe985726dc797baca7b15461}
+      \strng{fullhashraw}{c8aa5e2cbe985726dc797baca7b15461}
+      \strng{bibnamehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{authorbibnamehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{authornamehash}{0dfbb3aaa39a3af95339ae5e91820a64}
+      \strng{authorfullhash}{c8aa5e2cbe985726dc797baca7b15461}
+      \strng{authorfullhashraw}{c8aa5e2cbe985726dc797baca7b15461}
+      \field{extraname}{2}
+      \field{labelalpha}{Aue+25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Docling: An Efficient Open-Source Toolkit for AI-driven Document Conversion}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.48550/arXiv.2501.17887
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2501.17887
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2501.17887
+      \endverb
+    \endentry
+    \entry{Yang2025}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=9c245130418606dd988ed12a97044d62}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Wen},
+           giveni={W\bibinitperiod}}}%
+        {{hash=1270bd90aac97780c655517e392491c6}{%
+           family={Cao},
+           familyi={C\bibinitperiod},
+           given={Feifei},
+           giveni={F\bibinitperiod}}}%
+        {{hash=af2e5291228f861b38243294147ab86a}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Xueli},
+           giveni={X\bibinitperiod}}}%
+      }
+      \strng{namehash}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{fullhash}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{fullhashraw}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{bibnamehash}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{authorbibnamehash}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{authornamehash}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{authorfullhash}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \strng{authorfullhashraw}{c31b49c50ee13bc06aa0fdeae138c9e2}
+      \field{labelalpha}{YCZ25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Extraction of PDF Table Data Based on the Pdfplumber Method}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.1145/3696474.3696731
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/full/10.1145/3696474.3696731
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/full/10.1145/3696474.3696731
       \endverb
     \endentry
   \enddatalist

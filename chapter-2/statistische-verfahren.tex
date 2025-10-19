@@ -1,0 +1,40 @@
+\section{Statistische Methoden}
+
+\subsection{Deskriptive und explorative Statistik}
+
+Die deskriptive und explorative Statistik bildet die Grundlage der Analyse der aus den PEP-Ecopassports extrahierten Daten. 
+Sie dient der systematischen Aufbereitung, Verdichtung und visuellen Darstellung der Umweltindikatoren, 
+Materialkompositionen und Energieverbrauchswerte. 
+Ziel ist es, zentrale Muster, Streuungen und Ausreißer zu identifizieren, um sowohl die Datenqualität zu bewerten als auch
+eine belastbare Basis für weiterführende statistische Auswertungen zu schaffen.
+
+\paragraph{Grundlagen}
+Die deskriptive Statistik befasst sich mit der Organisation und Beschreibung von Stichprobendaten.  \cite{Fisher2009}
+Sie umfasst numerische und grafische Verfahren, um zentrale Tendenzen und Streuungen innerhalb einer Verteilung zu quantifizieren. 
+Damit lassen sich große Datenmengen komprimiert darstellen und charakteristische Eigenschaften eines Datensatzes sichtbar machen. 
+Da aus den PEP-Dokumenten extrahierte Umweltindikatoren häufig stark schiefe und ausreißerbehaftete Verteilungen aufweisen, 
+werden in dieser Arbeit bevorzugt robuste Maße wie der Median und der Interquartilsabstand (IQR) verwendet. 
+Diese Kennwerte sind unempfindlich gegenüber extremen Werten und beschreiben die mittleren 50 \% einer Verteilung. 
+Zur besseren Vergleichbarkeit schief verteilter Daten werden ergänzend logarithmische Transformationen angewendet, 
+um die Skalen zu stabilisieren und die visuelle Beurteilung der Daten zu erleichtern.
+
+\paragraph{Visualisierung}
+Zur Untersuchung der Verteilungen und zur Identifikation potenzieller Auffälligkeiten werden Histogramme und Boxplots eingesetzt. 
+Histogramme ermöglichen eine schnelle Einschätzung der Verteilungsform und zeigen zentrale Tendenz, Streuung, Modalität und potenzielle Ausreißer. 
+Boxplots stellen robuste Lage- und Streuungsmaße dar (Median und IQR) und verdeutlichen gleichzeitig Symmetrie, Schiefe und Extremwerte. 
+Die parallele Darstellung mehrerer Boxplots erlaubt zudem den Vergleich zwischen unterschiedlichen Indikatoren oder Produktgruppen. 
+Diese grafischen Verfahren werden in der explorativen Datenanalyse genutzt, um Muster oder Abweichungen ohne vorab definierte Hypothesen zu erkennen.
+
+\paragraph{Automatisierung und Reproduzierbarkeit}
+Die Auswertungen erfolgen reproduzierbar und skriptbasiert in R. 
+Alle Berechnungsschritte, Transformationen und grafischen Ausgaben sind in modularen R-Skripten dokumentiert, 
+sodass die Analyse vollständig nachvollziehbar und bei Bedarf automatisiert wiederholbar ist. 
+Eine skriptbasierte Auswertung stellt sicher, dass auch nach Datenkorrekturen oder Erweiterungen identische Analyseschritte angewendet werden können.
+
+\paragraph{Datenqualität und Plausibilitätsprüfung}
+Die explorative Datenanalyse unterstützt zugleich die Bewertung der Datenqualität. 
+Sie dient der Erkennung von Fehlern, Ausreißern, fehlenden oder inkonsistenten Werten 
+und ermöglicht damit eine erste Plausibilitätsprüfung der extrahierten Datensätze. 
+Durch die Beobachtung von Minimum-, Maximum- und Quartilswerten können unplausible Ausreißer oder fehlerhafte Einheiten erkannt werden. 
+Somit leistet die EDA einen wesentlichen Beitrag zur Validierung der extrahierten PEP-Daten 
+und zur Sicherstellung ihrer Eignung für nachgelagerte Analysen.
