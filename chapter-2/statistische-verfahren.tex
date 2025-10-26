@@ -1,40 +1,54 @@
-\section{Statistische Methoden}
+\section{Statistische Grundlagen}
 
 \subsection{Deskriptive und explorative Statistik}
+Deskriptive und explorative Statistik bilden die Grundlage der quantitativen Datenanalyse. 
+Ziel ist die \emph{systematische Aufbereitung, Verdichtung und Darstellung} empirischer Daten,
+um zentrale Merkmale einer Verteilung zu beschreiben und potenzielle Strukturen oder Auffälligkeiten sichtbar zu machen.
+Der Fokus liegt nicht auf Hypothesentests, sondern auf dem \emph{Verständnis der vorliegenden Daten}. In dieser Arbeit werden die 
+Verfahren auf aus PEP~Ecopassports extrahierte Kennwerte angewendet.
 
-Die deskriptive und explorative Statistik bildet die Grundlage der Analyse der aus den PEP-Ecopassports extrahierten Daten. 
-Sie dient der systematischen Aufbereitung, Verdichtung und visuellen Darstellung der Umweltindikatoren, 
-Materialkompositionen und Energieverbrauchswerte. 
-Ziel ist es, zentrale Muster, Streuungen und Ausreißer zu identifizieren, um sowohl die Datenqualität zu bewerten als auch
-eine belastbare Basis für weiterführende statistische Auswertungen zu schaffen.
+\paragraph{Deskriptive Statistik}
+Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung von
+(i) \emph{zentraler Tendenz} und (ii) \emph{Streuung}. \cite{Fisher2009}
+Typische Lagemaße sind Mittelwert, Median und Modalwert. 
+Der \textbf{Median} teilt eine geordnete Verteilung in zwei gleich große Hälften und gilt als \emph{robustes Lagemaß}, 
+da er im Vergleich zum Mittelwert wenig durch Ausreißer beeinflusst wird. \cite{Dimić2019}
+Der \textbf{Interquartilsabstand (IQR)} quantifiziert die Streuung der mittleren $50\%$ der Daten.
+Der IQR ist ein robustes Streuungsmaß und wird zunehmend in der Berichterstattung deskriptiver Statistiken verwendet.
+Für Ordinaldaten ist der Median das geeignete Lagemaß; der IQR (ergänzt um Minimum/Maximum, Spannweite und Häufigkeiten) beschreibt die Streuung. \cite{Fisher2009}
 
-\paragraph{Grundlagen}
-Die deskriptive Statistik befasst sich mit der Organisation und Beschreibung von Stichprobendaten.  \cite{Fisher2009}
-Sie umfasst numerische und grafische Verfahren, um zentrale Tendenzen und Streuungen innerhalb einer Verteilung zu quantifizieren. 
-Damit lassen sich große Datenmengen komprimiert darstellen und charakteristische Eigenschaften eines Datensatzes sichtbar machen. 
-Da aus den PEP-Dokumenten extrahierte Umweltindikatoren häufig stark schiefe und ausreißerbehaftete Verteilungen aufweisen, 
-werden in dieser Arbeit bevorzugt robuste Maße wie der Median und der Interquartilsabstand (IQR) verwendet. 
-Diese Kennwerte sind unempfindlich gegenüber extremen Werten und beschreiben die mittleren 50 \% einer Verteilung. 
-Zur besseren Vergleichbarkeit schief verteilter Daten werden ergänzend logarithmische Transformationen angewendet, 
-um die Skalen zu stabilisieren und die visuelle Beurteilung der Daten zu erleichtern.
+\paragraph{Verteilungsformen und Schiefe}
+Ein zentrales Merkmal numerischer Daten ist die Form ihrer Verteilung.
+Bei \emph{schiefen} (nicht normalverteilten) Daten sind Mittelwert, Median und Modalwert voneinander getrennt.
+Bei \emph{rechtsschiefen} Verteilungen liegen einige hohe Werte weit über dem zentralen Bereich, sodass der Mittelwert 
+tendenziell größer als der Median ist; bei \emph{linksschiefen} Verteilungen gilt das umgekehrte Muster.
+Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert den Einsatz robuster Kennzahlen.
 
-\paragraph{Visualisierung}
-Zur Untersuchung der Verteilungen und zur Identifikation potenzieller Auffälligkeiten werden Histogramme und Boxplots eingesetzt. 
-Histogramme ermöglichen eine schnelle Einschätzung der Verteilungsform und zeigen zentrale Tendenz, Streuung, Modalität und potenzielle Ausreißer. 
-Boxplots stellen robuste Lage- und Streuungsmaße dar (Median und IQR) und verdeutlichen gleichzeitig Symmetrie, Schiefe und Extremwerte. 
-Die parallele Darstellung mehrerer Boxplots erlaubt zudem den Vergleich zwischen unterschiedlichen Indikatoren oder Produktgruppen. 
-Diese grafischen Verfahren werden in der explorativen Datenanalyse genutzt, um Muster oder Abweichungen ohne vorab definierte Hypothesen zu erkennen.
+\paragraph{Log-Transformation und methodische Alternativen}
+Sind Daten deutlich schief (nicht normalverteilt), kommen drei datengetriebene Optionen in Betracht:
+(i) \emph{Ausreißerprüfung} mit dokumentierter Regel und ggf.\ Entfernung,
+(ii) \emph{Log-Transformation} der Werte zur Symmetrisierung der Verteilung (und für klarere Visualisierungen bzw.\ die Nutzbarkeit parametrischer Verfahren),
+(iii) Einsatz \emph{nicht-parametrischer} Methoden.
+Parametrische Verfahren setzen im Regelfall Normalität voraus; die Entscheidung erfolgt im Rahmen der EDA.
 
-\paragraph{Automatisierung und Reproduzierbarkeit}
-Die Auswertungen erfolgen reproduzierbar und skriptbasiert in R. 
-Alle Berechnungsschritte, Transformationen und grafischen Ausgaben sind in modularen R-Skripten dokumentiert, 
-sodass die Analyse vollständig nachvollziehbar und bei Bedarf automatisiert wiederholbar ist. 
-Eine skriptbasierte Auswertung stellt sicher, dass auch nach Datenkorrekturen oder Erweiterungen identische Analyseschritte angewendet werden können.
+\subsection{Explorative Datenanalyse (EDA) und Visualisierungen}
+Die EDA dient der visuellen Erkundung und Strukturentdeckung (Muster, Ausreißer, Beziehungen), ohne vorab Hypothesen festzulegen.
 
-\paragraph{Datenqualität und Plausibilitätsprüfung}
-Die explorative Datenanalyse unterstützt zugleich die Bewertung der Datenqualität. 
-Sie dient der Erkennung von Fehlern, Ausreißern, fehlenden oder inkonsistenten Werten 
-und ermöglicht damit eine erste Plausibilitätsprüfung der extrahierten Datensätze. 
-Durch die Beobachtung von Minimum-, Maximum- und Quartilswerten können unplausible Ausreißer oder fehlerhafte Einheiten erkannt werden. 
-Somit leistet die EDA einen wesentlichen Beitrag zur Validierung der extrahierten PEP-Daten 
-und zur Sicherstellung ihrer Eignung für nachgelagerte Analysen.
+\paragraph{Histogramme}
+Histogramme stellen die Häufigkeitsverteilung kontinuierlicher Merkmale über Bins/Buckets dar.
+Sie erlauben Aussagen zu Symmetrie, Schiefe oder Mehrgipfligkeit und prüfen Annahmen zur Verteilung (\emph{Value Distributions}).
+
+\paragraph{Boxplots}
+Boxplots visualisieren $Q_1$, Median und $Q_3$ sowie \emph{Whisker}. Übliche Ausreißergrenzen (\emph{fences}) sind
+\[
+\text{untere Grenze} = Q_1 - 1{,}5\cdot IQR, \qquad
+\text{obere Grenze} = Q_3 + 1{,}5\cdot IQR.
+\]
+Werte außerhalb werden als potenzielle Ausreißer markiert. Der IQR ($Q_3-Q_1$) ist dabei das zentrale Streuungsmaß.
+
+\subsection{Automatisierung, Reproduzierbarkeit und Datenqualität}
+Eine \emph{skriptbasierte}, reproduzierbare Umsetzung (z.\,B.\ in~R) stellt sicher, dass Berechnungs- und Visualisierungsschritte konsistent wiederholbar sind. Im Rahmen der EDA unterstützt dies die Datenqualitätsbewertung durch:
+(i) Aufdeckung von Datenfehlern und Anomalien (z.\,B.\ Ausreißer, Formatinkonsistenzen, fehlende Werte),
+(ii) Messung/Monitoring einfacher Profilierungsmaße (z.\,B.\ Anzahl Nullwerte, Anzahl eindeutiger Werte) zur Beurteilung von Vollständigkeit und Eindeutigkeit,
+(iii) Hinweise auf semantische Inkonsistenzen und Abhängigkeiten (z.\,B.\ Musterverletzungen), die für Bereinigung und Prozessverbesserungen genutzt werden können.
+Diese systematische, modellorientierte Vorgehensweise unterstützt die statistische Kontrolle der Prozesse entlang der Pipeline \emph{PDF~$\rightarrow$~JSON} und schafft Transparenz über den Zustand der Datenqualität.

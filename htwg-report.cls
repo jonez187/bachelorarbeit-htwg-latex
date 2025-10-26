@@ -84,6 +84,19 @@
 
 \RequirePackage{xkeyval}
 
+\RequirePackage{siunitx}
+\sisetup{
+  output-decimal-marker = {.},
+  group-digits = true,
+  group-separator = {\,},
+  exponent-product = \times,
+  scientific-notation = true,   % sehr kleine/große Werte automatisch in 1.23 × 10^n
+  round-mode = places,
+  round-precision = 2,          % genau 2 Nachkommastellen
+  table-number-alignment = center
+}
+
+
 %% BIB
 \RequirePackage[
 	backend=biber,
