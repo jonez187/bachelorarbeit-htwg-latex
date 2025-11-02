@@ -84,18 +84,26 @@
 
 \RequirePackage{xkeyval}
 
+\RequirePackage{booktabs}
 \RequirePackage{siunitx}
+\RequirePackage{adjustbox}
+\RequirePackage{caption}
+\RequirePackage{subcaption} 
 \sisetup{
-  output-decimal-marker = {.},
-  group-digits = true,
-  group-separator = {\,},
-  exponent-product = \times,
-  scientific-notation = true,   % sehr kleine/große Werte automatisch in 1.23 × 10^n
-  round-mode = places,
-  round-precision = 2,          % genau 2 Nachkommastellen
-  table-number-alignment = center
+  detect-weight,
+  table-format=2.2,
+  group-separator={,},
+  input-decimal-markers=.,
+  table-number-alignment=center
 }
 
+
+\RequirePackage{array}       
+\RequirePackage[table]{xcolor} 
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\graphicspath{images/}
 
 %% BIB
 \RequirePackage[

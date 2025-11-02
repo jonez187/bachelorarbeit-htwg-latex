@@ -1,54 +1,134 @@
 \section{Statistische Grundlagen}
 
+Die in dieser Arbeit verwendeten statistischen Verfahren bilden 
+die methodische Grundlage zur Analyse und Modellierung der aus PEP~Ecopassports extrahierten Daten. 
+Dazu werden zunächst \emph{deskriptive und explorative} Verfahren eingesetzt, um Strukturen, 
+Streuungen und Ausreißer in den Daten sichtbar zu machen. 
+Die \emph{Hauptkomponentenanalyse} wird dafür verwendet die wichtigsten Merkmale zu identifizieren.
+Darauf aufbauend wird die \emph{lineare Regression} als einfaches, interpretierbares Modell genutzt, 
+um heuristische Beziehungen zwischen Einflussgrößen und den resultierenden Umweltindikatoren zu identifizieren. 
+Diese Kombination ermöglicht eine robuste, nachvollziehbare und datengetriebene Einschätzung ökologischer Wirkzusammenhänge
+im Datensatz.
+
 \subsection{Deskriptive und explorative Statistik}
-Deskriptive und explorative Statistik bilden die Grundlage der quantitativen Datenanalyse. 
-Ziel ist die \emph{systematische Aufbereitung, Verdichtung und Darstellung} empirischer Daten,
-um zentrale Merkmale einer Verteilung zu beschreiben und potenzielle Strukturen oder Auffälligkeiten sichtbar zu machen.
-Der Fokus liegt nicht auf Hypothesentests, sondern auf dem \emph{Verständnis der vorliegenden Daten}. In dieser Arbeit werden die 
-Verfahren auf aus PEP~Ecopassports extrahierte Kennwerte angewendet.
+Die deskriptive und explorative Statistik bilden die Grundlage der quantitativen Datenanalyse. 
+Beide dienen der Zusammenfassung, Beschreibung und Visualisierung von Datensätzen, 
+um zentrale Merkmale einer Verteilung zu charakterisieren und potenzielle Muster oder Auffälligkeiten zu erkennen. \cite{Fisher2009}
+Der Schwerpunkt liegt nicht auf Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten. \cite{Dimić2019}
+In dieser Arbeit werden die Verfahren auf aus PEP~Ecopassports extrahierte Kennwerte angewendet. 
 
 \paragraph{Deskriptive Statistik}
-Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung von
-(i) \emph{zentraler Tendenz} und (ii) \emph{Streuung}. \cite{Fisher2009}
-Typische Lagemaße sind Mittelwert, Median und Modalwert. 
-Der \textbf{Median} teilt eine geordnete Verteilung in zwei gleich große Hälften und gilt als \emph{robustes Lagemaß}, 
-da er im Vergleich zum Mittelwert wenig durch Ausreißer beeinflusst wird. \cite{Dimić2019}
-Der \textbf{Interquartilsabstand (IQR)} quantifiziert die Streuung der mittleren $50\%$ der Daten.
-Der IQR ist ein robustes Streuungsmaß und wird zunehmend in der Berichterstattung deskriptiver Statistiken verwendet.
-Für Ordinaldaten ist der Median das geeignete Lagemaß; der IQR (ergänzt um Minimum/Maximum, Spannweite und Häufigkeiten) beschreibt die Streuung. \cite{Fisher2009}
+Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung
+(i) der \emph{zentralen Tendenz} und (ii) der \emph{Streuung} von Daten. \cite{Fisher2009}
+Ziel ist die Verdichtung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
+Zu den typischen Lagemaßen gehören \textbf{Mittelwert}, \textbf{Median} und \textbf{Modalwert}.
+Der Mittelwert beschreibt die durchschnittliche Ausprägung, während der Median die geordnete Verteilung in zwei gleich große Hälften teilt. 
+Der Median gilt als \emph{robustes Lagemaß}, da er – im Gegensatz zum Mittelwert – wenig durch Ausreißer beeinflusst wird. \cite{Dimić2019}
+Für die Streuung werden Standardabweichung, Spannweite und insbesondere der \textbf{Interquartilsabstand (IQR)} verwendet.
+Der IQR beschreibt die mittleren 50~\% der Daten und ist ein robustes Maß, das gegenüber Extremwerten stabil bleibt.
+Für ordinale Merkmale ist der Median das geeignete Lagemaß; der IQR, ergänzt um Minimum und Maximum, quantifiziert die Streuung. \cite{Fisher2009}
 
 \paragraph{Verteilungsformen und Schiefe}
-Ein zentrales Merkmal numerischer Daten ist die Form ihrer Verteilung.
-Bei \emph{schiefen} (nicht normalverteilten) Daten sind Mittelwert, Median und Modalwert voneinander getrennt.
-Bei \emph{rechtsschiefen} Verteilungen liegen einige hohe Werte weit über dem zentralen Bereich, sodass der Mittelwert 
-tendenziell größer als der Median ist; bei \emph{linksschiefen} Verteilungen gilt das umgekehrte Muster.
-Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert den Einsatz robuster Kennzahlen.
+Ein zentrales Merkmal numerischer Daten ist die Form ihrer Verteilung. 
+In symmetrischen Verteilungen fallen Mittelwert, Median und Modus zusammen.
+Bei \emph{rechtsschiefen} Verteilungen liegen einzelne hohe Werte weit über dem zentralen Bereich, sodass der Mittelwert größer als der Median ist; 
+bei \emph{linksschiefen} Verteilungen gilt das umgekehrte Muster. \cite{Kaur2018}
+Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert den Einsatz robuster Kennwerte wie Median und IQR.
+In der explorativen Praxis werden zudem log-transformierte Werte betrachtet, 
+um stark asymmetrische Verteilungen zu symmetrisieren und visuell leichter interpretierbar zu machen.\cite{Marshall2010}
 
 \paragraph{Log-Transformation und methodische Alternativen}
-Sind Daten deutlich schief (nicht normalverteilt), kommen drei datengetriebene Optionen in Betracht:
-(i) \emph{Ausreißerprüfung} mit dokumentierter Regel und ggf.\ Entfernung,
-(ii) \emph{Log-Transformation} der Werte zur Symmetrisierung der Verteilung (und für klarere Visualisierungen bzw.\ die Nutzbarkeit parametrischer Verfahren),
-(iii) Einsatz \emph{nicht-parametrischer} Methoden.
-Parametrische Verfahren setzen im Regelfall Normalität voraus; die Entscheidung erfolgt im Rahmen der EDA.
+Wenn eine Verteilung deutlich von der Normalität abweicht, bestehen drei grundlegende Optionen:
+(i) eine regelbasierte \emph{Ausreißerprüfung} mit dokumentierter Entfernung, \cite{Fisher2009}
+(ii) eine \emph{Log-Transformation} zur Annäherung an Symmetrie und zur besseren Vergleichbarkeit in Visualisierungen \cite{Marshall2010},
+oder (iii) die Anwendung \emph{nicht-parametrischer} Verfahren, die keine Normalverteilung voraussetzen \cite{Fisher2009}.
+Parametrische Methoden setzen in der Regel Normalität voraus; die Entscheidung erfolgt im Rahmen der explorativen Analyse.
 
 \subsection{Explorative Datenanalyse (EDA) und Visualisierungen}
-Die EDA dient der visuellen Erkundung und Strukturentdeckung (Muster, Ausreißer, Beziehungen), ohne vorab Hypothesen festzulegen.
+Die explorative Datenanalyse ergänzt die deskriptive Statistik durch strukturentdeckende Verfahren. 
+Sie dient der visuellen Erkundung und Bewertung von Mustern, Ausreißern oder Zusammenhängen zwischen Variablen, 
+ohne dass zuvor Hypothesen formuliert werden müssen. 
+Zentrale Visualisierungen sind Histogramme und Boxplots. \cite{Kaur2018}
 
 \paragraph{Histogramme}
-Histogramme stellen die Häufigkeitsverteilung kontinuierlicher Merkmale über Bins/Buckets dar.
-Sie erlauben Aussagen zu Symmetrie, Schiefe oder Mehrgipfligkeit und prüfen Annahmen zur Verteilung (\emph{Value Distributions}).
+Histogramme stellen Häufigkeitsverteilungen kontinuierlicher Merkmale über Klassen dar. 
+Sie erlauben Rückschlüsse auf Symmetrie, Schiefe und Mehrgipfligkeit und dienen zur
+Prüfung von Verteilungsannahmen. \cite{Marshall2010}
 
 \paragraph{Boxplots}
-Boxplots visualisieren $Q_1$, Median und $Q_3$ sowie \emph{Whisker}. Übliche Ausreißergrenzen (\emph{fences}) sind
-\[
-\text{untere Grenze} = Q_1 - 1{,}5\cdot IQR, \qquad
-\text{obere Grenze} = Q_3 + 1{,}5\cdot IQR.
-\]
-Werte außerhalb werden als potenzielle Ausreißer markiert. Der IQR ($Q_3-Q_1$) ist dabei das zentrale Streuungsmaß.
+Boxplots visualisieren Median ($Q_2$), Quartile ($Q_1$, $Q_3$) und potenzielle Ausreißer.
+Die sogenannten \emph{Whisker} markieren üblicherweise den Bereich bis zum 1{,}5-fachen Interquartilsabstand; 
+Werte außerhalb gelten als potenzielle Ausreißer. \cite{Marshall2010} 
+Diese Darstellungsform ermöglicht die Beurteilung von Streuung, Schiefe und Extremwerten
+und eignet sich für den Vergleich mehrerer Merkmale. \cite{Kaur2018}
 
 \subsection{Automatisierung, Reproduzierbarkeit und Datenqualität}
-Eine \emph{skriptbasierte}, reproduzierbare Umsetzung (z.\,B.\ in~R) stellt sicher, dass Berechnungs- und Visualisierungsschritte konsistent wiederholbar sind. Im Rahmen der EDA unterstützt dies die Datenqualitätsbewertung durch:
-(i) Aufdeckung von Datenfehlern und Anomalien (z.\,B.\ Ausreißer, Formatinkonsistenzen, fehlende Werte),
-(ii) Messung/Monitoring einfacher Profilierungsmaße (z.\,B.\ Anzahl Nullwerte, Anzahl eindeutiger Werte) zur Beurteilung von Vollständigkeit und Eindeutigkeit,
-(iii) Hinweise auf semantische Inkonsistenzen und Abhängigkeiten (z.\,B.\ Musterverletzungen), die für Bereinigung und Prozessverbesserungen genutzt werden können.
-Diese systematische, modellorientierte Vorgehensweise unterstützt die statistische Kontrolle der Prozesse entlang der Pipeline \emph{PDF~$\rightarrow$~JSON} und schafft Transparenz über den Zustand der Datenqualität.
+Eine \emph{skriptbasierte}, reproduzierbare Umsetzung (z.\,B.\ in~R) 
+gewährleistet konsistente Analysen und Nachvollziehbarkeit aller Berechnungsschritte. 
+Im Rahmen der explorativen Datenanalyse unterstützt sie die Datenqualitätsbewertung durch:
+(i) Erkennung von Datenfehlern, Ausreißern und fehlenden Werten, 
+(ii) Überwachung einfacher Profilierungsmaße (z.\,B.\ Anteil fehlender oder eindeutiger Werte) 
+zur Bewertung von Vollständigkeit und Eindeutigkeit, sowie
+(iii) Aufdeckung semantischer Inkonsistenzen und Formatabweichungen.
+Diese systematische, nachvollziehbare Vorgehensweise bildet die Grundlage 
+für die Qualitätssicherung entlang der Pipeline \emph{PDF~$\rightarrow$~JSON} 
+und schafft Transparenz über den Zustand der analysierten Daten.
+
+
+\subsection{Lineare Regression}
+
+Die lineare Regression dient in dieser Arbeit als methodische Grundlage zur 
+Modellierung der Umweltwirkungen von Produkten auf Basis quantitativer Einflussgrößen. 
+Ziel ist es, Zusammenhänge zwischen erklärenden Variablen wie \emph{Produktgewicht}, \emph{Materialzusammensetzung}, \emph{Stromverbrauch} und \emph{verwendetem Energiemix}
+und den resultierenden \emph{Umweltindikatoren} zu quantifizieren und zur Abschätzung unbekannter Werte nutzbar zu machen.
+
+\paragraph{Modellstruktur}
+Das Regressionsmodell beschreibt den linearen Zusammenhang zwischen einer abhängigen Variable \( y \) (z.\,B.\ einem Umweltindikator)
+und mehreren unabhängigen Variablen \( x_1, x_2, \dots, x_k \) (z.\,B.\ Gewicht, Stromverbrauch, Materialanteile):
+\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k + \varepsilon.
+\]
+Dabei ist \( \beta_0 \) der Achsenabschnitt, \( \beta_i \) die Regressionskoeffizienten der jeweiligen Einflussgrößen 
+und \( \varepsilon \) ein zufälliger Fehlerterm, der unerklärte Varianzanteile abbildet.
+Die Koeffizienten \(\beta_i\) quantifizieren die Richtung und Stärke des Einflusses einzelner Variablen auf den Zielindikator. \cite{Montgomery2022}
+
+\paragraph{Zentrale Annahmen}
+Für die lineare Regression gelten folgende Grundannahmen:
+\begin{itemize}
+    \item \textbf{Linearität:} Die Beziehung zwischen abhängiger und unabhängigen Variablen ist näherungsweise linear.
+    \item \textbf{Erwartungswert Null:} Die Fehlerterme haben einen Erwartungswert von null, \(E(\varepsilon)=0\).
+    \item \textbf{Homoskedastizität:} Die Varianz der Fehler ist konstant und unabhängig von den Regressoren.
+    \item \textbf{Unabhängigkeit:} Die Fehlerterme sind voneinander unkorreliert.
+\end{itemize}
+\cite{Su2012}
+Diese Annahmen sichern die Unverzerrtheit und Effizienz der Parameterschätzungen. 
+Für explorative Anwendungen, wie sie in dieser Arbeit verfolgt werden, steht jedoch die Strukturentdeckung im Vordergrund.
+Moderate Abweichungen von den Idealannahmen sind daher akzeptabel, sofern sie dokumentiert werden.
+
+
+%\paragraph{Parameterschätzung}
+%Die Schätzung der Regressionskoeffizienten erfolgt nach der Methode der kleinsten Quadrate (\emph{Ordinary Least Squares}, OLS). 
+%Dabei werden die Parameter so bestimmt, dass die Summe der quadrierten Abweichungen zwischen 
+%beobachteten und modellierten Werten minimal wird:
+%\[
+%S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
+%\]
+%Die resultierenden Schätzer sind unter den genannten Modellannahmen unverzerrt 
+%und besitzen die kleinste Varianz unter allen linearen, unverzerrten Schätzverfahren (Gauss-Markov-Eigenschaft). \cite{Su2012}
+
+\paragraph{Modellinterpretation}
+Die Koeffizienten \(\beta_i\) geben an, wie stark sich der Zielindikator \(y\) im Mittel verändert, 
+wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben. 
+Das \emph{Bestimmtheitsmaß} \(R^2\) beschreibt den Anteil der Varianz des Zielindikators, der durch die 
+erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte. \cite{Montgomery2022}
+Zur Bewertung der Modellangemessenheit werden Residuenanalysen eingesetzt, 
+um Abweichungen von Linearität oder Homoskedastizität sichtbar zu machen. 
+
+\paragraph{Anwendungsrahmen}
+In dieser Arbeit wird die multiple lineare Regression verwendet, 
+um Heuristiken zur Abschätzung der Umweltwirkungen von Elektro- und Elektronikprodukten zu entwickeln.
+Das Modell dient der quantitativen Erfassung
+von Zusammenhängen zwischen Produktmerkmalen und Umweltindikatoren und daraus schließend der möglichst präzisen Prognose 
+der Umweltindikatoren anhand der Input-Variablen.
+Damit bildet die lineare Regression eine nachvollziehbare, statistisch fundierte Basis für die 
+Entwicklung eines vereinfachten Bewertungsmodells innerhalb der PEP-Datenanalyse.

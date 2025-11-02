@@ -1,0 +1,234 @@
+\section{Deskriptive Annäherung an die PEP-Daten}
+Wie im Kapitel \ref{chapter-2} angesprochen ist es sinnvoll die erarbeiteten Daten deskriptiv anzuschauen, 
+um unter anderem auch die Datenqualität zu gewährleisten. 
+
+\subsection{Vollständigkeit der Werte}
+
+Zur Bewertung der Datenvollständigkeit wurde der Anteil fehlender Werte (\emph{missingness}) pro Umweltindikator berechnet und in einem Balkendiagramm dargestellt (Abb.~\ref{fig:missingness}). 
+Die Analyse zeigt deutliche Unterschiede zwischen den Indikatoren: 
+Während für \emph{Wasserknappheit} über 78~\% der Werte fehlen, weisen mehrere weitere Indikatoren
+wie \emph{Eutrophierung marines Gewässer}, \emph{Klimawandel (fossil, total)} und \emph{Eutrophierung terrestrisch} Lücken von rund 30~\% auf. 
+Andere Kernfelder wie \emph{Gesamtgewicht} oder \emph{Stromverbrauch} sind deutlich vollständiger. 
+Für die weitere Analyse müssen die fehlenden Werte beachtet werden. Regressiv auf die Wasserknappheit zu schließen wird 
+dementsprechend nicht möglich sein, da der Datensatz mit Wasserknappheit Werten zu klein ist.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/missingness_bar.png}
+    \caption{Anteil fehlender Werte pro Umweltindikator (\%).}
+    \label{fig:missingness}
+\end{figure}
+
+\subsection{Ziel und Überblick}
+Die robusten Kennzahlen (\textbf{Median}, \textbf{IQR}) werden berichtet und ergänzt mit dem \textbf{Mittelwert},
+um die Wirkung von Schiefe (v.\,a.\ Rechts­schiefe) zu verdeutlichen. 
+Ausreißer werden nicht entfernt. Ihre Effekte spiegeln sich im Mittelwert wider.
+
+Zusätzlich wurden die Erscheinungsjahre der PEP-Ecopassports analysiert. 
+Die Veröffentlichungen reichen von 2020 bis 2025 und setzt sich folgendermaßen zusammen: 
+
+\begin{figure}[h!] 
+  \centering
+  \includegraphics[width=0.8\linewidth]{images/dateien_pro_jahr.png} % Dateiname ohne Pfad, wenn in \graphicspath
+  \caption{Erscheinungsjahr der analysierten PEP-Dokumente}
+  \label{fig:meinbild}
+\end{figure}
+
+
+% ------------------------------------------------------------
+% T1: Basisvariablen (inkl. Mean)
+% ------------------------------------------------------------
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{l r r r r r r r l}
+\hline
+\textbf{Variable} & \textbf{Einheit} & \textbf{Min} & \textbf{Median} & \textbf{Max} & \textbf{IQR} & \textbf{Mittelwert}  \\
+\hline
+Gesamtgewicht & kg  & 0.0395 & 2.178 & 13022.6 & 125.210 & 278.023 \\
+Stromverbrauch & kWh & 0.026 & 326.511 & 8203569.5 & 86147.1 & 228061.654 \\
+\hline
+\end{tabular}
+\caption{Robuste deskriptive Kennzahlen der Basisvariablen.}
+\label{tab:basis}
+\end{table}
+
+Die in Tabelle~\ref{tab:basis} dargestellten Basisvariablen zeigen deutlich \textbf{rechtsschiefe Verteilungen} mit sehr großen Interquartilsabständen (IQR).
+Beim \emph{Gesamtgewicht} reicht die Spannweite von nur 0.04~kg bis zu über 13000~kg, was die starke Heterogenität der betrachteten Produkte verdeutlicht.
+Das \emph{kleinste Produkt} ist ein sehr leichtes elektronisches Gerät, ein \emph{Connected dimmer mit Bluetooth interface}
+(\href{https://register.pep-ecopassport.org/pep/consult/mbesqrsCBZbWbKJq6-kJ3gQki33tF6v8mGqIbNl9ZBA/mbesqrsCBZbWbKJq6-kJ3lQmBuGvAHsLUfQU9idjOpk}{PEP-Link}) im Grammbereich,
+während das \emph{größte Produkt}, ein \emph{Flüssigkeits\-kühler mit drehzahlgeregeltem Schrauben\-verdichter und intelligenter Greenspeed\textsuperscript{TM}\mbox{}-Technologie}
+(\href{https://register.pep-ecopassport.org/pep/consult/mbesqrsCBZbWbKJq6-kJ3i_N0-YkMDn5wDN9lr3hiPE/mbesqrsCBZbWbKJq6-kJ3lQmBuGvAHsLUfQU9idjOpk}{PEP-Link}),
+mehr als 13~t wiegt.
+Der Mittelwert liegt mit rund 278~kg weit über dem Median (2.18~kg), was die ausgeprägte Rechtsschiefe bestätigt.
+
+Auch der \emph{Stromverbrauch} weist eine extreme Streuung auf (ca.~86147~kWh), mit Werten zwischen 0.026~kWh und über 8.2e6~kWh.
+Damit ist das kleinste Produkt nahezu stromlos im Betrieb, während das größte Produkt eine mehrjährige oder großtechnische Nutzung abbildet.
+Der Mittelwert (228000~kWh) übersteigt den Median (327~kWh) um mehrere Größenordnungen, was die starke Rechtsverschiebung der Verteilung verdeutlicht.
+
+
+Eine weitere Variable, die die Umweltindikatoren stark beeinflussen, und damit in der zu entwickelnden Heuristik eine Rolle spielen muss,
+ist die Zusammensetzung des Produkts aus den verschiedenen Materialien.
+In der Tabelle \ref{tab:materials_threecols} wird aufgeführt, aus welchen Materialien das 
+durchschnittliche PEP-Produkt aus dem Datensatz besteht (Mittelwert).
+\emph{N} gibt die Anzahl der Produkte an, in welchen das aufgeführte Material auftaucht. 
+Wie in den meisten PEP-Dokumenten werden die modularen Materialien in
+die Gruppen \emph{Metalle, Plastik und andere} gegliedert. 
+
+
+\begin{table}
+  \centering
+  {\captionsetup{font=small}
+   \caption{Durchschnittliche Materialanteile nach Hauptkategorien (Mittelwert in \%).}
+   \label{tab:materials_threecols}
+   \scriptsize
+   \setlength{\tabcolsep}{3pt}
+   \renewcommand{\arraystretch}{1.03}
+
+   \begin{adjustbox}{max width=\textwidth}
+   \begin{minipage}{\textwidth}
+     % ==================== METALLE ====================
+     \begin{subtable}[t]{0.315\textwidth}
+       \centering
+       \caption{Metalle}
+       \begin{tabular}{@{}L{0.60\linewidth} S r@{}}
+         \toprule
+         Material & {Mittelwert} & {n} \\
+         \midrule
+         Stahl & 26.46 & 199 \\
+         Aluminium & 6.13 & 140 \\
+         Kupfer & 5.41 & 161 \\
+         Messing & 0.86 & 82 \\
+         Zamak & 0.45 & 15 \\
+         Nickel & 0.10 & 12 \\
+         Zinn & 0.06 & 20 \\
+         Zink & 0.05 & 9 \\
+         Bronze & 0.01 & 5 \\
+         Neodym & 0.01 & 5 \\
+         Hartlot & 0.00 & 7 \\
+         \bottomrule
+       \end{tabular}
+     \end{subtable}\hfill
+     % ==================== KUNSTSTOFFE ====================
+     \begin{subtable}[t]{0.315\textwidth}
+       \centering
+       \caption{Kunststoffe}
+       \begin{tabular}{@{}L{0.60\linewidth} S r@{}}
+         \toprule
+         Material & {Mittelwert} & {n} \\
+         \midrule
+         Polycarbonat (PC) & 8.23 & 113 \\
+         ABS & 2.84 & 105 \\
+         Polyamid (PA) & 2.37 & 118 \\
+         PVC & 2.08 & 86 \\
+         PS & 1.13 & 62 \\
+         PP & 0.80 & 75 \\
+         Gummi & 0.69 & 70 \\
+         PMMA & 0.66 & 19 \\
+         Epoxidharz & 0.60 & 42 \\
+         Polyesterharz & 0.57 & 23 \\
+         PE & 0.44 & 68 \\
+         PU & 0.40 & 40 \\
+         PBT & 0.23 & 17 \\
+         PET & 0.13 & 25 \\
+         POM & 0.09 & 16 \\
+         TBBPA & 0.07 & 9 \\
+         HIPS & 0.06 & 4 \\
+         Silikon & 0.04 & 6 \\
+         EPDM & 0.02 & 5 \\
+         PPS & 0.02 & 5 \\
+         Sonstige & 0.03 & --\\ 
+         \bottomrule
+       \end{tabular}
+     \end{subtable}\hfill
+     % ==================== ANDERE ====================
+     \begin{subtable}[t]{0.315\textwidth}
+       \centering
+       \caption{Andere}
+       \begin{tabular}{@{}L{0.60\linewidth} S r@{}}
+         \toprule
+         Material & {Mittelwert} & {n} \\
+         \midrule
+         Papier & 15.73 & 197 \\
+         Elektronik & 3.69 & 102 \\
+         Holz & 3.12 & 81 \\
+         Glas & 2.90 & 67 \\
+         PCBA & 1.79 & 24 \\
+         PCB & 1.27 & 49 \\
+         Kabel & 0.35 & 38 \\
+         Kältemittel & 0.35 & 53 \\
+         Ferrit & 0.28 & 38 \\
+         Elektromotoren & 0.27 & 9 \\
+         Lack / Farbe & 0.15 & 39 \\
+         Tinte & 0.08 & 15 \\
+         Silizium & 0.08 & 9 \\
+         Batterie & 0.08 & 10 \\
+         Thionylchlorid & 0.08 & 5 \\
+         Öl & 0.07 & 8 \\
+         Mineralwolle & 0.06 & 13 \\
+         Bitumen & 0.04 & 7 \\
+         Titandioxid & 0.04 & 14 \\
+         Quarz & 0.02 & 7 \\
+         Flussmittel & 0.02 & 6 \\
+         Filz & 0.01 & 11 \\
+         Aluminiumoxid & 0.01 & 5 \\
+         Haftkleber & 0.01 & 4 \\
+         Sonstige & 0.48 & -- \\
+         \bottomrule
+       \end{tabular}
+     \end{subtable}
+   \end{minipage}
+   \end{adjustbox}
+  }
+\end{table}
+
+Die Materialien sind sehr sehr unterschiedlich....
+
+
+
+% ------------------------------------------------------------
+% T2: Umweltindikatoren (Total) mit Mean und Schiefen-Indikatoren
+% ------------------------------------------------------------
+\begin{table}
+\centering
+\small
+{\setlength{\tabcolsep}{3pt}%
+\begin{tabular}{
+  p{5cm}
+  S[table-format=1.2e2]  % Min
+  S[table-format=3.2e2]  % Median
+  S[table-format=3.2e2]  % Max
+  S[table-format=3.2e2]  % IQR
+  S[table-format=3.2e2]  % Mean
+  p{2.6cm}
+}
+\hline
+\textbf{Indikator (total)} & \textbf{Min} & \textbf{Median} & \textbf{Max} & \textbf{IQR} & \textbf{Mean} & \textbf{Einheit} \\
+\hline
+Acidification & 0.000017 & 0.4295 & 3650 & 10.31 & 110.78 & kg SO$_2$ eq \\
+Climate change (total) & 0.0031 & 86.75 & 1040000 & 1979.43 & 22740.20 & kg CO$_2$ eq \\
+Eutrophication (freshwater) & 0.000001 & 0.0266 & 236 & 0.314 & 2.624 & kg P eq \\
+Hazardous waste disposed & 0 & 39.3 & 489000 & 596.69 & 6438.71 & kg \\
+Ozone depletion & 0 & 0.000007 & 0.192 & 0.000286 & 0.00323 & kg CFC-11 eq \\
+Photochemical ozone formation (HH) & 0.000002 & 0.181 & 1410 & 3.126 & 40.60 & kg C$_2$H$_4$ eq \\
+Resource use (fossils) & 0.0326 & 1620 & 106000000 & 95076 & 1583968.96 & MJ \\
+Resource use (minerals/metals) & 0.000001 & 0.00392 & 5.87 & 0.0495 & 0.2279 & kg Sb eq \\
+Radioactive waste disposed & 0 & 0.0656 & 3260 & 0.5381 & 22.56 & kg \\
+Water use & 0.000093 & 42.4 & 5770000 & 383.85 & 98836.32 & m$^{3}$ \\
+\hline
+\end{tabular}}
+\caption{Gesamtindikatoren (Total) mit Median/IQR und Mittelwert (gerundet auf zwei Nachkommastellen).}
+\label{tab:desc_indicators}
+\end{table}
+
+
+Wie in Tabelle~\ref{tab:desc_indicators} aufgezeigt weisen alle Umweltindikatoren eine stark rechtsschiefe Verteilungen auf, 
+bei denen der Mittelwert um ein Vielfaches über dem Median liegt.  
+Eine deutliche Rechtsschiefe zeigt sich insbesondere bei den Indikatoren 
+\emph{Climate change (total)}, \emph{Resource use (fossils)}, \emph{Water use} und
+\emph{Hazardous waste disposed}, bei denen der Mittelwert den Median teilweise um mehrere Größenordnungen übersteigt.  
+Lediglich \emph{Ozone depletion} und \emph{Resource use (minerals/metals)} zeigen 
+etwas geringere Unterschiede zwischen Mittelwert und Median, bleiben aber ebenfalls rechtsschief.  
+Insgesamt bestätigt dieses Muster eine stark heterogene Datenbasis, 
+bei der wenige Produkte mit extrem hohen Umweltbelastungen die Verteilungen dominieren.  
+
