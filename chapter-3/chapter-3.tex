@@ -1,28 +1,201 @@
-\chapter{Pipeline und Datenbasis (Methodik?)}
-Im folgenden Kaiptel wird die Pipeline zur Datenextraktion aus PEP Ecopassport PDFs sowie die daraus gewonnene Datenbasis beschrieben.
- 
-\section{Pipeline}
+\chapter{Pipeline und Datenbasis (Methodik)}
 
-Beschreibung vorheriger Pipeline, Probleme und Endresultat
+Dieses Kapitel beschreibt den Aufbau der Datenpipeline, die Extraktion der relevanten
+Variablen aus PEP-Ecopassport-Dokumenten sowie die Struktur und Aufbereitung der
+resultierenden Datenbasis.
 
-\subsection{PEP Recherche}
-Probleme mit der PEP Recherche und wie ich sie deshalb durchgefürt habe
+\section{Überblick der Pipeline}
 
-\subsection{Vorhandene Pipeline}
-Lennys Pipeline und Probleme
+Ziel der entwickelten Pipeline ist die automatisierte Extraktion strukturierter Daten
+aus PEP-Ecopassport-Dokumenten im PDF-Format. Die PEPs bilden die zentrale Quelle für
+produktbezogene Umweltinformationen, enthalten jedoch uneinheitlich formatierte
+Tabellen und Textblöcke, die eine direkte Auswertung erschweren.
 
-\subsection{Pipeline-Versuch1}
-Lennys Pipeline versucht upzugrade. Hier werden vor allem die Probleme gezeigt
+Die Pipeline wandelt die heterogenen PDF-Dokumente in ein einheitliches,
+maschinenlesbares Datenformat um. Als Input dienen die PEP-PDFs, als Output entsteht
+eine strukturierte CSV-Datei, die sämtliche relevanten Variablen zu Produkt,
+Materialien, Energieverbrauch und Umweltindikatoren enthält. Der Prozess umfasst
+mehrere aufeinanderfolgende Schritte:
 
-\subsection{Docling und LLM basierte Pipeline}
-Docling beschreiben, neue gpt-api usw.
+\begin{itemize}
+  \item \textbf{Erfassung und Download:} Automatisierte Recherche und Speicherung der
+        verfügbaren PEP-Dokumente aus der öffentlichen PEP-Datenbank.
+  \item \textbf{Extraktion:} Umwandlung der PDF-Dateien in Rohtext und Tabelleninhalte
+        mittels Dokumentenparser; Layout- und Tabellenstrukturen werden erkannt.
+  \item \textbf{Interpretation:} Zuordnung der erkannten Inhalte zu definierten
+        Variablen mithilfe regelbasierter und LLM-gestützter Methoden.
+  \item \textbf{Normalisierung:} Harmonisierung von Einheiten, Materialnamen und
+        Energie­modellen zur Sicherstellung der Vergleichbarkeit.
+  \item \textbf{Export:} Zusammenführung aller Informationen in eine flache,
+        analysierbare CSV-Datei als Grundlage der nachfolgenden statistischen
+        Auswertung.
+\end{itemize}
 
+Abbildung~\ref{fig:pipeline_overview} zeigt den groben schematischen Aufbau des
+Gesamtprozesses von der Rohdatenerfassung bis zur strukturierten Datenbasis. 
+Der Teil der Normalisierung und Datenbereinigung wird in \ref{subsec:normalisierung}
+detailreicher dargestellt.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/Pipeline_Grafik.png}
+  \caption{Schematischer Aufbau der Pipeline: von der PEP-Erfassung bis zur
+  strukturierten Datenbasis.}
+  \label{fig:pipeline_overview}
+\end{figure}
+
+
+\subsection{Datenerhebung und PEP-Recherche}
+
+Ziel der Datenerhebung war die Identifikation und Extraktion von PEP-Ecopassport-Dokumenten,
+die sich auf Geräte der Gebäudeautomatisierung oder IoT Komponenten beziehen. Die PEP-Datenbank bildet dabei
+die Quelle der Untersuchung. Für jedes gefundene Dokument wurden Produktinformationen,
+Material- und Energiedaten sowie Metadaten in strukturierter Form erfasst.
+
+\paragraph{Zielsetzung}
+Im ersten Schritt der Arbeit sollte eine Datenbasis zu IoT-Produkten in der PEP-Datenbank
+aufgebaut werden. Dazu wurden die Dokumente automatisiert recherchiert, die zugehörigen PDFs
+heruntergeladen, analysiert und nach Relevanz für den Smart-Home- bzw. IoT-Bereich klassifiziert.  Das Ergebnis
+wurde in CSV-Formaten gespeichert und diente als Grundlage für die weitergehende Analyse.
+
+\paragraph{Keyword-basierte Suche}
+Zur Ermittlung der verfügbaren PEP-Dokumente wurde zunächst die Suchfunktion der
+PEP-Datenbank analysiert. Über die Browser-Entwicklertools konnten die zugrunde liegenden
+Netzwerkanfragen identifiziert werden. Insbesondere der Endpoint \texttt{/xhr/searchPep}
+lieferte HTML-Snippets mit Produktnamen und Links. Diese wurden mithilfe von JavaScript
+iterativ abgefragt, geparst und in einer CSV-Datei gespeichert. Die Implementierung
+verwendete \texttt{fetch}-Requests mit kopierten FormData-Parametern und CSRF-Tokens. Für
+die Paginierung wurde die Gesamtanzahl der Treffer aus dem Response genutzt, um alle
+Ergebnisse in Schleifen abzurufen.
+Um gezielt IoT-nahe Produkte zu erfassen, wurden die Abfragen mit spezifischen
+Suchbegriffen in den FormData-Parametern erweitert (z.\,B.\ \emph{controller}, \emph{sensor}, \emph{gateway},
+\emph{wifi}, \emph{knx}, \emph{zigbee}, \emph{cloud}). Dadurch konnten 184 PEP-Einträge, welche
+potentiell Gebäudeautomatisierungsgeräte beschreiben
+identifiziert und als CSV exportiert werden. Anschließend erfolgte eine manuelle Prüfung und Klassifikation
+der Ergebnisse, da die Suchbegriffe im Produktitel nicht ausnahmslos auf Komponenten der Gebäudeautomation schließen können.
+Zudem wendet die Suchfunktion der PEP-Plattform nicht alle Filter korrekt
+an und es treten Überschneidungen zwischen den Seiten auf.
+
+\paragraph{Klassifikation der Produkte}
+Die ermittelten Produkte wurden in einer Excel-Datei manuell kategorisiert. Neben dem
+Produktnamen und der URL enthielt die Datei eine Spalte \emph{IoT-Einschätzung} mit
+vordefinierten Auswahloptionen. Farbcodierungen erleichterten die visuelle Trennung
+zwischen den Gruppen. Zur Validierung wurden zusätzlich die jeweiligen PEP-PDFs gelesen
+und, falls erforderlich, weitere Produktinformationen aus Herstellerportalen
+herangezogen. So konnten 102 Smart-Home-relevante Geräte eindeutig als IoT oder
+IoT-nah eingestuft werden.
+
+\paragraph{Kategorisierung}
+Die Zuordnung erfolgte nach funktionalen Kriterien:
+\begin{itemize}
+  \item \textbf{Gebäudeautomatisierung:} Geräte mit Konnektivität (z.\,B.\ ZigBee, WiFi, KNX) oder Cloud-Anbindung,
+        wie Gateways, smarte Sensoren oder Steuerungen.
+  \item \textbf{eher ja:} Komponenten mit indirekter IoT-Relevanz, etwa Erweiterungsmodule. (Teilweise aussortiert)
+  \item \textbf{eher nein:} Elektronik mit digitaler Funktion, jedoch ohne Vernetzung. (Aussortiert)
+  \item \textbf{kein IoT:} Produkte ohne Kommunikationsfähigkeit (z.\,B.\ Kabel, Trafos, LED-Panels). (Aussortiert)
+\end{itemize}
+
+\paragraph{Manuelle Ergänzungen}
+Zusätzlich zur halbautomatisierten Suche wurden IoT-relevante Unternehmen gezielt
+identifiziert (z.\,B.\ ABB, Siemens, Schneider Electric, Legrand, Somfy, Daikin,
+Bosch, Honeywell). Deren PEP-Dokumente wurden manuell durchsucht und ergänzt. Dadurch
+erweiterte sich der Datensatz um weitere 145 PEPs. Insgesamt umfasst die erstellte
+Datenbasis 247 PEP-Dokumente, die anschließend in der Parsing-Pipeline verarbeitet und
+vereinheitlicht wurden.
+
+
+\subsection{PDF-Parsing und Extraktion}
+
+Die Extraktion strukturierter Daten aus PEP-PDFs stellte den technisch anspruchsvollsten
+Teil der Arbeit dar. Ziel war es, aus den heterogenen Dokumenten eine konsistente,
+maschinenlesbare Repräsentation der Umweltindikatoren, Materialanteile und
+Metadaten zu erzeugen. Die finale Lösung kombiniert eine robuste Layoutanalyse mit
+Docling und eine LLM-basierte, schema­gesteuerte Inhaltsinterpretation.
+
+\paragraph{Entwicklung und Vorläufer}
+Zu Beginn wurde eine auf \texttt{pdfplumber} basierende Pipeline eingesetzt, die mit
+Regex- und Textheuristiken Tabellen und Materiallisten erkannte. Obwohl dieser Ansatz
+für einzelne PDFs funktionierte, erwies sich die Übertragbarkeit als unzureichend.
+Grund dafür waren stark variierende Layouts, Tabellen als Rasterbilder und
+uneinheitliche Bezeichnungs- und Einheitenformate. Bereits kleine Änderungen im
+Tabellenkopf führten zu fehlerhaften Zuordnungen von Indikatornamen oder Spalten.
+Die Vielzahl individueller Ausnahmen entwickelte sich zur sogenannten
+\emph{„Exception-Hölle“}, in der jedes zusätzliche Sonderlayout neue Regressionen
+verursachte. Eine vollständige Generalisierung des pdfplumber-Parsers war im Rahmen
+der Arbeit nicht realistisch umsetzbar.
+
+Diese Limitierungen führten zur Entwicklung einer neuen, modularen Pipeline, die auf
+dem Open-Source-Framework \emph{Docling} von IBM basiert. Docling erlaubt die
+strukturierte Segmentierung von PDF-Inhalten in Absätze, Tabellen, Listen und Bilder
+und exportiert diese in Markdown oder JSON. Dadurch konnte die textuelle Logik vom
+Layout entkoppelt und die Zuverlässigkeit der Downstream-Verarbeitung deutlich
+verbessert werden.
+
+\paragraph{Methodisches Konzept}
+Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
+\begin{itemize}
+  \item \textbf{Docling-Konvertierung:} PDF-Dateien werden in eine Markdown-Struktur
+        überführt. OCR und Bildbeschreibung sind deaktiviert, um Laufzeit und
+        Speicherverbrauch zu reduzieren. Tabellen- und Abschnittsgrenzen bleiben
+        erhalten.
+  \item \textbf{LLM-basierte Extraktion:} Der konvertierte Text wird in Abschnitten
+        an ein Sprachmodell übergeben, das definierte Variablen extrahiert und im
+        JSON-Format zurückgibt. Die Promptstruktur erzwingt strikte Datentypen und
+        klare Feldbezeichnungen.
+  \item \textbf{Merging:} Ergebnisse der Indikatorenextraktion und der
+        Metadatenextraktion werden über den PDF-Dateinamen zusammengeführt;
+        parserbasierte Werte haben Vorrang vor LLM-Schätzungen.
+\end{itemize}
+
+\paragraph{Wahl des Modells und der Schnittstelle}
+Für die semantische Extraktion wurde \emph{GPT-5} verwendet, angesprochen über die
+\emph{Responses-API}. Diese neue Schnittstelle unterstützt native strukturierte
+Ausgaben und optional eine Schema-Validierung. Der Aufruf erfolgt im
+\texttt{response\_format=json\_object}- oder \texttt{json\_schema}-Modus, wodurch
+fehlerhafte JSON-Formate praktisch ausgeschlossen sind. Gegenüber dem früher
+verwendeten \emph{gpt-3.5-turbo} zeigte sich GPT-5 deutlich stabiler in der
+Erkennung von numerischen Werten, Einheiten und Modulzuordnungen (A1–A3, A4, A5,
+B*, C*, D). Zudem reduziert sich der Post-Processing-Aufwand erheblich, da keine
+nachträgliche JSON-Reparatur erforderlich ist.  
+
+Die Kombination aus Docling und GPT-5 führte somit zu einem reproduzierbaren und
+skalierbaren Verfahren, das auch bei komplexen Layouts konsistente Ergebnisse liefert.
+
+\paragraph{Extraktionslogik}
+\begin{itemize}
+  \item \textbf{Indikatoren:} Matching über Name und Einheit auf Basis der EF 3.1-Labels
+        (z.\,B.\ \(\mathrm{kg\,CO_2\,eq}\), \(\mathrm{kg\,Sb\,eq}\), \(\mathrm{MJ}\)).
+        Header-Kontext wird mitgeparst, B-Phasen werden nicht aggregiert.
+  \item \textbf{Plausibilität:} Flatline-Filter (identische Modulwerte),
+        Prüfungen von \emph{Total} vs. Modul­summe, Toleranz für negative D-Werte.
+  \item \textbf{Materialien:} Parser-Ergebnisse aus Docling-Tabellen sind führend.
+        Das LLM ergänzt nur, überschreibt jedoch keine verlässlichen Prozentwerte.
+  \item \textbf{Normalisierung:} Zahlen ohne Einheitenzeichen; Einheiten ausschließlich
+        im Feld \texttt{unit}. Keine heuristische Imputation oder Raten.
+\end{itemize}
+
+\paragraph{Robustheit und Grenzen}
+Die neue Pipeline konnte die Anzahl fehlerhafter oder unvollständiger Einträge deutlich
+reduzieren. Fallback-Mechanismen greifen bei fehlerhaften Tabellen automatisch auf den
+Fließtext zurück, wodurch auch reine Text-PEPs ausgewertet werden können. Für PDFs mit
+reinen Rastertabellen bleibt jedoch eine Einschränkung bestehen, da ohne OCR keine
+Inhalts­extraktion möglich ist. Trotz dieser Grenzen erlaubt der Ansatz eine hohe
+Reproduzierbarkeit und Transparenz: identische Eingaben erzeugen identische Ausgaben.
+Die Pipeline priorisiert Nachvollziehbarkeit und strukturelle Konsistenz gegenüber
+maximaler Vollständigkeit.
+
+
+\subsection{Normalisierung und Datenbereinigung}
+\label{subsec:normalisierung}
+Mapping von Materialnamen, Energie­modellen, Einheitenharmonisierung, Umgang mit
+fehlenden Werten, Ausreißerprüfung.
 
 \section{Datenbasis}
-Wie viele PDFs, wie ichs noch weiter flachgezogen habe, Probleme usw
+Quantitative Übersicht über die gewonnene Datenbasis:
+Anzahl der Dokumente, Variablen, Struktur, Coverage.
 
-\subsection{Normalisierung}
-Mapping Material, Strommodell usw
+\subsection{Variablenstruktur}
+Beschreibung der Hauptgruppen (Input, Output, Metadaten).
 
-\subsection{Datenbereinigung} 
-Wie Daten bereinigt (zb zu leere PDFs aussortiert), Ausreißer manuell analysiert, Werte nachtragen
+\subsection{Qualitätssicherung}
+Verfahren zur Plausibilitätsprüfung (z.\,B. visuelle Kontrolle, Stichproben, Filter).

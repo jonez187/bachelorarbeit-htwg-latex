@@ -92,6 +92,82 @@
       \verb https://link.springer.com/chapter/10.1007/978-3-540-28640-0_20
       \endverb
     \endentry
+    \entry{Fisher2009}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c02eedbd2c32894dce3018f832820143}{%
+           family={Fisher},
+           familyi={F\bibinitperiod},
+           given={Murray\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=bf4f6b0e87cb370696ffb583cb28a6d5}{%
+           family={Marshall},
+           familyi={M\bibinitperiod},
+           given={Andrea\bibnamedelima P.},
+           giveni={A\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{b148e571914a9e9a017f0a00943415da}
+      \strng{fullhash}{b148e571914a9e9a017f0a00943415da}
+      \strng{fullhashraw}{b148e571914a9e9a017f0a00943415da}
+      \strng{bibnamehash}{b148e571914a9e9a017f0a00943415da}
+      \strng{authorbibnamehash}{b148e571914a9e9a017f0a00943415da}
+      \strng{authornamehash}{b148e571914a9e9a017f0a00943415da}
+      \strng{authorfullhash}{b148e571914a9e9a017f0a00943415da}
+      \strng{authorfullhashraw}{b148e571914a9e9a017f0a00943415da}
+      \field{labelalpha}{FM09}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Understanding descriptive statistics}
+      \field{year}{2009}
+      \verb{doi}
+      \verb 10.1016/j.aucc.2008.11.003
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S1036731408001732
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S1036731408001732
+      \endverb
+    \endentry
+    \entry{Marshall2010}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=82d804c8ae20a48a4d86e63782c86e14}{%
+           family={Marshall},
+           familyi={M\bibinitperiod},
+           given={Gill},
+           giveni={G\bibinitperiod}}}%
+        {{hash=14b29c54ee59a3965b66e25940cb03a7}{%
+           family={Jonker},
+           familyi={J\bibinitperiod},
+           given={Leon},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{fullhash}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{fullhashraw}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{bibnamehash}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{authorbibnamehash}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{authornamehash}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{authorfullhash}{b0a88a95b03bfb70cce428266d4e9663}
+      \strng{authorfullhashraw}{b0a88a95b03bfb70cce428266d4e9663}
+      \field{labelalpha}{MJ10}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{An introduction to descriptive statistics: A review and practical guide}
+      \field{year}{2010}
+      \verb{doi}
+      \verb 10.1016/j.radi.2010.01.001
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S1078817410000027
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S1078817410000027
+      \endverb
+    \endentry
     \entry{Hassanzadeh2013}{article}{}{}
       \name{author}{4}{}{%
         {{hash=402ff948d7e5e2dc49d2ba212a6471c8}{%
@@ -353,6 +429,138 @@
       \endverb
       \verb{url}
       \verb https://dl.acm.org/doi/abs/10.1145/3085228.3085278
+      \endverb
+    \endentry
+    \entry{Kaur2018}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=4ac31621c6d86c1cfb5a72eedeafbbdc}{%
+           family={Kaur},
+           familyi={K\bibinitperiod},
+           given={Parampreet},
+           giveni={P\bibinitperiod}}}%
+        {{hash=177d6ab7def1143c35cd7ab8af6ed029}{%
+           family={Stoltzfus},
+           familyi={S\bibinitperiod},
+           given={Jill},
+           giveni={J\bibinitperiod}}}%
+        {{hash=1b36ce4824283ea036190c393330b1c1}{%
+           family={Yellapu},
+           familyi={Y\bibinitperiod},
+           given={Vikas},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{fullhash}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{fullhashraw}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{bibnamehash}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{authorbibnamehash}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{authornamehash}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{authorfullhash}{e93c155b3c2683cacbd65a54440f3b48}
+      \strng{authorfullhashraw}{e93c155b3c2683cacbd65a54440f3b48}
+      \field{labelalpha}{KSY18}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Descriptive statistics}
+      \field{year}{2018}
+      \verb{doi}
+      \verb 10.4103/IJAM.IJAM_7_18
+      \endverb
+      \verb{urlraw}
+      \verb https://journals.lww.com/ijam/fulltext/2018/04010/Descriptive_statistics.7.aspx
+      \endverb
+      \verb{url}
+      \verb https://journals.lww.com/ijam/fulltext/2018/04010/Descriptive_statistics.7.aspx
+      \endverb
+    \endentry
+    \entry{Dimić2019}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=3901c11fea4bb59c27df977781343e43}{%
+           family={Dimić},
+           familyi={D\bibinitperiod},
+           given={Gabrijela},
+           giveni={G\bibinitperiod}}}%
+        {{hash=5c7f94245f39b51eeb20c03826b5729a}{%
+           family={Rančić},
+           familyi={R\bibinitperiod},
+           given={Dejan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=996e3d9a1d55a4f5cccc678331854efc}{%
+           family={Rančić},
+           familyi={R\bibinitperiod},
+           given={Olivera\bibnamedelima Pronić},
+           giveni={O\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=f8ff1906f2f7e291eb062d72f12776b3}{%
+           family={Spalević},
+           familyi={S\bibinitperiod},
+           given={Petar},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{5df20ff476f07bd075343db2b1c68988}
+      \strng{fullhash}{83eb03be5769e37bb7267e9baee2970d}
+      \strng{fullhashraw}{83eb03be5769e37bb7267e9baee2970d}
+      \strng{bibnamehash}{5df20ff476f07bd075343db2b1c68988}
+      \strng{authorbibnamehash}{5df20ff476f07bd075343db2b1c68988}
+      \strng{authornamehash}{5df20ff476f07bd075343db2b1c68988}
+      \strng{authorfullhash}{83eb03be5769e37bb7267e9baee2970d}
+      \strng{authorfullhashraw}{83eb03be5769e37bb7267e9baee2970d}
+      \field{labelalpha}{Dim+19}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Descriptive Statistical Analysis in the Process of Educational Data Mining}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.1109/TELSIKS46999.2019.9002177
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/9002177
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/9002177
+      \endverb
+    \endentry
+    \entry{Montgomery2022}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=7d4a838891cb5c31eb1e3e089777efa0}{%
+           family={Montgomery},
+           familyi={M\bibinitperiod},
+           given={Douglas\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=bb9dadeef0e27beee51d152faff8ca96}{%
+           family={Peck},
+           familyi={P\bibinitperiod},
+           given={Elizabeth\bibnamedelima A.},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=788c3b54381fbc8ef27cdf46201acf93}{%
+           family={Vining},
+           familyi={V\bibinitperiod},
+           given={G.\bibnamedelimi Geoffrey},
+           giveni={G\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{fullhash}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{fullhashraw}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{bibnamehash}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{authorbibnamehash}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{authornamehash}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{authorfullhash}{99eadd8af988e76081d9186d2fd2c617}
+      \strng{authorfullhashraw}{99eadd8af988e76081d9186d2fd2c617}
+      \field{labelalpha}{MPV22}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-119-57876-5}
+      \field{title}{Introduction to Linear Regression Analysis}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb http://wiley.com/en-ie/Introduction+to+Linear+Regression+Analysis%2C+6e+Solutions+Manual-p-9781119578765
+      \endverb
+      \verb{url}
+      \verb http://wiley.com/en-ie/Introduction+to+Linear+Regression+Analysis%2C+6e+Solutions+Manual-p-9781119578765
       \endverb
     \endentry
     \entry{PEP}{online}{}{}
