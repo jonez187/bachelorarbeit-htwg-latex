@@ -1,4 +1,5 @@
 \section{Statistische Grundlagen}
+\label{sec:stat_grundlagen}
 
 Die in dieser Arbeit verwendeten statistischen Verfahren bilden 
 die methodische Grundlage zur Analyse und Modellierung der aus PEP~Ecopassports extrahierten Daten. 
@@ -19,18 +20,21 @@ In dieser Arbeit werden die Verfahren auf aus PEP~Ecopassports extrahierte Kennw
 
 \paragraph{Deskriptive Statistik}
 Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung
-(i) der \emph{zentralen Tendenz} und (ii) der \emph{Streuung} von Daten. \cite{Fisher2009}
-Ziel ist die Verdichtung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
-Zu den typischen Lagemaßen gehören \textbf{Mittelwert}, \textbf{Median} und \textbf{Modalwert}.
-Der Mittelwert beschreibt die durchschnittliche Ausprägung, während der Median die geordnete Verteilung in zwei gleich große Hälften teilt. 
-Der Median gilt als \emph{robustes Lagemaß}, da er – im Gegensatz zum Mittelwert – wenig durch Ausreißer beeinflusst wird. \cite{Dimić2019}
-Für die Streuung werden Standardabweichung, Spannweite und insbesondere der \textbf{Interquartilsabstand (IQR)} verwendet.
+der \emph{Lage} und der \emph{Streuungskennzahlen} von Daten. \cite{Fisher2009}
+Ziel ist die Abbildung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
+Zu den typischen Lagemaßen gehören \emph{Mittelwert}, \emph{Median} und \emph{Modalwert}.
+Der Mittelwert beschreibt die durchschnittliche Ausprägung, während der Median die geordnete Verteilung 
+in zwei gleich große Hälften teilt. 
+Der Median gilt als \emph{robustes Lagemaß}, da er, im Gegensatz zum Mittelwert, wenig durch Ausreißer beeinflusst wird.
+Der Modalwert ist der Wert, der in der Stichprobe am häufigsten vorkommt. \cite{Dimić2019}
+Für die Streuung werden Standardabweichung, Spannweite und insbesondere der \emph{Interquartilsabstand (IQR)} verwendet.
 Der IQR beschreibt die mittleren 50~\% der Daten und ist ein robustes Maß, das gegenüber Extremwerten stabil bleibt.
-Für ordinale Merkmale ist der Median das geeignete Lagemaß; der IQR, ergänzt um Minimum und Maximum, quantifiziert die Streuung. \cite{Fisher2009}
+Für ordinale Merkmale ist der Median das geeignete Lagemaß. Der IQR, ergänzt um Minimum und Maximum, quantifiziert 
+die Streuung. \cite{Fisher2009}
 
 \paragraph{Verteilungsformen und Schiefe}
 Ein zentrales Merkmal numerischer Daten ist die Form ihrer Verteilung. 
-In symmetrischen Verteilungen fallen Mittelwert, Median und Modus zusammen.
+In symmetrischen Verteilungen fallen Mittelwert, Median und Modalwert zusammen.
 Bei \emph{rechtsschiefen} Verteilungen liegen einzelne hohe Werte weit über dem zentralen Bereich, sodass der Mittelwert größer als der Median ist; 
 bei \emph{linksschiefen} Verteilungen gilt das umgekehrte Muster. \cite{Kaur2018}
 Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert den Einsatz robuster Kennwerte wie Median und IQR.
@@ -38,13 +42,13 @@ In der explorativen Praxis werden zudem log-transformierte Werte betrachtet,
 um stark asymmetrische Verteilungen zu symmetrisieren und visuell leichter interpretierbar zu machen.\cite{Marshall2010}
 
 \paragraph{Log-Transformation und methodische Alternativen}
-Wenn eine Verteilung deutlich von der Normalität abweicht, bestehen drei grundlegende Optionen:
+Wenn eine Verteilung deutlich von einer Normalverteilung abweicht, bestehen drei grundlegende Optionen:
 (i) eine regelbasierte \emph{Ausreißerprüfung} mit dokumentierter Entfernung, \cite{Fisher2009}
 (ii) eine \emph{Log-Transformation} zur Annäherung an Symmetrie und zur besseren Vergleichbarkeit in Visualisierungen \cite{Marshall2010},
 oder (iii) die Anwendung \emph{nicht-parametrischer} Verfahren, die keine Normalverteilung voraussetzen \cite{Fisher2009}.
-Parametrische Methoden setzen in der Regel Normalität voraus; die Entscheidung erfolgt im Rahmen der explorativen Analyse.
+Die Entscheidung erfolgt im Rahmen der explorativen Analyse.
 
-\subsection{Explorative Datenanalyse (EDA) und Visualisierungen}
+\subsection{Explorative Datenanalyse und Visualisierungen}
 Die explorative Datenanalyse ergänzt die deskriptive Statistik durch strukturentdeckende Verfahren. 
 Sie dient der visuellen Erkundung und Bewertung von Mustern, Ausreißern oder Zusammenhängen zwischen Variablen, 
 ohne dass zuvor Hypothesen formuliert werden müssen. 
@@ -62,18 +66,92 @@ Werte außerhalb gelten als potenzielle Ausreißer. \cite{Marshall2010}
 Diese Darstellungsform ermöglicht die Beurteilung von Streuung, Schiefe und Extremwerten
 und eignet sich für den Vergleich mehrerer Merkmale. \cite{Kaur2018}
 
+\iffalse
 \subsection{Automatisierung, Reproduzierbarkeit und Datenqualität}
-Eine \emph{skriptbasierte}, reproduzierbare Umsetzung (z.\,B.\ in~R) 
+Eine \emph{skriptbasierte}, reproduzierbare Umsetzung (z.\,B.\ in~R oder Python) 
 gewährleistet konsistente Analysen und Nachvollziehbarkeit aller Berechnungsschritte. 
 Im Rahmen der explorativen Datenanalyse unterstützt sie die Datenqualitätsbewertung durch:
-(i) Erkennung von Datenfehlern, Ausreißern und fehlenden Werten, 
-(ii) Überwachung einfacher Profilierungsmaße (z.\,B.\ Anteil fehlender oder eindeutiger Werte) 
-zur Bewertung von Vollständigkeit und Eindeutigkeit, sowie
-(iii) Aufdeckung semantischer Inkonsistenzen und Formatabweichungen.
+Erkennung von Datenfehlern, Ausreißern und fehlenden Werten, 
+und die Überwachung einfacher Profilierungsmaße (z.\,B.\ Anteil fehlender oder eindeutiger Werte) 
+zur Bewertung von Vollständigkeit und Eindeutigkeit.
 Diese systematische, nachvollziehbare Vorgehensweise bildet die Grundlage 
 für die Qualitätssicherung entlang der Pipeline \emph{PDF~$\rightarrow$~JSON} 
 und schafft Transparenz über den Zustand der analysierten Daten.
+\fi
 
+\subsection{Hauptkomponentenanalyse (PCA)}
+Die \emph{Hauptkomponentenanalyse} (Principal Component Analysis, PCA) ist eine weit 
+verbreitete multivariate statistische Methode zur
+Vereinfachung komplexer Datensätze, 
+Extraktion der wesentlichen Informationen und der Erkennung von Strukturen in den Daten.
+Ihre mathematischen Grundlagen beruhen auf fundamentalen Konzepten der linearen Algebra. \cite{Abdi2010}
+
+Die PCA verfolgt zwei zentrale Ziele:
+
+\paragraph{Reduktion der Dimensionalität}
+
+Die ursprünglichen Variablen werden durch eine kleinere Menge neuer, 
+orthogonaler Variablen ersetzt, die \emph{Hauptkomponenten}. Diese werden als 
+lineare Kombinationen der Ausgangsvariablen konstruiert und erklären maximal 
+mögliche Varianz. Die erste Hauptkomponente trägt dabei den größten Anteil 
+der Gesamtvarianz. \cite{Maćkiewicz1993}
+
+\paragraph{Vereinfachung und Interpretation}
+
+Durch Komprimierung ohne wesentlichen Informationsverlust ermöglicht die PCA 
+eine vereinfachte Darstellung des Datensatzes sowie die Analyse von 
+Beziehungen zwischen Beobachtungen und Variablen. Muster von Ähnlichkeiten 
+können grafisch auf wenigen Achsen dargestellt werden. \cite{Abdi2010}
+ 
+
+
+\paragraph{Mathematische Grundlagen}
+
+Die PCA beruht darauf, aus einer Menge korrelierter Variablen neue,
+unkorrelierte Variablen (\emph{Hauptkomponenten}) zu erzeugen. Dafür wird die
+Varianz-Kovarianz-Matrix $S$ (bzw.\ die Korrelationsmatrix bei normierten
+Variablen) zerlegt \cite{Maćkiewicz1993}. Die Hauptkomponenten ergeben sich aus den Eigenwerten
+und Eigenvektoren dieser Matrix. Dazu wird
+\[
+  |S - \lambda I| = 0
+\]
+gelöst. Die Eigenwerte $\lambda_i$ geben an, wie viel Varianz jede
+Hauptkomponente erklärt. Die zugehörigen Eigenvektoren liefern die
+Gewichte der linearen Kombinationen, aus denen die Hauptkomponenten
+entstehen:
+\[
+  V = A^{\prime} X.
+\]
+\cite{Maćkiewicz1993}
+Die Hauptkomponenten sind orthogonal und damit unkorreliert \cite{Abdi2010}.
+
+\paragraph{Singulärwertzerlegung}
+
+Statt über Eigenwerte kann die PCA auch mit der
+Singulärwertzerlegung (SVD) berechnet werden, wie es in modernen Softwarebibliotheken (z.B.
+Python scikit-learn \cite{scikit-learn-pca} und Matlab \cite{matlab-pca}) üblich ist:
+\[
+  X = P \Lambda Q^{T}.
+\]
+Die quadrierten Singulärwerte entsprechen dabei den Eigenwerten, und die
+Hauptkomponenten der Beobachtungen ergeben sich zu
+\[
+  F = P \Lambda.
+\]
+Die SVD zeigt, dass die PCA eine optimale Niedrigrang-Approximation der
+Datenmatrix im Sinne der kleinsten Quadrate liefert. \cite{Abdi2010}
+
+\paragraph{PCA in dieser Arbeit}
+
+Die Hauptkomponentenanalyse bildet die Grundlage der Principal Component 
+Regression (PCR), bei der die ursprünglichen Regressorvariablen durch 
+die Hauptkomponenten ersetzt werden. Dies ist insbesondere dann 
+vorteilhaft, wenn starke Multikollinearität zwischen den Variablen besteht,
+da die Schätzung der Regressionskoeffizienten durch die Entkorrelierung 
+wesentlich stabiler wird. \cite{Jolliffe1982}
+Da die in den PEP-Daten enthaltenen Materialanteile 
+teils ausgeprägt korrelieren, wird die lineare Regression in dieser Arbeit 
+auf Basis der zuvor berechneten Hauptkomponenten durchgeführt.
 
 \subsection{Lineare Regression}
 
@@ -96,8 +174,8 @@ Die Koeffizienten \(\beta_i\) quantifizieren die Richtung und Stärke des Einflu
 Für die lineare Regression gelten folgende Grundannahmen:
 \begin{itemize}
     \item \textbf{Linearität:} Die Beziehung zwischen abhängiger und unabhängigen Variablen ist näherungsweise linear.
-    \item \textbf{Erwartungswert Null:} Die Fehlerterme haben einen Erwartungswert von null, \(E(\varepsilon)=0\).
-    \item \textbf{Homoskedastizität:} Die Varianz der Fehler ist konstant und unabhängig von den Regressoren.
+    \item \textbf{Erwartungswert Null:} Die Fehlerterme haben einen Erwartungswert von null \(E(\varepsilon)=0\) und sind Normalverteilt.
+    \item \textbf{Homoskedastizität:} Die Varianz der Fehler ist konstant und unabhängig von den erklärenden Variablen.
     \item \textbf{Unabhängigkeit:} Die Fehlerterme sind voneinander unkorreliert.
 \end{itemize}
 \cite{Su2012}
@@ -106,23 +184,22 @@ Für explorative Anwendungen, wie sie in dieser Arbeit verfolgt werden, steht je
 Moderate Abweichungen von den Idealannahmen sind daher akzeptabel, sofern sie dokumentiert werden.
 
 
-%\paragraph{Parameterschätzung}
-%Die Schätzung der Regressionskoeffizienten erfolgt nach der Methode der kleinsten Quadrate (\emph{Ordinary Least Squares}, OLS). 
-%Dabei werden die Parameter so bestimmt, dass die Summe der quadrierten Abweichungen zwischen 
-%beobachteten und modellierten Werten minimal wird:
-%\[
-%S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
-%\]
-%Die resultierenden Schätzer sind unter den genannten Modellannahmen unverzerrt 
-%und besitzen die kleinste Varianz unter allen linearen, unverzerrten Schätzverfahren (Gauss-Markov-Eigenschaft). \cite{Su2012}
+\paragraph{Parameterschätzung}
+Die Schätzung der Regressionskoeffizienten erfolgt nach der Methode der kleinsten Quadrate (\emph{Ordinary Least Squares}, OLS). 
+Dabei werden die Parameter so bestimmt, dass die Summe der quadrierten Abweichungen zwischen 
+beobachteten und modellierten Werten minimal wird:
+\[
+S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
+\]
+Die resultierenden Schätzer sind unter den genannten Modellannahmen unverzerrt 
+und besitzen die kleinste Varianz unter allen linearen, unverzerrten Schätzverfahren (Gauss-Markov-Eigenschaft). \cite{Su2012}
 
 \paragraph{Modellinterpretation}
 Die Koeffizienten \(\beta_i\) geben an, wie stark sich der Zielindikator \(y\) im Mittel verändert, 
 wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben. 
 Das \emph{Bestimmtheitsmaß} \(R^2\) beschreibt den Anteil der Varianz des Zielindikators, der durch die 
 erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte. \cite{Montgomery2022}
-Zur Bewertung der Modellangemessenheit werden Residuenanalysen eingesetzt, 
-um Abweichungen von Linearität oder Homoskedastizität sichtbar zu machen. 
+
 
 \paragraph{Anwendungsrahmen}
 In dieser Arbeit wird die multiple lineare Regression verwendet, 

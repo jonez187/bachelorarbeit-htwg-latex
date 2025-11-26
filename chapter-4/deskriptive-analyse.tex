@@ -1,6 +1,17 @@
 \section{Deskriptive Annäherung an die PEP-Daten}
-Wie im Kapitel \ref{chapter-2} angesprochen ist es sinnvoll die erarbeiteten Daten deskriptiv anzuschauen, 
-um unter anderem auch die Datenqualität zu gewährleisten. 
+
+Wie bereits in Kapitel~\ref{sec:stat_grundlagen} erläutert, ist eine
+deskriptive Betrachtung der Daten ein notwendiger erster Schritt, um die
+Qualität und Aussagekraft des Datensatzes zu beurteilen. 
+Ziel dieses Abschnitts ist es, einen Überblick über die Vollständigkeit der
+vorliegenden Daten sowie über zentrale Eingangs- und Ausgangsvariablen zu geben. 
+Dazu werden zunächst die Anteile der fehlenden Werte analysiert,
+gefolgt von einer Beschreibung der
+Input-Variablen Gesamtgewicht, Stromverbrauch, Materialzusammensetzung und
+Energiemodelle. 
+Abschließend werden die Verteilungen der Umweltindikatoren
+untersucht, um erste strukturelle Muster und Auffälligkeiten innerhalb des
+Datensatzes zu identifizieren.
 
 
 \subsection{Vollständigkeit der Werte}
@@ -14,11 +25,20 @@ Die Analyse zeigt deutliche Unterschiede zwischen den Indikatoren: Für
 \emph{Wasserknappheit} fehlen rund 78~\% der Werte, während mehrere weitere
 Indikatoren wie \emph{Eutrophierung marines Gewässer}, \emph{Klimawandel (fossil,
 total)} und \emph{Eutrophierung terrestrisch} Fehlstände von etwa 30~\% aufweisen.
-Andere Kernfelder, darunter \emph{Gesamtgewicht} und \emph{Stromverbrauch}, sind
-vergleichsweise vollständig.
 
-Die fehlenden Werte werden in der weiteren Analyse berücksichtigt. Der Indikator
-\emph{Wasserknappheit} wird aufgrund der hohen Ausfallrate von der Auswertung
+Für den in der Regression verwendeten Stromverbrauch (\texttt{electricity\_consumption})
+fehlen knapp 25~\% der Werte. In diesen PEPs wird zwar ein Energienutzungsmodell
+beschrieben und eine Formel zur Berechnung des Verbrauchs angegeben, der
+tatsächliche Gesamtstromverbrauch über die Lebensdauer wird jedoch nicht als
+konkreter Zahlenwert ausgewiesen, sondern basiert auf externen Katalogdaten
+(z.\,B.\ Verlustleistung $P_{\text{use}}$). Diese Informationen stehen in der
+vorliegenden Datenpipeline nicht zur Verfügung und können daher
+nicht automatisch in \texttt{electricity\_consumption} überführt werden. In der
+weiteren Analyse stehen somit nur die PEPs mit explizit angegebenem
+Stromverbrauch zur Verfügung, was den Stichprobenumfang für die Regression
+reduziert.
+
+Der Indikator \emph{Wasserknappheit} wird aufgrund der hohen Ausfallrate von der Auswertung
 ausgeschlossen, da keine belastbaren statistischen Aussagen getroffen werden können.
 
 \begin{figure}[h!]
@@ -27,6 +47,7 @@ ausgeschlossen, da keine belastbaren statistischen Aussagen getroffen werden kö
   \caption{Anteil fehlender Werte pro Umweltindikator (\%, \(N=233\) Produkte).}
   \label{fig:missingness}
 \end{figure}
+
 
 
 Zusätzlich wurden die Erscheinungsjahre der PEP-Ecopassports untersucht. Die
@@ -46,8 +67,8 @@ letzten Jahren.
 \subsection{Überblick der \emph{Input}-Variablen}
 
 Für die Input-Variablen werden robuste Kennzahlen (\textbf{Median}, \textbf{IQR})
-berichtet und durch den \textbf{Mittelwert} ergänzt, um die Wirkung der Schiefe
-(v.\,a.\ Rechts­schiefe) zu verdeutlichen. Ausreißer werden nicht entfernt; ihre
+gezeigt und durch den \textbf{Mittelwert} ergänzt, um die Wirkung der Schiefe
+(v.\,a.\ Rechts­schiefe) zu verdeutlichen. Ausreißer werden nicht entfernt, ihre
 Einflüsse spiegeln sich im Mittelwert wider.
 
 
@@ -99,7 +120,8 @@ europäischer Modelle deutlich höher. Dies liegt vermutlich daran, dass die Pro
 vertrieben und verwendet werden. Daher ist es schwierig, den tatsächlichen Energiebezug eines spezifischen Landes 
 realistisch abzubilden, weshalb in der Regel ein repräsentativer europäischer Durchschnitt angenommen wird.
 
-Der hohe Anteil von Frankreich ist auf eine große Anzahl an PEP-Dokumenten aus Frankreich zurückzuführen.
+Der hohe Anteil von Frankreich ist auf eine große Anzahl an PEP-Dokumenten aus Frankreich zurückzuführen,
+die zu national vermarkteten Produkten gehören.
 Von dort stammt die Association P.E.P und das Format ist dort am meisten etabliert.
 
 Auch in der Herstellungsphase dominiert ein europäischer Energiemix, ergänzt durch einzelne Modelle 
@@ -239,7 +261,7 @@ Die in Tabelle~\ref{tab:materials_threecols} dargestellten Materialanteile zeige
 sehr heterogene Zusammensetzung der untersuchten Produkte. Mit durchschnittlich
 rund 26~\% ist \emph{Stahl} das mengenmäßig dominierende Einzelmaterial, gefolgt von
 \emph{Papier} (15.7~\%), welches vor allem für Verpackungen verwendet wird,
-und \emph{Polycarbonat (PC)} (8.2~\%). Die hohe Varianz der
+und \emph{Polycarbonat (PC)} (8.2~\%).
 Während Metalle in nahezu allen PEPs vertreten sind, treten bestimmte
 Kunststoffe und Spezialmaterialien (z.\,B.\ PMMA, PBT, PPS) nur in wenigen Fällen auf.
 Die Kategorie \emph{Andere} enthält zahlreiche kleinvolumige Komponenten, deren
@@ -252,6 +274,8 @@ Verteilung die Diversität der erfassten Produktgruppen wider.
 Die Umweltindikatoren bilden die Output-Variablen, auf deren Basis später die
 Heuristik entwickelt wird. Eine deskriptive Betrachtung verdeutlicht bereits die
 Verteilungsstruktur der Daten.
+
+% \paragraph{TODO: Übersetzen, Layout anpassen}
 
 \begin{table}[h]
   \centering

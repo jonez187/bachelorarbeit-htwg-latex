@@ -1,0 +1,174 @@
+\section{Lineare Regression der CO$_2$-Äquivalente}
+\label{sec:regression_co2}
+
+Ziel der folgenden Analyse ist es zu untersuchen, inwieweit sich die in den PEPs
+ausgewiesenen Treibhausgasemissionen (\emph{Climate Change, total})
+durch einfache technische Produkteigenschaften erklären lassen.
+Als erklärende Variablen werden das Gesamtgewicht des Produkts,
+der über die Nutzungsdauer aggregierte Stromverbrauch sowie die
+Materialzusammensetzung in Form von Hauptkomponenten aus der PCA verwendet.
+Da der Stromverbrauch in den PEPs nur als Gesamtwert über die gesamte
+Lebensdauer und nicht phasenspezifisch angegeben wird, erfolgt die
+Modellierung auf Basis der gesamten CO$_2$-Äquivalente pro Produkt.
+
+\paragraph{Datenbasis}
+
+Für die Regression werden nur Datensätze berücksichtigt, bei denen
+\texttt{cc\_total}, \texttt{total\_weight} und
+\texttt{electricity\_consumption} vorhanden und positiv sind.
+Nach dieser Filterung verbleiben insgesamt $n = 171$ PEPs.
+Die Materialinformationen liegen als Massenanteile in Spalten der Form
+\texttt{m\_*} vor, zum Beispiel \texttt{m\_steel}, \texttt{m\_aluminium},
+\texttt{m\_copper} oder \texttt{m\_wood}.
+Um sehr seltene Materialien auszublenden, werden nur solche Materialien
+verwendet, die in mindestens 15 Produkten vorkommen.
+Auf diese Weise gehen 25 Materialspalten in die weiteren Auswertungen ein.
+
+\paragraph{Transformation der Variablen}
+
+Die Verteilungen der CO$_2$-Äquivalente, des Produktgewichts und des
+Stromverbrauchs sind stark rechtsschief und decken einen großen Wertebereich ab.
+Um diese Größen besser handhabbar zu machen und den Einfluss extremer Werte
+zu verringern, werden sie mit der Funktion \texttt{log1p} transformiert.
+Dabei werden die folgenden Variablen definiert:
+\[
+  \text{log\_cc} = \log(1 + \text{CO2}_{\text{total}}), \quad
+  \text{log\_w}  = \log(1 + \text{weight}), \quad
+  \text{log\_e}  = \log(1 + \text{electricity}).
+\]
+Die lineare Regression wird auf der Transformationsskala von $\text{log\_cc}$
+durchgeführt.
+Falls nötig, lassen sich die Ergebnisse über die inverse Funktion
+\texttt{expm1} wieder auf die Originalskala der Emissionen zurückführen.
+
+\paragraph{Regressionsmodell und Schätzung}
+
+In der log-transformierten Skala hat das Regressionsmodell die Form
+\[
+  \text{log\_cc} =
+  \beta_0 +
+  \beta_1 \cdot \text{log\_w} +
+  \beta_2 \cdot \text{log\_e} +
+  \sum_{j=1}^{k} \gamma_j \cdot \text{PC\_mat} +
+  \varepsilon,
+\]
+wobei \text{PC\_mat} die Material-Hauptkomponenten aus der PCA bezeichnen und
+$k = 16$ die Anzahl der verwendeten Komponenten ist.
+Der Fehlerterm $\varepsilon$ steht für nicht modellierte Einflüsse und
+Messfehler.
+
+Die Schätzung der Koeffizienten erfolgt mit gewöhnlichen kleinsten Quadraten
+(OLS) auf Basis der SciPy-Funktion \texttt{linalg.lstsq}.
+Vor der OLS-Schätzung werden alle erklärenden Variablen
+(also \text{log\_w}, \text{log\_e}{} und die PCA-Komponenten) per Min--Max-Skalierung in den
+Bereich $[0,1]$ gebracht.
+Die dafür benötigten Minimal- und Maximalwerte werden ausschließlich aus dem
+Trainingsdatensatz bestimmt und anschließend auf das Testset übertragen.
+
+Zur Bewertung der Modellgüte wird ein äußerer Train/Test-Split mit einem
+Testanteil von 15\,\% verwendet.
+Auf dem Trainingsdatensatz wird zusätzlich ein innerer Wiederholungssplit
+durchgeführt: In 200 Wiederholungen wird der Trainingsdatensatz jeweils
+erneut in Train- und Validierungsdaten aufgeteilt.
+Damit lässt sich prüfen, wie stabil die Schätzungen und Gütemaße gegenüber
+der zufälligen Aufteilung der Daten sind.
+Hyperparameter werden dabei nicht optimiert, sondern es geht nur um eine
+Stabilitätsanalyse.
+
+\paragraph{Modellvarianten}
+
+Um den Beitrag der Materialinformationen und die Wirkung der PCA zu bewerten,
+werden drei Modellvarianten mit identischer Train/Test-Aufteilung betrachtet:
+
+\begin{enumerate}
+  \item \textbf{Basismodell}: \\
+        In dieser Variante wird $\text{log\_cc}$ nur auf \text{log\_w}{} und \text{log\_e}{}
+        (sowie \texttt{lifetime}, falls vorhanden) regressiert.
+        Materialinformationen werden nicht verwendet.
+
+  \item \textbf{Basis + Rohmaterialien}: \\
+        Hier wird das Basismodell um die 25 ausgewählten Materialspalten
+        \texttt{m\_*} in roher Form erweitert.
+        Jede Materialart geht also als eigene Regressorvariable in das
+        Modell ein.
+
+  \item \textbf{Basis + PCA-Materialien (PCR)}: \\
+        In dieser Variante wird das Basismodell statt mit den einzelnen
+        Materialspalten mit 16 Material-Hauptkomponenten erweitert.
+        Diese Komponenten stammen aus einer PCA auf dem Materialblock
+        und bilden gemeinsam mindestens 90\,\% der Varianz der 25
+        Ausgangsvariablen ab.
+        Dieses Modell entspricht einer Principal Component Regression
+        (PCR) auf Basis der Materialinformationen.
+\end{enumerate}
+
+\paragraph{Gütekennzahlen der Modelle}
+
+Die Modelle werden über das Bestimmtheitsmaß $R^2$ und den
+Root-Mean-Square-Error (RMSE) auf dem Testdatensatz bewertet.
+Beide Kennzahlen beziehen sich auf die log-transformierte Zielvariable
+$\text{log\_cc}$.
+Tabelle~\ref{tab:reg_co2_models} zeigt die Ergebnisse für die drei
+Modellvarianten.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der linearen Regressionsmodelle für den Indikator
+  \emph{Climate Change (total)} in der Transformationsskala $\log(1+\text{CO2})$.}
+  \label{tab:reg_co2_models}
+  \begin{tabular}{lccc}
+    \toprule
+    Modellvariante                     & $R^2_{\text{Train}}$ & $R^2_{\text{Test}}$ & RMSE\textsubscript{Test} \\
+    \midrule
+    Basis (Gewicht, Stromverbrauch)    & 0.817 & 0.730 & 1.904 \\
+    Basis + Rohmaterialien             & 0.904 & 0.727 & 1.914 \\
+    Basis + PCA-Materialien (16 PCs)   & 0.851 & 0.822 & 1.325 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Das Basismodell erklärt bereits einen großen Teil der Varianz von $\text{log\_cc}$,
+erreicht aber auf dem Testdatensatz nur ein $R^2$ von etwa 0{,}73.
+Die Erweiterung um Rohmaterialien erhöht das Trainings-$R^2$
+deutlich, verbessert das Test-$R^2$ jedoch nicht und führt zu einem sehr
+ähnlichen RMSE.
+Dies deutet darauf hin, dass das Modell mit Rohmaterialspalten eher zur
+Überanpassung neigt.
+Das PCA-basierte Modell mit 16 Material-Hauptkomponenten erreicht dagegen
+ein Test-$R^2$ von rund 0{,}82 und einen deutlich geringeren RMSE von etwa
+1{,}33 in der $\text{log\_cc}$-Skala.
+Damit zeigt sich, dass die Materialinformationen in komprimierter Form zur
+Verbesserung der Vorhersagegüte beitragen.
+
+\subsection*{Visualisierung der Vorhersagequalität}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/regression_co2.png}
+  \caption{Schematischer Aufbau der Pipeline: von der PEP-Erfassung bis zur
+  strukturierten Datenbasis.}
+  \label{fig:regression_scatter}
+\end{figure}
+
+Zur Veranschaulichung der Modellgüte zeigt \ref{fig:regression_scatter} für das PCA-basierte Modell ein
+Streudiagramm der vorhergesagten gegenüber den tatsächlichen Werten von
+$\text{log\_cc}$ erstellt.
+Auf beiden Achsen ist die Transformationsskala $\log(1 + \text{CO2}_{\text{total}})$
+verwendet.
+Trainings- und Testdaten werden im Plot getrennt dargestellt, und eine
+gestrichelte Diagonale $y = x$ markiert die ideale Übereinstimmung von
+Vorhersage und Realität.
+Die meisten Punkte liegen in der Nähe dieser Diagonalen, und die Streuung ist
+für Trainings- und Testdaten ähnlich.
+Dies passt zu den ausgewiesenen Gütemaßen und spricht dafür, dass das
+PCA-Modell die Daten gut abbildet, ohne stark zu überanpassen.
+
+\paragraph{Ausreißer}
+
+Zusätzlich werden die Werte betrachtet, die auf der Originalskala der
+CO$_2$-Äquivalente betrachtet.
+Dabei zeigt sich, dass die größten Abweichungen bei besonders großen
+Produkten auftreten.
+Die stärksten Ausreißer stammen aus PEPs mit einem Gesamtgewicht von
+mindestens 720\,kg.
+Eine inhaltliche Einordnung dieser Ausreißer und mögliche Ursachen werden im
+anschließenden Diskussionsabschnitt aufgegriffen.

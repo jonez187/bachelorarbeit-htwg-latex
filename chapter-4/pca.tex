@@ -1,0 +1,89 @@
+\section{PCA der Materialien}
+
+Zur explorativen Analyse der hochdimensionalen Materialdaten wurde eine Hauptkomponentenanalyse
+(PCA) durchgeführt.
+Benutzt wurde die Python-Bibliothekt \emph{scikit-learn} \cite{scikit-learn-pca}.
+Die Eingangsdaten wurden zuvor pro Spalte z-standardisiert (Mittelwert 0, Varianz 1).
+Alle Materialien, die in einem Produkt nicht vorkommen, wurden als 0 interpretiert.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/pca_kum.png}
+  \caption{Kumulative erklärte Varianz}
+  \label{fig:pca_kum}
+\end{figure}
+
+In Abbildung~\ref{fig:pca_kum} ist die durch die Hauptkomponenten erklärte kumulative 
+Varianz dargestellt.
+Die ersten 10 Hauptkomponenten erklären bereits ungefähr 55\,\% der Varianz, 20 Komponenten etwa 80\,\%
+und 30 Komponenten ungefähr 90\,\%. Ab etwa 30 Komponenten nehmen zusätzliche Komponenten nur noch
+geringe Varianzanteile auf (z.\,B.\ ca.\ 97\,\% bei 40 Komponenten). Für die weitere Modellierung
+wurde daher ein Varianzschwellenwert von 90\,\% gewählt, was in diesem Datensatz etwa $k=30$
+Hauptkomponenten entspricht. Dieser Wert ist ein Kompromiss zwischen Dimensionsreduktion
+und Informationsverlust. 
+
+Anzumerken ist, dass die hier dargestellte PCA auf dem vollständigen Datensatz basiert und nur der 
+explorativen Darstellung der Materialien dient. 
+Für die nachfolgende Modellschätzung wird die PCA jeweils ausschließlich
+auf dem Trainingsdatensatz gefittet und anschließend auf die Testdaten angewendet, um
+zu vermeiden, dass das Modell durch die PCA die Testdaten lernt.
+
+\subsection{Interpretation der Material-Hauptkomponenten}
+
+Jede Hauptkomponente ist eine
+lineare Kombination der einzelnen Materialanteile. Die zugehörigen \emph{Loadings}
+geben an, wie stark ein bestimmtes Material zur jeweiligen Komponente beiträgt.
+Große Beträge der Loadings (unabhängig vom Vorzeichen) weisen auf Materialien hin,
+die diese Komponente besonders prägen. Das Vorzeichen bestimmt lediglich die Richtung
+der Achse (Zunahme vs.\ Abnahme eines Materials), ist für die inhaltliche Einordnung
+des Musters aber weniger wichtig als die absolute Größe.
+
+Auf Basis der Top-Loadings pro Komponente lassen sich die ersten
+Hauptkomponenten wie folgt interpretieren:
+\begin{itemize}
+  \item \textbf{PC$_1$ (Stahl- / Kältemittel):}
+        Die erste Komponente wird vor allem durch \texttt{Stahl} und
+        \texttt{Kältemittel} auf der einen, sowie \texttt{Epoxid},
+        \texttt{Papier/Karton} und \texttt{PC} auf der anderen Seite geprägt.
+        Sie trennt damit Produkte mit hohem Stahl- und Kältemittelanteil
+        (z.\,B.\ schwere, kältemittelführende Geräte) von Produkten, bei denen
+        Epoxidharze, Papier und PC-Kunststoffe dominieren (typisch für Leiterplatten,
+        Gehäuse und Verpackungs- bzw.\ Isolationsanteile).
+        Auffällig ist, dass das Kältemittel trotz eines im Mittel sehr geringen
+        Massenanteils von nur rund 0{,}35\,\% mit einem hohen Loading in der ersten
+        Hauptkomponente erscheint. Das deutet darauf hin, dass Kältemittel zwar nur
+        in wenigen Produkten vorkommt, dort aber gemeinsam mit hohen
+        Stahlanteilen auftritt und damit ein charakteristisches Materialmuster
+        schwerer, kältemittelführender Geräte beschreibt.
+  \item \textbf{PC$_2$ und PC$_3$ (elektromechanische Baugruppen):}
+        In PC$_2$ und PC$_3$ treten insbesondere \texttt{Hartlot},
+        \texttt{Elektrische Motoren}, \texttt{Kältemittel} und \texttt{PE-HD}
+        mit hohen Loadings auf, teilweise kontrastiert mit Aluminium,
+        Messing oder PU. Diese Komponenten beschreiben Varianten
+        von Produkten mit ausgeprägten elektromechanischen Baugruppen (Motoren,
+        Lötverbindungen, Hochdichte-PE) gegenüber eher metallischen oder mit
+        PU-Schaum ausgestatteten Ausführungen.
+  \item \textbf{PC$_4$ und PC$_5$ (Oberflächen und Gehäusematerialien):}
+        PC$_4$ wird vor allem durch \texttt{Farbe}, \texttt{Aluminium},
+        \texttt{PVC} und \texttt{PU} geprägt, PC$_5$ durch \texttt{Messing},
+        \texttt{Quartz} und \texttt{Polyester}. Diese Komponenten fassen
+        unterschiedliche Typen von Oberflächen- und Gehäusematerialien zusammen,
+        also Kombinationen aus metallischen Gehäusen, Beschichtungen, Kunststoffen
+        und Füllstoffen.
+  \item \textbf{Weitere Komponenten (PC$_6$\,ff.):}
+        Die nachfolgenden Hauptkomponenten erfassen zunehmend speziellere
+        Materialkombinationen, etwa unterschiedliche Kunststoffmischungen, 
+        Isolations- und Dichtmaterialien, sowie
+        Elektronik-spezifische Stoffe und Flammschutzmittel. Viele dieser
+        Komponenten unterscheiden damit Varianten von elektronischen Produkten mit
+        hohem Leiterplatten- und Metallanteil von Geräten mit höheren Anteilen an
+        klassischen Struktur- und Dämmmaterialien.
+\end{itemize}
+
+Insgesamt zeigt die Material-PCA, dass sich der Materialmix der betrachteten PEPs auf
+wenige wiederkehrende Muster zurückführen lässt: Kombinationen aus Strukturmetallen
+(z.\,B.\ Stahl, Aluminium), Kunststoffen, Elektronik- und Leiterplattenmaterialien
+sowie Isolations- und Spezialstoffen. Diese Hauptkomponenten werden in der folgenden
+Regression als verdichtete Materialindikatoren verwendet, um den Einfluss des
+Materialmixes auf die CO$_2$-Äquivalente zu erfassen, ohne alle stark korrelierten
+Materialspalten einzeln berücksichtigen zu müssen.

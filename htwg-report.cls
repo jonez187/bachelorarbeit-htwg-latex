@@ -84,6 +84,8 @@
 
 \RequirePackage{xkeyval}
 
+\RequirePackage{float}
+
 \RequirePackage{booktabs}
 \RequirePackage{siunitx}
 \RequirePackage{adjustbox}

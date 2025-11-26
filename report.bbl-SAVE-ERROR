@@ -19,6 +19,77 @@
 
 \refsection{0}
   \datalist[entry]{ynt/global//global/global/global}
+    \entry{Jolliffe1982}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=2d87c65d6bc93daaaf4c9f1e98b5e53a}{%
+           family={Jolliffe},
+           familyi={J\bibinitperiod},
+           given={Ian\bibnamedelima T.},
+           giveni={I\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{fullhash}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{fullhashraw}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{bibnamehash}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{authorbibnamehash}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{authornamehash}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{authorfullhash}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \strng{authorfullhashraw}{2d87c65d6bc93daaaf4c9f1e98b5e53a}
+      \field{labelalpha}{Jol82}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A Note on the Use of Principal Components in Regression}
+      \field{year}{1982}
+      \verb{doi}
+      \verb 10.2307/2348005
+      \endverb
+      \verb{urlraw}
+      \verb https://academic.oup.com/jrsssc/article/31/3/300/6985100
+      \endverb
+      \verb{url}
+      \verb https://academic.oup.com/jrsssc/article/31/3/300/6985100
+      \endverb
+    \endentry
+    \entry{Maćkiewicz1993}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=b796fd49f7cfab0ec59ad6b5327dbf47}{%
+           family={Maćkiewicz},
+           familyi={M\bibinitperiod},
+           given={Andrzej},
+           giveni={A\bibinitperiod}}}%
+        {{hash=590fdf5dc36506fb4c21840a502be614}{%
+           family={Ratajczak},
+           familyi={R\bibinitperiod},
+           given={Waldemar},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{418a5580fc4d98d2012048749b50720c}
+      \strng{fullhash}{418a5580fc4d98d2012048749b50720c}
+      \strng{fullhashraw}{418a5580fc4d98d2012048749b50720c}
+      \strng{bibnamehash}{418a5580fc4d98d2012048749b50720c}
+      \strng{authorbibnamehash}{418a5580fc4d98d2012048749b50720c}
+      \strng{authornamehash}{418a5580fc4d98d2012048749b50720c}
+      \strng{authorfullhash}{418a5580fc4d98d2012048749b50720c}
+      \strng{authorfullhashraw}{418a5580fc4d98d2012048749b50720c}
+      \field{labelalpha}{MR93}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Principal components analysis (PCA)}
+      \field{year}{1993}
+      \verb{doi}
+      \verb 10.1016/0098-3004(93)90090-R
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/009830049390090R
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/009830049390090R
+      \endverb
+    \endentry
     \entry{Lovegrove1995}{article}{}{}
       \name{author}{2}{}{%
         {{hash=e42cfc5cb28745ef53901fbecc5ed89a}{%
@@ -128,6 +199,44 @@
       \endverb
       \verb{url}
       \verb https://www.sciencedirect.com/science/article/abs/pii/S1036731408001732
+      \endverb
+    \endentry
+    \entry{Abdi2010}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=39941cc0aa7bf75386a0f8e68f0fc6aa}{%
+           family={Abdi},
+           familyi={A\bibinitperiod},
+           given={Herve},
+           giveni={H\bibinitperiod}}}%
+        {{hash=b973996d01dd9df2c765d72c94a70678}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={Lynne\bibnamedelima J.},
+           giveni={L\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{fullhash}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{fullhashraw}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{bibnamehash}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{authorbibnamehash}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{authornamehash}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{authorfullhash}{d3d1773866191d304a88f7285e3c1e75}
+      \strng{authorfullhashraw}{d3d1773866191d304a88f7285e3c1e75}
+      \field{labelalpha}{AW10}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Principal component analysis}
+      \field{year}{2010}
+      \verb{doi}
+      \verb 10.1002/wics.101
+      \endverb
+      \verb{urlraw}
+      \verb https://wires.onlinelibrary.wiley.com/doi/full/10.1002/wics.101
+      \endverb
+      \verb{url}
+      \verb https://wires.onlinelibrary.wiley.com/doi/full/10.1002/wics.101
       \endverb
     \endentry
     \entry{Marshall2010}{article}{}{}
@@ -577,6 +686,7 @@
       \strng{authornamehash}{415ef068ea6daeacd28db07d814fe318}
       \strng{authorfullhash}{415ef068ea6daeacd28db07d814fe318}
       \strng{authorfullhashraw}{415ef068ea6daeacd28db07d814fe318}
+      \field{extraname}{1}
       \field{labelalpha}{Ass24}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
@@ -818,6 +928,40 @@
       \verb https://arxiv.org/abs/2410.09871
       \endverb
     \endentry
+    \entry{PEPDB}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=415ef068ea6daeacd28db07d814fe318}{%
+           family={{Association P.E.P.}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{fullhash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{fullhashraw}{415ef068ea6daeacd28db07d814fe318}
+      \strng{bibnamehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authorbibnamehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authornamehash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authorfullhash}{415ef068ea6daeacd28db07d814fe318}
+      \strng{authorfullhashraw}{415ef068ea6daeacd28db07d814fe318}
+      \field{extraname}{2}
+      \field{labelalpha}{Ass25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Offizielle PEP Datenbank}
+      \field{title}{PEP Ecopassport Database}
+      \field{urlday}{11}
+      \field{urlmonth}{11}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://register.pep-ecopassport.org/pep/consult
+      \endverb
+      \verb{url}
+      \verb https://register.pep-ecopassport.org/pep/consult
+      \endverb
+    \endentry
     \entry{Auer2025}{article}{}{}
       \name{author}{19}{}{%
         {{hash=37fb83951ca10956269fce55f021fe29}{%
@@ -944,6 +1088,46 @@
       \verb https://arxiv.org/abs/2501.17887
       \endverb
     \endentry
+    \entry{layout-parser}{online}{}{}
+      \field{labelalpha}{25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extraalpha}{1}
+      \field{labeltitlesource}{title}
+      \field{note}{Dokumentation der Layout-Parser Bibliothek}
+      \field{title}{Layout-Parser Dokumentation}
+      \field{urlday}{23}
+      \field{urlmonth}{11}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://layout-parser.github.io/
+      \endverb
+      \verb{url}
+      \verb https://layout-parser.github.io/
+      \endverb
+    \endentry
+    \entry{matlab-pca}{online}{}{}
+      \field{labelalpha}{25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extraalpha}{2}
+      \field{labeltitlesource}{title}
+      \field{note}{Dokumentation der Matlab pca Bibliothek}
+      \field{title}{Matlab PCA Dokumentation}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://de.mathworks.com/help/stats/pca.html
+      \endverb
+      \verb{url}
+      \verb https://de.mathworks.com/help/stats/pca.html
+      \endverb
+    \endentry
     \entry{Filho2025}{article}{}{}
       \name{author}{13}{}{%
         {{hash=df7e2951a8bb154895e9608c74840a82}{%
@@ -1037,6 +1221,50 @@
       \verb https://wires.onlinelibrary.wiley.com/doi/full/10.1002/wcms.70047
       \endverb
     \endentry
+    \entry{scikit-learn-pca}{online}{}{}
+      \field{labelalpha}{25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extraalpha}{3}
+      \field{labeltitlesource}{title}
+      \field{note}{Dokumentation der Python Bibliothek scikit-learn zur PCA}
+      \field{title}{Scikit-learn PCA Dokumentation}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
+      \endverb
+      \verb{url}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
+      \endverb
+    \endentry
+    \entry{Selg2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=d6edefb08e012d027e1c26feeb474544}{%
+           family={Selg},
+           familyi={S\bibinitperiod},
+           given={Lenny},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{d6edefb08e012d027e1c26feeb474544}
+      \strng{fullhash}{d6edefb08e012d027e1c26feeb474544}
+      \strng{fullhashraw}{d6edefb08e012d027e1c26feeb474544}
+      \strng{bibnamehash}{d6edefb08e012d027e1c26feeb474544}
+      \strng{authorbibnamehash}{d6edefb08e012d027e1c26feeb474544}
+      \strng{authornamehash}{d6edefb08e012d027e1c26feeb474544}
+      \strng{authorfullhash}{d6edefb08e012d027e1c26feeb474544}
+      \strng{authorfullhashraw}{d6edefb08e012d027e1c26feeb474544}
+      \field{labelalpha}{Sel25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Analyse und Vergleich von Umweltparametern vernetzter Geräte auf Basis von PEP Deklarationen}
+      \field{year}{2025}
+    \endentry
     \entry{Yang2025}{article}{}{}
       \name{author}{3}{}{%
         {{hash=9c245130418606dd988ed12a97044d62}{%
@@ -1081,6 +1309,7 @@
       \endverb
     \endentry
   \enddatalist
+  \missing{grobid}
 \endrefsection
 \endinput
 

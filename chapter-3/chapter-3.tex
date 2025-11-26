@@ -1,4 +1,5 @@
 \chapter{Pipeline und Datenbasis (Methodik)}
+\label{chapter:methodik}
 
 Dieses Kapitel beschreibt den Aufbau der Datenpipeline, die Extraktion der relevanten
 Variablen aus PEP-Ecopassport-Dokumenten sowie die Struktur und Aufbereitung der
@@ -18,8 +19,8 @@ Materialien, Energieverbrauch und Umweltindikatoren enthält. Der Prozess umfass
 mehrere aufeinanderfolgende Schritte:
 
 \begin{itemize}
-  \item \textbf{Erfassung und Download:} Automatisierte Recherche und Speicherung der
-        verfügbaren PEP-Dokumente aus der öffentlichen PEP-Datenbank.
+  \item \textbf{Recherche und Erfassung:} Recherche, Speicherung und Bewertung der
+        verfügbaren PEP-Dokumente mit Gebäudeautomatisierungsbezug aus der öffentlichen PEP-Datenbank. \cite{PEPDB}
   \item \textbf{Extraktion:} Umwandlung der PDF-Dateien in Rohtext und Tabelleninhalte
         mittels Dokumentenparser; Layout- und Tabellenstrukturen werden erkannt.
   \item \textbf{Interpretation:} Zuordnung der erkannten Inhalte zu definierten
@@ -38,7 +39,7 @@ detailreicher dargestellt.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{images/Pipeline_Grafik.png}
+  \includegraphics[width=1.0\textwidth]{images/Pipeline_Grafik.png}
   \caption{Schematischer Aufbau der Pipeline: von der PEP-Erfassung bis zur
   strukturierten Datenbasis.}
   \label{fig:pipeline_overview}
@@ -47,13 +48,13 @@ detailreicher dargestellt.
 
 \subsection{Datenerhebung und PEP-Recherche}
 
-Ziel der Datenerhebung war die Identifikation und Extraktion von PEP-Ecopassport-Dokumenten,
+Ziel der Datenerhebung ist die Identifikation und Extraktion von PEP-Ecopassport-Dokumenten,
 die sich auf Geräte der Gebäudeautomatisierung oder IoT Komponenten beziehen. Die PEP-Datenbank bildet dabei
 die Quelle der Untersuchung. Für jedes gefundene Dokument wurden Produktinformationen,
 Material- und Energiedaten sowie Metadaten in strukturierter Form erfasst.
 
 \paragraph{Zielsetzung}
-Im ersten Schritt der Arbeit sollte eine Datenbasis zu IoT-Produkten in der PEP-Datenbank
+Im ersten Schritt der Arbeit sollte eine Datenbasis zu IoT-Produkten in der PEP-Datenbank 
 aufgebaut werden. Dazu wurden die Dokumente automatisiert recherchiert, die zugehörigen PDFs
 heruntergeladen, analysiert und nach Relevanz für den Smart-Home- bzw. IoT-Bereich klassifiziert.  Das Ergebnis
 wurde in CSV-Formaten gespeichert und diente als Grundlage für die weitergehende Analyse.
@@ -92,7 +93,7 @@ Die Zuordnung erfolgte nach funktionalen Kriterien:
         wie Gateways, smarte Sensoren oder Steuerungen.
   \item \textbf{eher ja:} Komponenten mit indirekter IoT-Relevanz, etwa Erweiterungsmodule. (Teilweise aussortiert)
   \item \textbf{eher nein:} Elektronik mit digitaler Funktion, jedoch ohne Vernetzung. (Aussortiert)
-  \item \textbf{kein IoT:} Produkte ohne Kommunikationsfähigkeit (z.\,B.\ Kabel, Trafos, LED-Panels). (Aussortiert)
+  \item \textbf{keine IoT-Relevanz:} Produkte ohne Kommunikationsfähigkeit (z.\,B.\ Kabel, Trafos, LED-Panels). (Aussortiert)
 \end{itemize}
 
 \paragraph{Manuelle Ergänzungen}
@@ -107,21 +108,26 @@ vereinheitlicht wurden.
 \subsection{PDF-Parsing und Extraktion}
 
 Die Extraktion strukturierter Daten aus PEP-PDFs stellte den technisch anspruchsvollsten
-Teil der Arbeit dar. Ziel war es, aus den heterogenen Dokumenten eine konsistente,
+Teil der Arbeit dar. Ziel ist es, aus den heterogenen Dokumenten eine konsistente,
 maschinenlesbare Repräsentation der Umweltindikatoren, Materialanteile und
-Metadaten zu erzeugen. Die finale Lösung kombiniert eine robuste Layoutanalyse mit
+Metadaten zu erzeugen, welche entsrechend der Zielsetzung der Arbeit analysiert wereden können. 
+Die finale Lösung kombiniert eine robuste Layoutanalyse mit
 Docling und eine LLM-basierte, schema­gesteuerte Inhaltsinterpretation.
 
 \paragraph{Entwicklung und Vorläufer}
-Zu Beginn wurde eine auf \texttt{pdfplumber} basierende Pipeline eingesetzt, die mit
-Regex- und Textheuristiken Tabellen und Materiallisten erkannte. Obwohl dieser Ansatz
-für einzelne PDFs funktionierte, erwies sich die Übertragbarkeit als unzureichend.
-Grund dafür waren stark variierende Layouts, Tabellen als Rasterbilder und
-uneinheitliche Bezeichnungs- und Einheitenformate. Bereits kleine Änderungen im
-Tabellenkopf führten zu fehlerhaften Zuordnungen von Indikatornamen oder Spalten.
-Die Vielzahl individueller Ausnahmen entwickelte sich zur sogenannten
-\emph{„Exception-Hölle“}, in der jedes zusätzliche Sonderlayout neue Regressionen
-verursachte. Eine vollständige Generalisierung des pdfplumber-Parsers war im Rahmen
+Zu Beginn wurde eine auf \texttt{pdfplumber} basierende Pipeline eingesetzt, die auf der von Selg \cite{Selg2025} entwickelten Pipeline aufbaut.
+Sie erkennt mithilfe Regex- und Textheuristiken Tabellen und Materiallisten. 
+Obwohl dieser Ansatz für einzelne PDFs funktionierte, erwies sich die Übertragbarkeit als unzureichend.
+Ursache waren typische Strukturprobleme von PDF-Dateien: eine verzerrte
+Zeilen- und Wortreihenfolge im Textlayer, stark variierende Layouts, Tabellen als
+Rasterbilder sowie uneinheitliche Bezeichnungs- und Einheitenformate. Bereits kleine
+Abweichungen in Tabellenköpfen führten zu fehlerhaften Zuordnungen von Indikatoren oder
+Spalten. 
+Die Vielzahl individueller Ausnahmen entwickelt sich zu einem unübersichtlichen Netz von abzufangenden Ausnahmefällen, 
+das neue Konflikte zwischen bestehenden und neu hinzugefügten
+Layouts verursachte.
+Auch die manuelle Ergänzung einzelner Werte ist bei der erforderlichen Datenmenge in dieser Arbeit nicht mehr ausreichend anzuwenden.
+Eine vollständige Generalisierung des pdfplumber-Parsers war im Rahmen
 der Arbeit nicht realistisch umsetzbar.
 
 Diese Limitierungen führten zur Entwicklung einer neuen, modularen Pipeline, die auf
@@ -138,27 +144,33 @@ Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
         überführt. OCR und Bildbeschreibung sind deaktiviert, um Laufzeit und
         Speicherverbrauch zu reduzieren. Tabellen- und Abschnittsgrenzen bleiben
         erhalten.
+  \item \textbf{Regelbasierter Filter:}
+      Um Kontextverluste des nachgelagerten Sprachmodells zu vermeiden,
+      wurde ein regelbasierter Python-Filter auf die aus Docling generierten
+      Markdown-Dateien angewendet. Hierbei werden nicht inhaltsrelevante
+      Textsegmente wie Kopf- und Fußzeilen, Unternehmensinformationen oder
+      generische Beschreibungen der PEP-Standards über eine Blacklist entfernt.
+      Diese Vorverarbeitung reduziert die Eingabelänge und verbessert die
+      inhaltliche Fokussierung der anschließenden LLM-basierten Extraktion.
   \item \textbf{LLM-basierte Extraktion:} Der konvertierte Text wird in Abschnitten
         an ein Sprachmodell übergeben, das definierte Variablen extrahiert und im
         JSON-Format zurückgibt. Die Promptstruktur erzwingt strikte Datentypen und
-        klare Feldbezeichnungen.
-  \item \textbf{Merging:} Ergebnisse der Indikatorenextraktion und der
-        Metadatenextraktion werden über den PDF-Dateinamen zusammengeführt;
-        parserbasierte Werte haben Vorrang vor LLM-Schätzungen.
+        klare Feldbezeichnungen. 
 \end{itemize}
 
-\paragraph{Wahl des Modells und der Schnittstelle}
+\paragraph{Wahl des Modells und der LLM Schnittstelle}
 Für die semantische Extraktion wurde \emph{GPT-5} verwendet, angesprochen über die
 \emph{Responses-API}. Diese neue Schnittstelle unterstützt native strukturierte
 Ausgaben und optional eine Schema-Validierung. Der Aufruf erfolgt im
-\texttt{response\_format=json\_object}- oder \texttt{json\_schema}-Modus, wodurch
-fehlerhafte JSON-Formate praktisch ausgeschlossen sind. Gegenüber dem früher
+\texttt{response\_format=json\_object}-Modus, wodurch
+fehlerhafte JSON-Formate ausgeschlossen sind. Gegenüber dem früher
 verwendeten \emph{gpt-3.5-turbo} zeigte sich GPT-5 deutlich stabiler in der
 Erkennung von numerischen Werten, Einheiten und Modulzuordnungen (A1–A3, A4, A5,
 B*, C*, D). Zudem reduziert sich der Post-Processing-Aufwand erheblich, da keine
 nachträgliche JSON-Reparatur erforderlich ist.  
+Die Temperatur des LLMs wurde auf 0 gesetzt um Zufälligkeit und Kreativität möglichst zu vermeiden.
 
-Die Kombination aus Docling und GPT-5 führte somit zu einem reproduzierbaren und
+Die Kombination aus Docling und GPT-5 führte somit zu einem 
 skalierbaren Verfahren, das auch bei komplexen Layouts konsistente Ergebnisse liefert.
 
 \paragraph{Extraktionslogik}
@@ -168,34 +180,150 @@ skalierbaren Verfahren, das auch bei komplexen Layouts konsistente Ergebnisse li
         Header-Kontext wird mitgeparst, B-Phasen werden nicht aggregiert.
   \item \textbf{Plausibilität:} Flatline-Filter (identische Modulwerte),
         Prüfungen von \emph{Total} vs. Modul­summe, Toleranz für negative D-Werte.
-  \item \textbf{Materialien:} Parser-Ergebnisse aus Docling-Tabellen sind führend.
-        Das LLM ergänzt nur, überschreibt jedoch keine verlässlichen Prozentwerte.
-  \item \textbf{Normalisierung:} Zahlen ohne Einheitenzeichen; Einheiten ausschließlich
-        im Feld \texttt{unit}. Keine heuristische Imputation oder Raten.
+  \item \textbf{Einheiten:} Zahlen ohne Einheitenzeichen. Einheiten werden ausschließlich
+        in das Feld \texttt{unit} extrahiert, ohne heuristische Ergänzung oder Raten.
 \end{itemize}
 
 \paragraph{Robustheit und Grenzen}
 Die neue Pipeline konnte die Anzahl fehlerhafter oder unvollständiger Einträge deutlich
 reduzieren. Fallback-Mechanismen greifen bei fehlerhaften Tabellen automatisch auf den
-Fließtext zurück, wodurch auch reine Text-PEPs ausgewertet werden können. Für PDFs mit
-reinen Rastertabellen bleibt jedoch eine Einschränkung bestehen, da ohne OCR keine
-Inhalts­extraktion möglich ist. Trotz dieser Grenzen erlaubt der Ansatz eine hohe
-Reproduzierbarkeit und Transparenz: identische Eingaben erzeugen identische Ausgaben.
-Die Pipeline priorisiert Nachvollziehbarkeit und strukturelle Konsistenz gegenüber
-maximaler Vollständigkeit.
+Fließtext zurück, wodurch auch reine Text-PEPs ausgewertet werden können. 
+Für PDFs mit reinen Rastertabellen bleibt jedoch eine 
+Einschränkung bestehen, da ohne OCR keine
+Inhalts­extraktion möglich ist. 
+Der Einsatz eines LLMs führt aufgrund der stochastischer Modellkomponenten zudem zu einer eingeschränkten
+Reproduzierbarkeit und Transparenz: 
+Obwohl das Risiko minimiert wurde, erzeugen identische Eingaben
+aufgrund von Halluzinationen nicht immer identische Ausgaben.
+Diese Einschränkungen sind angesichts der PDF-Heterogenität nicht zu umgehen und methodisch vertretbar.
 
-
-\subsection{Normalisierung und Datenbereinigung}
+\subsection{Normalisierung der Daten}
 \label{subsec:normalisierung}
-Mapping von Materialnamen, Energie­modellen, Einheitenharmonisierung, Umgang mit
-fehlenden Werten, Ausreißerprüfung.
+\paragraph{Zielsetzung}
+Nach der Extraktion lag ein heterogenes Datenset mit uneinheitlichen Bezeichnungsformen
+für Länder, Materialien, Lebenszyklusphasen, Energiequellen und Einheiten vor.
+Um eine konsistente Auswertung zu ermöglichen, wurden sämtliche Schreibweisen vereinheitlicht.
+Ziel war es, strukturell vergleichbare Werte zu schaffen und gruppierte Analysen über
+mehrere PEPs hinweg zu ermöglichen.
 
-\section{Datenbasis}
-Quantitative Übersicht über die gewonnene Datenbasis:
-Anzahl der Dokumente, Variablen, Struktur, Coverage.
+\paragraph{Vokabularanalyse}
+Zur systematischen Erfassung der vorhandenen Begriffe wurde ein Hilfsskript
+(\texttt{pep\_vocab\_scan.py}) entwickelt, das die in den JSON-Dateien vorkommenden
+Rohwerte inventorisiert. Für jedes relevante Feld (z.\,B. Indikatoreinheiten,
+Materialbezeichnungen oder Energiequellen) werden die Häufigkeiten einzelner
+Strings erfasst und als Übersichtstabellen ausgegeben. 
+Die Ausgabe diente der Identifikation inkonsistenter Schreibweisen, Abkürzungen und
+Synonyme, die anschließend über Zuordnungstabellen (\emph{Mapping Dateien}) vereinheitlicht
+wurden.
 
-\subsection{Variablenstruktur}
-Beschreibung der Hauptgruppen (Input, Output, Metadaten).
+\paragraph{Normalisierung mittels Mapping-Tabellen}
+Für jede Datendomäne (z.\,B. Einheit, Material, Land, Energiequelle, Phase)
+wurde eine Zuordnungstabelle erstellt, die reguläre Ausdrücke den vereinheitlichten
+Standardbegriffen zuordnet. 
+Diese Mappings wurden schrittweise verfeinert, bis alle identifizierten
+Abweichungen abgedeckt waren. 
+Beispielsweise wurden die Einheitenvarianten \emph{„kg~CO$_2$-eq“},
+\emph{„kg~CO2e“} und \emph{„kg~CO2~equiv.“} auf den Standardbegriff
+\emph{„kg~CO2~eq“} gemappt. 
+Ebenso wurden Synonyme wie \emph{„Aluminum“} und \emph{„Aluminium“} oder
+\emph{„Paper“} und \emph{„Carton“} zu gemeinsamen Bezeichnungen
+zusammengeführt. 
+Auch Länderangaben wurden vereinheitlicht, indem Bezeichnungen und ISO-Kürzel
+(z.\,B. „France“, „FR“) zu konsistenten Formen zusammengefasst wurden.
 
-\subsection{Qualitätssicherung}
-Verfahren zur Plausibilitätsprüfung (z.\,B. visuelle Kontrolle, Stichproben, Filter).
+\paragraph{Phasen- und Energiemodell-Normalisierung}
+Für Lebenszyklusphasen wurden die in den PEPs auftretenden Varianten (z.\,B.
+„A1–A3“, „Production“, „Manufacturing“) auf ein einheitliches Schema
+(„manufacturing“, „distribution“, „use“, „end\_of\_life“) abgebildet.
+Analog wurden Angaben zu Strommixen standardisiert, wobei landesspezifische
+Modelle (z.\,B. „FR“, „France Mix“, „French grid“) zu klar benannten Einträgen wie
+\emph{„France grid mix“} zusammengeführt wurden.
+Diese Normalisierung ist entscheidend, um energiebezogene und phasenabhängige
+Indikatoren konsistent vergleichen zu können.
+
+\paragraph{Entscheidungen und Vereinfachungen}
+Bei der Vereinheitlichung wurden einige pragmatische Entscheidungen getroffen:
+\emph{Steel} und \emph{Iron} wurden beispielsweise zur Kategorie \emph{Steel (metals)} zusammengefasst,
+da beide ähnliche Materialeigenschaften und Umweltwirkungen aufweisen. 
+\emph{Paper} und \emph{Carton} wurden zu \emph{Paper/Cardboard} kombiniert.
+Für Kunststoffe wurde eine vereinfachte Zusammenführung vorgenommen.
+Ein Python-Skript \emph{apply\_mappings.py} wendet die auf dem Vokabular
+basierenden Mapping Dateien auf alle extrahierten JSON Dateien an.
+
+\paragraph{Konsolidierung von Materialeinträgen}
+Durch das Mapping entstehen teilweise doppelte Materialeinträge, 
+welche innerhalb der Feldstruktur
+\texttt{material\_composition} mithilfe von \emph{merge\_material.py} zusammengeführt werden, 
+sofern sie identische Bezeichnungen
+aufwiesen. Dabei wurden nur exakt gleiche Strings (nach Vereinheitlichung von
+Groß-/Kleinschreibung und Leerzeichen) berücksichtigt
+Prozent- und Gewichtsangaben wurden bei Dubletten addiert und auf drei
+Nachkommastellen gerundet. Diese Maßnahme reduziert Redundanz und erleichtert
+die spätere Aggregation der Materialanteile.
+
+
+\paragraph{Ergebnis}
+Durch die Vokabularanalyse und anschließende Normalisierung entsteht so ein
+standardisierter Datensatz mit konsistenten Schreibweisen und eindeutiger
+Begriffssystematik. Diese Vereinheitlichung bildet die methodische Grundlage
+für die nachfolgende quantitative Auswertung.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/normalisierung_grafik.png}
+  \caption{Übersicht der Skriptabfolge zur Normalisierung und Bereinigung der extrahierten JSON-Daten.}
+  \label{fig:pipeline_normalisierung}
+\end{figure}
+
+
+
+
+\subsection{Datenbereinigung und Validierung}
+
+\paragraph{Ausschluss unvollständiger Datensätze}
+Nach der automatischen Extraktion und Normalisierung werden
+fehlerhafte oder unvollständige
+Datensätze mithilfe eines Python-Skripts \emph{sort\_out\_unusable.py} ausgeschlossen. 
+Ein Datensatz galt als unbrauchbar, wenn sämtliche
+Umweltindikatoren fehlten oder ausschließlich Nullwerte enthielten, oder wenn
+die zentralen Felder \texttt{total\_weight}, \texttt{electricity\_consumption},
+\texttt{material\_composition} und \texttt{energy\_model} gleichzeitig leer waren.
+Diese Kriterien führten zur Aussonderung von 8 der insgesamt 242 Datensätze.
+Diese PEPs enthielten zwar Metadaten, jedoch keine quantitativen Werte
+und wurden daher nicht in die Analyse einbezogen.
+
+\paragraph{Qualitätssicherung und Validierung}
+Die Datenbereinigung wurde durch automatisierte Prüfmechanismen begleitet.
+Dazu zählten Validierungen auf fehlende oder ungültige Einheiten, numerische
+Typfehler (z.\,B. String statt numerischer Wert) sowie Plausibilitätsprüfungen,
+etwa auf Null- oder Extremwerte bei zentralen Variablen. 
+Fehlerhafte Regex-Definitionen, die während der Normalisierung auftraten, wurden
+iterativ korrigiert und mit Testdateien überprüft. 
+Ein zusätzlicher Kontrolllauf identifizierte Datensätze mit nicht plausiblen
+Summen oder Flatline-Indikatoren (identische Werte in allen Phasen), die von der
+weiteren Analyse ausgeschlossen wurden.
+
+\paragraph{Entscheidungen und Grenzen}
+Mehrere alternative Ansätze wurden im Verlauf der Datenbereinigung geprüft und
+bewusst verworfen. Die Aktivierung von OCR für alle PDFs hätte den Aufwand und
+die Laufzeit erheblich erhöht, ohne die Datenqualität signifikant zu verbessern.
+Ebenso wurde auf ein vollautomatisches Mapping über Sprachmodelle verzichtet,
+da dieses zu unkontrollierten Korrekturen führte. 
+Eine Hierarchisierung der Materialien (z.\,B. \emph{Iron} als Unterkategorie von
+\emph{Metals}) oder eine gesonderte Behandlung von Verpackungsmaterialien wurde
+aus Gründen der Vergleichbarkeit nicht umgesetzt.
+
+\paragraph{Datenformatierung für die statistische Auswertung}
+Die bereinigten JSON-Dateien wurden anschließend mit \texttt{flatten\_jsons.py}
+in ein flaches, tabellenbasiertes Format überführt. 
+Während die ursprünglichen JSON-Strukturen sowohl menschen- als auch maschinenlesbar
+angelegt waren, wurde das Format nun in eine einheitliche, analysierbare
+Datenstruktur überführt, die sich für statistische Auswertungen und Visualisierungen
+eignet.
+
+\paragraph{Ergebnis}
+Nach Abschluss der Bereinigung standen 234 konsistente 
+strukturierte Datensätze zur Verfügung. Diese bilden die Grundlage für die
+nachfolgende statistische Analyse. Die zentrale Datenbasis umfasst vereinheitlichte
+Material-, Energie- und Länderschreibweisen sowie geprüfte Indikatorwerte, wodurch
+eine zuverlässige quantitative Auswertung der Umweltwirkungen ermöglicht wird.
