@@ -1,0 +1,144 @@
+\chapter{Explorative Modellentwicklung und experimentelle Evaluation}
+\label{sec:exp_models}
+
+Dieses Kapitel beschreibt die Wahl des Regressionsmodells. 
+Im Mittelpunkt steht die
+explorative Entwicklung und experimentelle Erprobung verschiedener
+Modellvarianten, aus denen das in Abschnitt~\ref{sec:regression_co2}
+eingesetzte Hauptmodell für die CO$_2$-Äquivalente sowie die übrigen
+Indikatoren abgeleitet wurde.
+
+Die Modellentwicklung erfolgte iterativ und datengetrieben: Unterschiedliche
+Feature-Sets, verschiedene PCA-Varianten sowie alternative lineare
+Schätzer wurden ausprobiert und anhand einheitlicher Gütemaße bewertet.
+Ziel ist es nachvollziehbar zu machen,
+welche Kombinationen sich in der Praxis als robust erwiesen haben und welche
+Ansätze verworfen wurden.
+
+\section{Experimentelle Fragestellungen}
+\label{sec:exp_questions}
+
+Ausgehend von der Zielsetzung, mit möglichst wenigen und robust
+erfassbaren Merkmalen brauchbare Vorhersagen zu erhalten, leiten sich
+für die explorative Modellentwicklung insbesondere folgende
+Fragestellungen ab:
+
+\begin{enumerate}
+  \item \textbf{Beitrag der Materialinformationen:}
+        Verbessert sich die Vorhersagegüte gegenüber einem Modell,
+        das nur Gewicht und Stromverbrauch nutzt, wenn zusätzlich
+        Materialinformationen einbezogen werden?
+  \item \textbf{Rohmaterialien vs.\ Material-PCA:}
+        Ist es günstiger, die zahlreichen Materialspalten direkt zu
+        verwenden, oder führt eine vorgelagerte PCA des Materialblocks
+        zu stabileren und interpretierbareren Modellen?
+  \item \textbf{Wahl des Regressionsverfahrens:}
+        Unterscheiden sich klassische OLS-Schätzer und
+        Gradientenverfahren (\texttt{SGDRegressor}) hinsichtlich
+        Stabilität und erzielbarer Gütemaße bei den vorhandenen
+        PEP-Daten?
+\end{enumerate}
+
+Die nachfolgenden Abschnitte stellen die dafür durchgeführten
+Experimente vor und leiten aus den beobachteten Unterschieden
+einfache Heuristiken für die weitere Modellierung ab.
+
+
+\section{Vergleich der Feature-Sets}
+\label{sec:exp_feature_sets}
+
+Als erster Schritt der experimentellen Modellentwicklung wurde untersucht,
+welchen Beitrag unterschiedliche Eingangsmerkmale zur Vorhersage von
+\emph{Climate change (total)} leisten. Grundlage sind hierbei
+$n = 173$ PEPs, für die Gesamtgewicht, Stromverbrauch
+und die CO$_2$-Äquivalente vollständig vorliegen.
+
+Verglichen wurden drei Feature-Sets, jeweils in einem linearen
+Regressionsmodell auf der Transformationsskala
+$\log(1+\text{CO2}_\text{total})$:
+
+\begin{itemize}
+  \item \textbf{Basis:} nur Gewicht und Stromverbrauch.
+  \item \textbf{Basis + Rohmaterialien:} zusätzlich alle ausgewählten
+        Materialien als separate Regressoren.
+  \item \textbf{Basis + Rohmaterialien mit Minimalvorkommen:}
+        Materialien, die in mehr als 10 PEPs vorkommen, als separate Regressoren.
+  \item \textbf{Basis + PCA-Materialien:} statt der Rohmaterialspalten
+        werden $k$ Hauptkomponenten aus einer PCA auf dem Materialblock
+        verwendet (Varianzschwelle 90\,\%).
+\end{itemize}
+
+Für alle drei Varianten wurden dieselben Train/Test-Splits verwendet,
+so dass die Gütemaße direkt vergleichbar sind. Tabelle~\ref{tab:reg_exp_feature_sets}
+zeigt die erzielten Ergebnisse.
+
+\begin{table}[h]
+  \centering
+  \caption{Vergleich verschiedener Feature-Sets für den Indikator
+           \emph{Climate change (total)} auf der Skala
+           $\log(1+\text{CO2}_\text{total})$.}
+  \label{tab:reg_exp_feature_sets}
+  \begin{tabular}{lccc}
+    \toprule
+    Modellvariante                     & $R^2_{\text{Train}}$ & $R^2_{\text{Test}}$ & RMSE\textsubscript{Test} \\
+    \midrule
+    Basis (Gewicht, Strom)             & 0.817 & 0.770 & 1.904 \\
+    Basis + Rohmaterialien             & 0.904 & 0.567 & 2.140 \\
+    Basis + Rohmaterialien ($n >=10$)  & 0.842 & 0.832 & 1.152 \\
+    Basis + PCA-Materialien ($n >=10$) & 0.890 & 0.882 & 1.095 \\
+    PCA auf alle Variablen             & 0.822 & 0.738 & 1.579 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Das Basismodell aus Gewicht und Stromverbrauch erklärt bereits einen
+großen Anteil der Varianz der CO$_2$-Äquivalente. Die Erweiterung um
+Rohmaterialanteile erhöht zwar das Trainings-$R^2$ deutlich, bringt
+aber auf dem Testdatensatz keinen Mehrwert und verschlechtert $R^2_{\text{Test}}$ und den
+RMSE\textsubscript{Test} leicht. Dies ist ein Hinweis auf Überanpassung durch die vielen,
+teilweise korrelierten Materialvariablen.
+
+Deutlich besser schneidet das Modell mit einem Minimalvorkommen an Materialien ab.
+$R^2_{\text{Test}}$ ist hier durchscnittlich deutlich höher als im Basismodell.
+
+Auffällig ist, dass die Variante \emph{PCA auf alle Variablen}
+deutlich schlechter abschneidet als die material-spezifische PCA.
+Eine PCA über alle Variablen scheint die starken
+Basiseffekte von Gewicht und Strom mit den vielen, teils verrauschten
+Materialvariablen zu vermischen und damit genau diese klaren Zusammenhänge
+abzuschwächen. 
+
+Die PCA-Variante mit Material-Hauptkomponenten erreicht das höchste Test-$R^2$ und 
+einen deutlich geringeren Test-RMSE als die
+anderen Modelle. Die Materialinformationen tragen also erkennbar
+zur Vorhersage bei, müssen dafür aber in verdichteter Form (PCA) in das
+Modell eingehen. Auf Basis dieser Experimente wurde das
+„Basis + PCA-Materialien“-Feature-Set als Ausgangspunkt für die weitere
+Modellentwicklung und den späteren SGD-Regressionsansatz gewählt.
+
+
+\section{Vergleich der Regressionsverfahren}
+\label{sec:exp_regressionsverfahren}
+
+Die im vorherigen Abschnitt beschriebenen Experimente zum Vergleich der
+Feature-Sets wurden für den Indikator \emph{Climate change (total)} zunächst
+mit einer klassischen linearen Regression auf Basis der der \texttt{LinearRegression} aus
+\texttt{scikit-learn} nachgebildet und in eine Pipeline mit
+\texttt{StandardScaler}, optionaler PCA und Train/Test-Aufteilung eingebettet.
+
+Im nächsten Schritt wurde das lineare Modell anschließend mit \texttt{SGDRegressor}
+implementiert. Dieser schätzt dieselbe lineare Funktion wie
+\texttt{LinearRegression}, optimiert die Parameter jedoch iterativ mittels
+stochastischem Gradientenabstieg über mehrere Epochen. 
+
+Bei festem Feature-Set
+(Gewicht, Stromverbrauch, PCA-Materialkomponenten) lieferten
+\texttt{LinearRegression} und \texttt{SGDRegressor} über mehrere äußere
+Train/Test-Wiederholungen nahezu identische $R^2$- und RMSE-Werte.
+Die Wahl des Regressors war damit deutlich weniger bedeutend als der
+Einfluss von Feature-Set, Ausreißerbehandlung und Zielindikator.
+
+Für die weiteren Analysen wurde das \texttt{SGDRegressor} Modell verwendet,
+da es sich über die wiederholten äußeren Train/Test-Splits hinweg als minimal robuster
+und konstanter erwies, was vor allem auf die integrierte Regularisierung und die
+iterative Schätzung zurückzuführen ist.

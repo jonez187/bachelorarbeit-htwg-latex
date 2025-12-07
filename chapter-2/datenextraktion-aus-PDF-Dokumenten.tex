@@ -1,5 +1,5 @@
 \section{Datenextraktion aus PDF-Dokumenten}
-Da die PEP-Ecopassport-Umweltdaten ausschließlich in PDF-Dateien veröffentlicht werden, 
+Da die PEP\--Ecopassport\--Umweltdaten ausschließlich in PDF\--Dateien veröffentlicht werden, 
 besteht der erste Schritt darin, die Informationen zu extrahieren, um sie 
 für die quantitative Analyse in ein
 einheitlich strukturiertes und maschinenlesbares Format zu bringen. 
@@ -51,6 +51,7 @@ allgemein verbindlichen Standards für die Strukturierung solcher Informationen 
 
 
 \subsection{Herausforerungen bei der automatisierten Extraktion}
+\label{subsec:pdf_challenges}
 
 Die Rekonstruktion des Textflusses und der semantischen Einheiten 
 aus den Positionen einzelner Zeichen ist komplex:
@@ -113,29 +114,23 @@ mit dem Ziel sie anschließend weiter zu analysieren.
 
 
 \paragraph{Klassische Verfahren (regelbasierte Parser)}
-Regelbasierte PDF-Parsing-Methoden arbeiten mit
+Regelbasierte PDF\--Parsing\--Methoden arbeiten mit
 fest definierten Regeln und benötigen kein Training. 
 Sie lassen sich schnell einsetzen, da sie ohne domänenspezifische Daten auskommen. \cite{Adhikari2025}
 Mehrere weit verbereutete Softwarebibliotheken implementieren regelbasierte Parser, 
 darunter \emph{pdfplumber}, \emph{pypdfium2} und \emph{pypdf}.
 Da die Arbeit von Selg auf \emph{pdfplumber} aufbaut, wird diese Bibliothek näher besprochen. \cite{Selg2025}
+
 Sie ist vollständig in Python implementiert und baut auf der weit verbreiteten Bibliothek \emph{pdfminer.six} auf.
 Das Werkzeug wurde speziell für die Text- und Tabellenextraktion aus PDF-Dokumenten entwickelt und gilt als eine
 der benutzerfreundlichsten Lösungen im Python-Ökosystem. \cite{Adhikari2025}
 
-\emph{pdfplumber} konvertiert beim Einlesen einer PDF-Datei 
-deren Inhalt in ein analysierbares Python-Objekt, das sämtliche Seiteninformationen
-wie Text, Linien, Rechtecke und Bilder enthält. Jede Seite wird dabei als Sammlung 
-geometrischer Objekte behandelt, deren Koordinaten und Stilattribute 
-(z.\,B.\ Schriftart, Farbe, Position) präzise erfasst sind. \cite{Yang2025} 
-Diese Informationen werden über Objektlisten verfügbar gemacht. 
-Für die Erkennung und Extraktion von Tabellen nutzt das Tool einfache visuelle Heuristiken: 
-Standardmäßig werden horizontale und vertikale Linien
-einer Seite als potenzielle Zellgrenzen interpretiert.  \cite{Yang2025}
-Über Parameter wie \texttt{table\_settings} oder \texttt{snap\_tolerance} lässt sich die 
-Erkennung an unterschiedliche Layouts anpassen. 
-So können beispielsweise die Toleranzen für Linienabstände verändert werden, 
-um verschobene Spalten oder leere Zellen zu korrigieren. \cite{Yang2025}
+\emph{pdfplumber} ist ein Python-Werkzeug, das PDF-Dateien so einliest, dass Text und einfache
+grafische Elemente jeder Seite als Python-Objekte vorliegen. Jede Seite wird dabei als Sammlung
+von Textfragmenten, Linien, Rechtecken und Bildern mit ihren Positionen beschrieben. \cite{Yang2025}
+Für die Tabellenerkennung nutzt \emph{pdfplumber} vor allem sichtbare horizontale und vertikale
+Linien als potenzielle Zellgrenzen. Über Optionen lässt sich diese
+Heuristik an unterschiedliche Layouts anpassen. \cite{Yang2025} 
 
 Der regelbasierte Ansatz von \emph{pdfplumber} führt bei klar strukturierten, 
 editierbaren PDF-Dokumenten zu guten Ergebnissen. 
@@ -174,20 +169,19 @@ Diese Systeme kombinieren visuelle Merkmale, Textinformationen und
 semantische Modelle, um Dokumente mit anspruchsvoller Struktur automatisch 
 zu analysieren und in maschinenlesbare Formate zu überführen.
 
+TODO: GROBID Doku suchen
+
 Für diese Arbeit wird \emph{Docling} näher betrachtet, da es ein vollständig 
 offenes, lokal ausführbares Toolkit darstellt, das eine vollständige 
 End-to-End-Pipeline für Layout-Analyse, Strukturerkennung und Tabellensegmentierung bereitstellt. 
 Es integriert moderne Deep-Learning-Modelle, berücksichtigt gleichzeitig geometrische Informationen und 
-und lässt sich einfach in eine Python Pipeline einbauen.  
-\cite{Auer2024}
+und lässt sich einfach in eine Python Pipeline einbauen. \cite{Auer2024}
 
 Es wurde mit dem Ziel entwickelt, PDF-Dokumente und andere Formate in eine maschinell verarbeitbare, 
 strukturierte Repräsentation zu überführen. 
 Im Gegensatz zu Werkzeugen wie \emph{pdfplumber}, die auf geometrischen Heuristiken basieren, 
 kombiniert \emph{Docling} klassische Parsing-Verfahren mit 
 tiefen neuronalen Modellen für Layout- und Strukturerkennung. \cite{Auer2024}
-Das Toolkit ist vollständig in Python implementiert und modular aufgebaut. 
-Die lokale Ausführbarkeit macht es insbesondere für den Einsatz in sensiblen Datenumgebungen geeignet. \cite{Auer2025}
 
 Technisch basiert \emph{Docling} auf einer linearen Verarbeitungs-Pipeline, 
 die mehrere spezialisierte Komponenten kombiniert. 
@@ -196,7 +190,7 @@ werden für jede Seite Bitmap-Abbilder erzeugt,
 auf denen KI-Modelle für Layout- und Strukturerkennung ausgeführt werden. \cite{Auer2024}
 Das zugrunde liegende Layout-Analysemodell \emph{DocLayNet} identifiziert auf 
 Basis eines trainierten Objektdetektors verschiedene 
-Seitenelemente und deren Begrenzungsrahmen als Absätze, Überschriften, Listen, Abbildungen oder Tabellen.  \cite{Auer2024}
+Seitenelemente und deren Begrenzungsrahmen als Absätze, Überschriften, Listen, Abbildungen oder Tabellen. \cite{Auer2024}
 Diese visuellen Einheiten werden mit den extrahierten Text-Tokens verknüpft und zu 
 konsistenten Dokumentstrukturen zusammengeführt. 
 Für erkannte Tabellenobjekte kommt anschließend das Vision-Transformer-Modell \emph{TableFormer} 
@@ -205,7 +199,7 @@ einer Tabelle rekonstruiert und die Zellen semantisch klassifiziert (z.\,B.\ Kop
 Für gescannte oder bildbasierte Dokumente steht optional eine OCR-Komponente auf Basis von \emph{EasyOCR} 
 zur Verfügung. \cite{Auer2025}
 
-Nach Abschluss aller Erkennungsschritte werden die Ergebnisse zu einem vollständigen 
+Nach Abschluss aller Erkennungs\-schritte werden die Ergebnisse zu einem vollständigen 
 \emph{DoclingDocument} zusammengeführt.
 \emph{DoclingDocument} ist eine vereinheitlichte
 interne Repräsentation, die sämtliche Inhalte eines Dokuments (Text, Tabellen, Bilder, Layoutinformationen,
@@ -217,7 +211,7 @@ Im Post-Processing ergänzt ein sprachsensitives Modell weitere Merkmale wie die
 der Lesereihenfolge, die automatische Spracherkennung und die 
 Extraktion zentraler Metadaten (Titel, Autoren, Referenzen). \cite{Auer2024}
 
-Durch diese Architektur adressiert \emph{Docling} mehrere der in Abschnitt~2.3 
+Durch diese Architektur adressiert \emph{Docling} mehrere der in \ref{subsec:pdf_challenges}
 beschriebenen Extraktionsprobleme, die klassische Tools nur unzureichend lösen können. 
 Es rekonstruiert eine konsistente Lesereihenfolge auch bei mehrspaltigen Layouts, 
 erkennt logische Dokumentstrukturen und kann Tabellen semantisch 
@@ -228,13 +222,9 @@ und dienen als Grundlage für weiterführende
 Analysen oder Datenpipelines, etwa zur Wissensextraktion, 
 semantischen Suche oder automatisierten Inhaltsklassifikation. \cite{Auer2024}
 
-Im Vergleich zu klassischen, regelbasierten Parsern wie \emph{pdfplumber} kombiniert \emph{Docling} geometrische und visuelle Merkmale mit semantischem Verständnis. 
-Dadurch ermöglicht es eine qualitativ hochwertige, KI-gestützte Dokumentenkonvertierung, die sowohl schnelle 
-als auch stabile Ergebnisse liefert und für komplexe Dokumente wie PEP-Ecopassports einen erheblichen Qualitätsgewinn in der Extraktion bietet. \cite{Auer2024}
-
 Tabelle~\ref{tab:extraktion_vergleich} fasst die Extraktionsfähigkeiten der beiden Ansätze zusammen. 
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \caption{Vergleich der Extraktionsfähigkeiten von \textit{pdfplumber} und \textit{Docling}}
 \label{tab:extraktion_vergleich}
@@ -267,7 +257,7 @@ Für weiterführende Analysen ist daher ein fest definiertes, maschinenlesbares 
 das alle relevanten Inhalte in klar benannten Feldern abbildet. 
 
 Das in dieser Arbeit verwendete textbasierte Austauschformat \emph{JavaScript Object Notation (JSON)} 
-hat sich als De-facto-Standard für den strukturierten Datenaustausch etabliert und ist sowohl für Menschen gut lesbar 
+hat sich als Standard für den strukturierten Datenaustausch etabliert und ist sowohl für Menschen lesbar 
 als auch für Maschinen leicht zu verarbeiten \cite{Pezoa2016}. 
 Obwohl es historisch aus der JavaScript-Syntax hervorgegangen ist, wird JSON sprachunabhängig in nahezu allen modernen 
 Programmiersprachen eingesetzt \cite{Pezoa2016}. 
@@ -282,18 +272,17 @@ Materialkompositionen und Energieverbrauchsmodellen und lässt sich nahtlos in n
 Damit bildet JSON die Grundlage für eine standardisierte und reproduzierbare Datenanalyse.
 
 
-\subsection{Informationsextraktion Markdown/Text -> JSON (TODO ???)}
+\subsection{Informationsextraktion Markdown/Text -> JSON}
+! TODO: Kapitel benennen ! 
 
 Die Informationsextraktion \emph{(Information Extraction, IE)} dient dazu,
-aus unstrukturierten Texten gezielt Informationen zu gewinnen
-und diese in strukturierter Form bereitzustellen. \cite{Grishman2015}
-Im Kontext dieser Arbeit beschreibt IE den Prozess, aus den mit \emph{pdfplumber} oder
-\emph{Docling} gewonnenen Textdaten die relevanten PEP-Inhalte (z.\,B.\ Umweltindikatoren, Materialien und Metadaten) 
-in eine vorgefertigte JSON-Struktur zu überführen. 
-Grundsätzlich lassen sich zwei methodische Ansätze unterscheiden: klassische, regel- oder modellbasierte 
-Pipeline-Systeme und moderne, auf großen Sprachmodellen (LLMs) basierende Verfahren.
+aus unstrukturierten Texten, wie die Markdown Dateien in dieser Arbeit, gezielt Informationen zu gewinnen
+und diese in eine strukturierte Form, wie JSON, zu bringen \cite{Grishman2015}.
+Grundsätzlich lassen sich zwei methodische Ansätze unterscheiden: 
+(1) klassische, regel- oder modellbasierte 
+Pipeline-Systeme und (2) moderne, auf großen Sprachmodellen (LLMs) basierende Verfahren.
 
-\paragraph{Regelbasierte Pipeline-Ansätze}
+\paragraph{Regelbasierte Ansätze}
 Traditionelle IE-Systeme folgen einer mehrstufigen Verarbeitungspipeline. 
 Typischerweise werden dabei in aufeinanderfolgenden Schritten benannte Entitäten erkannt, syntaktische Strukturen analysiert,
 Koreferenzen aufgelöst und schließlich Relationen zwischen Entitäten extrahiert. 
@@ -329,4 +318,4 @@ interpretieren und direkt in das definierte JSON-Schema überführen können.
 Allerdings erfordern sie eine Validierung der Modellantworten, da geringere 
 Transparenz und vereinzelte Fehlinterpretationen möglich sind.
 Da diese Arbeit auf eine quantitative Analyse der PEP-Ecopassport PDFs abzielt, wird trotzdem
-ein LLM für die Extraktion und Überführung in das harmonisierte JSON-Zielformat eingesetzt
+ein LLM für die Extraktion und Überführung in das harmonisierte JSON-Zielformat eingesetzt.

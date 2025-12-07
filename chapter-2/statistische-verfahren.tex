@@ -16,7 +16,6 @@ Die deskriptive und explorative Statistik bilden die Grundlage der quantitativen
 Beide dienen der Zusammenfassung, Beschreibung und Visualisierung von Datensätzen, 
 um zentrale Merkmale einer Verteilung zu charakterisieren und potenzielle Muster oder Auffälligkeiten zu erkennen. \cite{Fisher2009}
 Der Schwerpunkt liegt nicht auf Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten. \cite{Dimić2019}
-In dieser Arbeit werden die Verfahren auf aus PEP~Ecopassports extrahierte Kennwerte angewendet. 
 
 \paragraph{Deskriptive Statistik}
 Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung
@@ -61,7 +60,7 @@ Prüfung von Verteilungsannahmen. \cite{Marshall2010}
 
 \paragraph{Boxplots}
 Boxplots visualisieren Median ($Q_2$), Quartile ($Q_1$, $Q_3$) und potenzielle Ausreißer.
-Die sogenannten \emph{Whisker} markieren üblicherweise den Bereich bis zum 1{,}5-fachen Interquartilsabstand; 
+Die sogenannten \emph{Whisker} markieren üblicherweise den Bereich bis zum 1{,}5-fachen Interquartilsabstand. 
 Werte außerhalb gelten als potenzielle Ausreißer. \cite{Marshall2010} 
 Diese Darstellungsform ermöglicht die Beurteilung von Streuung, Schiefe und Extremwerten
 und eignet sich für den Vergleich mehrerer Merkmale. \cite{Kaur2018}
@@ -157,12 +156,16 @@ auf Basis der zuvor berechneten Hauptkomponenten durchgeführt.
 
 Die lineare Regression dient in dieser Arbeit als methodische Grundlage zur 
 Modellierung der Umweltwirkungen von Produkten auf Basis quantitativer Einflussgrößen. 
-Ziel ist es, Zusammenhänge zwischen erklärenden Variablen wie \emph{Produktgewicht}, \emph{Materialzusammensetzung}, \emph{Stromverbrauch} und \emph{verwendetem Energiemix}
-und den resultierenden \emph{Umweltindikatoren} zu quantifizieren und zur Abschätzung unbekannter Werte nutzbar zu machen.
+Ziel ist es, Zusammenhänge zwischen erklärenden Variablen wie \emph{Produktgewicht}, 
+\emph{Materialzusammensetzung}, \emph{Stromverbrauch} und \emph{verwendetem Energiemix}
+und den resultierenden \emph{Umweltindikatoren} zu quantifizieren und zur Abschätzung unbekannter 
+Werte nutzbar zu machen.
 
 \paragraph{Modellstruktur}
-Das Regressionsmodell beschreibt den linearen Zusammenhang zwischen einer abhängigen Variable \( y \) (z.\,B.\ einem Umweltindikator)
-und mehreren unabhängigen Variablen \( x_1, x_2, \dots, x_k \) (z.\,B.\ Gewicht, Stromverbrauch, Materialanteile):
+Das Regressionsmodell beschreibt den linearen Zusammenhang zwischen einer abhängigen Variable 
+\( y \) (z.\,B.\ einem Umweltindikator)
+und mehreren unabhängigen Variablen 
+\( x_1, x_2, \dots, x_k \) (z.\,B.\ Gewicht, Stromverbrauch, Materialanteile):
 \[
 y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k + \varepsilon.
 \]

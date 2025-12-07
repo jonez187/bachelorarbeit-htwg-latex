@@ -52,6 +52,8 @@
 \RequirePackage[table]{xcolor}
 \RequirePackage{longtable}
 
+\setlength{\headheight}{14pt}
+
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 \lstset{framextopmargin=50pt}
 
@@ -92,11 +94,10 @@
 \RequirePackage{caption}
 \RequirePackage{subcaption} 
 \sisetup{
-  detect-weight,
-  table-format=2.2,
-  group-separator={,},
-  input-decimal-markers=.,
-  table-number-alignment=center
+  exponent-mode       = scientific,
+  round-mode          = figures,
+  round-precision     = 3,
+  group-minimum-digits= 4,
 }
 
 

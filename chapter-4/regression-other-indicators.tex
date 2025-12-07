@@ -1,0 +1,375 @@
+\section{Lineare Regression der anderen Indikatoren}
+\label{sec:reg_other_indicators}
+
+Die für CO$_2$ aufgebaute Regressions-Pipeline wird nun auf 
+weitere Umweltindikatoren angewendet, um zu prüfen, wie gut 
+sich diese mit denselben Produktmerkmalen erklären lassen.
+
+\subsection{Regression des Indikators Acidification}
+\label{sec:reg_acidification}
+
+Neben den CO$_2$-Äquivalenten wurde das lineare Regressionsmodell auch auf den
+Indikator \emph{Acidification} angewendet. Die Zielvariable ist dabei der
+log-transformierte Gesamtwert des Indikators
+$\text{log\_acid} = \log(1 + \text{acidification}_\text{total})$.
+Es konnten 177 PEPs benutzt werden. 
+Tabelle~\ref{tab:reg_acidification} fasst die Testleistung zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der Regression für den Indikator
+           \emph{Acidification} (Zielvariable auf der Skala $\log(1+\text{acidification})$)
+           über $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:reg_acidification}
+  \begin{tabular}{lcc}
+    \toprule
+    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$           & $0.800 \pm 0.158$ & $0.923$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $0.975 \pm 0.281$ & $0.640$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Im Mittel erklärt das Modell damit rund 80\,\% der Varianz der
+log-transformierten Acidification-Werte, bei zugleich moderater Streuung
+über die verschiedenen Train/Test-Aufteilungen. Der beste Lauf erreicht ein
+Test-$R^2$ von 0{,}923 bei einem RMSE von 0{,}640 (jeweils in
+log1p-Einheiten der Zielvariable) und zeigt damit, dass das lineare Modell
+mit Gewicht, Stromverbrauch und Material-PCs auch für diesen Indikator eine
+sehr hohe Vorhersagegüte erreichen kann.
+
+Zur Veranschaulichung zeigt Abbildung~\ref{fig:reg_acidification_scatter}
+für den besten Lauf ein Streudiagramm der vorhergesagten gegenüber den
+tatsächlichen Werten von \texttt{log\_acid}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_acid.png}
+  \caption{Vorhersagte gegenüber tatsächlichen Acidification-Werten
+           (log1p-Skala) für den besten Lauf der Regression.}
+  \label{fig:reg_acidification_scatter}
+\end{figure}
+
+Die meisten Punkte liegen in der Nähe der Diagonalen, insbesondere im
+Bereich mittlerer bis hoher Acidification-Werte, was auf eine gute
+Abbildung des allgemeinen Trends hinweist. Im Bereich sehr kleiner Werte
+($\text{log1p} \approx 0$) ist die Streuung relativ größer, die absoluten
+Fehler bleiben dort jedoch gering. Das Fehlerverhalten von Trainings- und
+Testdaten ist vergleichbar, so dass keine starke Überanpassung erkennbar
+ist. Insgesamt bestätigt die Analyse, dass das aus dem CO$_2$-Fall
+übernommene Modell auch für den Indikator \emph{Acidification} robuste und
+plausible Vorhersagen liefert.
+
+
+
+\subsection{Regression des Indikators Hazardous Waste Disposed}
+\label{sec:reg_hazardous_waste}
+
+Für den Indikator Hazardous Waste Disposed wurden 168 PEP benutzt.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der Regression für den Indikator
+           \emph{Hazardous waste disposed} (Zielvariable auf der Skala
+           $\log(1+\text{hazardous\_waste\_disposed})$) über
+           $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:reg_hazardous_waste}
+  \begin{tabular}{lcc}
+    \toprule
+    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$           & $0.627 \pm 0.343$ & $0.906$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $1.780 \pm 0.622$ & $1.015$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Im Mittel erklärt das Modell rund 63\,\% der Varianz der
+log-transformierten Werte, bei deutlich größerer Streuung der
+Gütemaße als bei \emph{Climate change} oder \emph{Acidification}.
+Der beste Lauf erreicht ein Test-$R^2$ von 0{,}906 bei einem
+RMSE von 1{,}015 (log1p-Einheiten), einzelne Splits fallen jedoch
+deutlich schwächer aus, was auf eine geringere Stabilität der
+Regression hinweist.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_h_w_d.png}
+  \caption{Vorhersagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Hazardous waste disposed} (log1p-Skala) für den besten
+           Lauf der Regression.}
+  \label{fig:reg_hazardous_waste_scatter}
+\end{figure}
+
+Das Streudiagramm zeigt, dass die Punkte insgesamt entlang der
+Diagonalen $y=x$ liegen und der generelle Trend gut erfasst wird.
+Gegenüber den Indikatoren \emph{Climate change} und \emph{Acidification}
+ist der Streubereich jedoch sichtbar größer, insbesondere im mittleren
+Wertebereich. Über- und Unterschätzungen treten in der Schätzung häufiger auf.
+Insgesamt liefert das Modell sinnvolle, aber weniger präzise und
+weniger robuste Vorhersagen als in den Fällen CO$_2$ und Acidification.
+
+
+\subsection{Regression des Indikators Water Use}
+\label{sec:reg_water_use}
+
+Für den Indikator \emph{Water use} wird ebenfalls das lineare
+Regressionsmodell mit Gewicht, Stromverbrauch und Material-PCs
+verwendet. Die Zielvariable ist der log-transformierte Gesamtwert
+$\log(1+\text{water\_use}_\text{total})$.
+Tabelle~\ref{tab:reg_water_use} fasst die Testleistung über
+$R = 100$ äußere Train/Test-Splits zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der Regression für den Indikator
+           \emph{Water use} (Zielvariable auf der Skala
+           $\log(1+\text{water\_use})$) über
+           $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:reg_water_use}
+  \begin{tabular}{lcc}
+    \toprule
+    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$           & $0.603 \pm 0.588$ & $0.872$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $2.196 \pm 0.753$ & $1.431$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Im Mittel erklärt das Modell damit rund 60\,\% der Varianz der
+log-transformierten Water-use-Werte, allerdings mit einer sehr hohen
+Streuung zwischen den einzelnen Train/Test-Aufteilungen. Der beste
+Lauf erreicht ein Test-$R^2$ von 0{,}872 bei einem RMSE von 1{,}431
+(log1p-Einheiten), liegt damit aber klar unter der Güte, die für
+\emph{Climate change} und \emph{Acidification} erreicht wurde.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_water_use.png}
+  \caption{Vorhersagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Water use} (log1p-Skala) für den besten Lauf der Regression.}
+  \label{fig:reg_water_use_scatter}
+\end{figure}
+
+Das Streudiagramm in Abbildung~\ref{fig:reg_water_use_scatter} zeigt, dass die
+meisten der 171 Produkte nahe der Diagonalen $y=x$ liegen und der
+Wasserverbrauch damit insgesamt moderat getroffen wird. Für kleine bis mittlere
+Werte (unter etwa 6 log1p-Einheiten) ist die Streuung relativ groß und es gibt
+sowohl Über- als auch Unterschätzungen. Im Bereich höherer Werte liegen die Werte dagegen 
+enger an der Diagonalen, so dass besonders wasserintensive
+Produkte vergleichsweise zuverlässig vorhergesagt werden.
+Insgesamt ist die Modellgüte für \emph{Water use}
+damit als moderat und deutlich weniger stabil und präzise einzuschätzen
+als für die besser erklärbaren Indikatoren.
+
+
+\subsection{Regression des Indikators Photochemical Ozone Formation (HH)}
+\label{sec:reg_pof_hh}
+
+Für den Indikator \emph{Photochemical ozone formation, human health}
+(\texttt{photochemical\_ozone\_formation\_hh}) wird dasselbe Modell wie in
+Abschnitt~\ref{sec:regression_co2} auf insgesamt $n = 171$ PEPs angewendet.
+Tabelle~\ref{tab:reg_pof_hh} zeigt die Testgüte über
+$R = 100$ äußere Train/Test-Splits.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der Regression für den Indikator
+           \emph{Photochemical ozone formation, human health}
+           (Zielvariable auf der Skala
+           $\log(1+\text{photochemical\_ozone\_formation\_hh})$) über
+           $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:reg_pof_hh}
+  \begin{tabular}{lcc}
+    \toprule
+    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$           & $0.626 \pm 0.182$ & $0.880$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $1.102 \pm 0.211$ & $0.717$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Im Mittel werden damit rund 63\,\% der Varianz der log-transformierten
+Indikatorwerte erklärt. Die Streuung der Testgüte ist deutlich größer als
+bei \emph{Climate change} und \emph{Acidification}, aber ähnlich wie bei
+\emph{Hazardous waste disposed}. Der beste Lauf erreicht ein
+Test-$R^2$ von 0{,}880 bei einem RMSE von 0{,}717 (log1p-Einheiten).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_rof.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Photochemical ozone formation, human health}
+           (log1p-Skala) für den besten Lauf der Regression
+           ($n = 171$ PEPs).}
+  \label{fig:reg_pof_hh_scatter}
+\end{figure}
+
+Das Streudiagramm in Abbildung~\ref{fig:reg_pof_hh_scatter} zeigt, dass für
+sehr kleine Werte (nahe $0$ auf der $\log(1+x)$-Skala) eine relativ hohe
+Streuung vorliegt und der Indikator ungefähr gleich häufig zu hoch wie zu
+niedrig geschätzt wird. Im mittleren Bereich (etwa $0{,}5$ bis $2$
+log1p-Einheiten) liegen die Punkte tendenziell oberhalb der Diagonalen und
+das Modell überschätzt die Werte leicht. Für größere Werte ab ungefähr
+$3$ log1p-Einheiten liegen die Punkte überwiegend unterhalb der Diagonalen,
+so dass hohe Werte eher unterschätzt werden.
+
+
+\subsection{Regression des Indikators Resource Use, Fossils}
+\label{sec:reg_ruf}
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der Regression für den Indikator
+           \emph{Resource Use, Fossils}
+           (Zielvariable auf der Skala
+           $\log(1+\text{photochemical\_ozone\_formation\_hh})$) über
+           $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:reg_ru_f}
+  \begin{tabular}{lcc}
+    \toprule
+    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$           & $0.790 \pm 0.145$ & $0.940$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $1.669 \pm 0.463$ & $0.990$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+Für den Indikator \emph{Resource use, fossils} erreicht das Modell über
+alle im Mittel ein Test-$R^2$ von
+$0{,}790 \pm 0{,}145$ bei einem $\mathrm{RMSE}_{\text{Test}}$ von
+$1{,}669 \pm 0{,}463$ (log1p-Skala). Im besten Lauf werden sogar
+ein Test-$R^2$ von 0{,}940 und ein RMSE von 0{,}990 erreicht. 
+Der fossile Ressourcenverbrauch ähnlich gut geschätzt wie \emph{Acidification}.
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_rof.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Resource Use, fossils}
+           (log1p-Skala) für den besten Lauf der Regression
+           ($n = 171$ PEPs).}
+  \label{fig:reg_resource_use_fossils_scatter}
+\end{figure}
+
+
+Das Streudiagramm in Abbildung~\ref{fig:reg_resource_use_fossils_scatter}
+zeigt, dass die meisten der 171 Produkte dicht entlang der Diagonalen
+$y=x$ liegen. Kleine und mittlere Werte weisen lediglich eine moderate
+Streuung mit geringfügigen Über- und Unterschätzungen auf, während hohe
+Werte besonders gut getroffen werden. Eine deutliche systematische Abweichung
+ist hier nicht erkennbar.
+
+
+\subsection{Regression des Indikators Eutrophication (terrestrial)}
+\label{sec:reg_eutrophication_terr}
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen der Regression für den Indikator
+           \emph{Eutrophication, terrestrial}
+           (Zielvariable auf der Skala
+           $\log(1+\text{photochemical\_ozone\_formation\_hh})$) über
+           $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:reg_eutrophication_t}
+  \begin{tabular}{lcc}
+    \toprule
+    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$           & $0.773 \pm 0.154$ & $0.932$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $1.155 \pm 0.312$ & $0.788$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Für den diesen Indikator wurde das
+Regressionsmodell wie zuvor auf $n = 107$ PEPs angewendet. Über
+$R = 100$ äußere Train/Test-Splits ergibt sich ein mittleres
+Test-$R^2$ von $0{,}773 \pm 0{,}154$ bei einem
+$\mathrm{RMSE}_{\text{Test}}$ von $1{,}155 \pm 0{,}312$
+(log1p-Skala). Im besten Lauf werden ein
+Test-$R^2$ von $0{,}932$ und ein RMSE von $0{,}788$ erreicht und liegen
+damit auf einem ähnlich hohen Niveau wie bei \emph{Resource use,
+fossils}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_et.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Eutrophication (terrestrial)}
+           (log1p-Skala) für den besten Lauf der Regression
+           ($n = 171$ PEPs).}
+  \label{fig:reg_et}
+\end{figure}
+
+Das Streudiagramm in Abbildung~\ref{fig:reg_et}
+zeigt, dass der Großteil der Punkte nahe der Diagonalen $y=x$ liegt.
+Sehr kleine Werte (nahe $\log(1+x)=0$) streuen relativ stark, die
+absoluten Fehler bleiben dort jedoch gering. Im mittleren Bereich um
+2–3 log-Einheiten treten etwas stärkere Über- und Unterschätzungen auf,
+während hohe Eutrophierungswerte ab etwa 4 log-Einheiten überwiegend gut
+getroffen und nur leicht unterschätzt werden.
+
+
+\subsection{Indikatoren mit geringer Modellgüte}
+\label{sec:weak_indicators}
+
+Neben den oben beschriebenen Indikatoren mit moderater bis hoher Modellgüte wurden
+alle weiteren Umweltindikatoren mit derselben Regressionspipeline
+geschätzt. Für einige Zielgrößen bleibt das erreichte
+Test-$R^2$ jedoch deutlich unter 0{,}5, so dass hier nicht von einem
+zuverlässigen Vorhersagemodell gesprochen werden kann. Tabelle~\ref{tab:weak_indicators}
+fasst diese Indikatoren zusammen.
+
+!TODO: Die Tabelle passt Layout technisch noch nicht!
+
+\begin{table}[h]
+  \centering
+  \caption{Indikatoren mit geringer Modellgüte
+           ($R^2_{\text{Test, mean}} < 0{,}5$) in der log1p-Skala
+           der Zielvariablen über
+           $R = 100$ äußere Train/Test-Splits.}
+  \label{tab:weak_indicators}
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{lccc}
+    \toprule
+    Indikator &
+    $R^2_{\text{Test}}$ (Mean $\pm$ Std.) &
+    RMSE\textsubscript{Test} (Mean $\pm$ Std.) & Anzahl analysierter PEPs \\
+    \midrule
+    Eutrophication (freshwater)      & $0.323 \pm 0.276$ & $0.618 \pm 0.137$ & 133\\
+    Eutrophication (marine)          & $0.239 \pm 1.395$ & $1.242 \pm 0.552$ & 107\\
+    Ozone depletion                  & $-0.100 \pm 1.070$ & $0.008 \pm 0.004$ & 170\\
+    Radioactive waste disposed       & $-0.018 \pm 2.604$ & $1.263 \pm 0.445$ & 158\\
+    Resource use (minerals \& metals) & $0.401 \pm 0.311$ & $0.271 \pm 0.057$ & 175\\
+    \bottomrule
+  \end{tabular}
+  }
+\end{table}
+
+
+Als besonders kritisches Beispiel zeigt Abbildung~\ref{fig:reg_ozone_depl_scatter}
+den Indikator \emph{Ozone depletion}. Obwohl die absoluten Fehler aufgrund
+der sehr kleinen Werte gering bleiben, liegen die Werte weit von der
+Diagonalen entfernt und die Streuung ist hoch. Entsprechend ist das
+durchschnittliche Test-$R^2$ sogar leicht negativ. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_od.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Ozone depletion}
+           (log1p-Skala) für den besten Lauf der Regression.}
+  \label{fig:reg_ozone_depl_scatter}
+\end{figure}
+
+Ähnliche Muster zeigen sich bei weiteren Indikatoren. 
+Weitere Streudiagramme für alle hier 
+aufgeführten Indikatoren sind im Anhang~\ref{app:scatter_weak_indicators} dargestellt.
+! TODO: Anhang (?) !

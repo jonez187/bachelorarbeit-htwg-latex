@@ -41,7 +41,7 @@ reduziert.
 Der Indikator \emph{Wasserknappheit} wird aufgrund der hohen Ausfallrate von der Auswertung
 ausgeschlossen, da keine belastbaren statistischen Aussagen getroffen werden können.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/missingness_bar.png}
   \caption{Anteil fehlender Werte pro Umweltindikator (\%, \(N=233\) Produkte).}
@@ -275,20 +275,20 @@ Die Umweltindikatoren bilden die Output-Variablen, auf deren Basis später die
 Heuristik entwickelt wird. Eine deskriptive Betrachtung verdeutlicht bereits die
 Verteilungsstruktur der Daten.
 
-% \paragraph{TODO: Übersetzen, Layout anpassen}
+! TODO: Übersetzen, EINHEITLICH! Layout anpassen !
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \small
-  {\setlength{\tabcolsep}{3pt}%
+  \resizebox{\textwidth}{!}{
   \begin{tabular}{
-    p{5cm}
-    S[table-format=1.2e2]
-    S[table-format=3.2e2]
-    S[table-format=3.2e2]
-    S[table-format=3.2e2]
-    S[table-format=3.2e2]
-    p{2.6cm}
+      p{5cm}
+      S[table-format=1.2e3]
+      S[table-format=1.2e3]
+      S[table-format=1.2e3]
+      S[table-format=1.2e3]
+      S[table-format=1.2e3]
+      p{2.6cm}
   }
   \hline
   \textbf{Indikator (total)} & \textbf{Min} & \textbf{Median} & \textbf{Max} &
@@ -297,7 +297,7 @@ Verteilungsstruktur der Daten.
   Acidification & 0.000017 & 0.4295 & 3650 & 10.31 & 110.78 & kg SO$_2$ eq \\
   Climate change (total) & 0.0031 & 86.75 & 1040000 & 1979.43 & 22740.20 & kg CO$_2$ eq \\
   Eutrophication (freshwater) & 0.000001 & 0.0266 & 236 & 0.314 & 2.624 & kg P eq \\
-  Hazardous waste disposed & 0 & 39.3 & 489000 & 596.69 & 6438.71 & kg \\
+  Hazardous waste disposed & 0.0001 & 39.3 & 489000 & 596.69 & 6438.71 & kg \\
   Ozone depletion & 0 & 0.000007 & 0.192 & 0.000286 & 0.00323 & kg CFC-11 eq \\
   Photochemical ozone formation (HH) & 0.000002 & 0.181 & 1410 & 3.126 & 40.60 & kg C$_2$H$_4$ eq \\
   Resource use (fossils) & 0.0326 & 1620 & 106000000 & 95076 & 1583968.96 & MJ \\
