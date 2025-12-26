@@ -1,4 +1,4 @@
-\chapter{Explorative Modellentwicklung und experimentelle Evaluation}
+\chapter{Explorative Modellentwicklung}
 \label{sec:exp_models}
 
 Dieses Kapitel beschreibt die Wahl des Regressionsmodells. 
@@ -15,33 +15,34 @@ Ziel ist es nachvollziehbar zu machen,
 welche Kombinationen sich in der Praxis als robust erwiesen haben und welche
 Ansätze verworfen wurden.
 
+
 \section{Experimentelle Fragestellungen}
 \label{sec:exp_questions}
 
-Ausgehend von der Zielsetzung, mit möglichst wenigen und robust
-erfassbaren Merkmalen brauchbare Vorhersagen zu erhalten, leiten sich
-für die explorative Modellentwicklung insbesondere folgende
-Fragestellungen ab:
+Ausgehend von der Zielsetzung, mit möglichst wenigen und robust erfassbaren 
+Merkmalen brauchbare Vorhersagen zu erhalten, leiten sich für die explorative 
+Modellentwicklung insbesondere folgende Fragestellungen ab:
 
 \begin{enumerate}
   \item \textbf{Beitrag der Materialinformationen:}
-        Verbessert sich die Vorhersagegüte gegenüber einem Modell,
-        das nur Gewicht und Stromverbrauch nutzt, wenn zusätzlich
-        Materialinformationen einbezogen werden?
+        Verbessert sich die Vorhersagegüte gegenüber einem Modell, 
+        das nur Gewicht und Stromverbrauch nutzt, wenn zusätzlich Materialinformationen 
+        einbezogen werden?
   \item \textbf{Rohmaterialien vs.\ Material-PCA:}
-        Ist es günstiger, die zahlreichen Materialspalten direkt zu
-        verwenden, oder führt eine vorgelagerte PCA des Materialblocks
-        zu stabileren und interpretierbareren Modellen?
-  \item \textbf{Wahl des Regressionsverfahrens:}
-        Unterscheiden sich klassische OLS-Schätzer und
-        Gradientenverfahren (\texttt{SGDRegressor}) hinsichtlich
-        Stabilität und erzielbarer Gütemaße bei den vorhandenen
-        PEP-Daten?
+        Ist es günstiger, die zahlreichen Materialspalten direkt zu verwenden,
+      oder führt eine PCA des Materialblocks zu stabileren Modellen?
+  \item \textbf{Wahl des Regressionsverfahrens und Regularisierung:}
+        Unterscheiden sich OLS, \texttt{Ridge} und \texttt{Lasso} hinsichtlich 
+        Stabilität und erzielbarer Gütemaße bei den vorhandenen PEP-Daten, 
+        insbesondere bei vielen korrelierten Regressoren?
+  \item \textbf{Wahl der Zieltransformation:}
+        Führt eine Log-Transformation (\texttt{log1p}) oder eine Box-Cox-Transformation zu 
+        besserer Vorhersagegüte und plausibleren Residuen?
 \end{enumerate}
 
-Die nachfolgenden Abschnitte stellen die dafür durchgeführten
-Experimente vor und leiten aus den beobachteten Unterschieden
-einfache Heuristiken für die weitere Modellierung ab.
+Die nachfolgenden Abschnitte stellen die dafür durchgeführten Experimente vor und 
+leiten aus den beobachteten Unterschieden einfache Heuristiken für die weitere Modellierung ab.
+
 
 
 \section{Vergleich der Feature-Sets}
@@ -80,13 +81,13 @@ zeigt die erzielten Ergebnisse.
   \label{tab:reg_exp_feature_sets}
   \begin{tabular}{lccc}
     \toprule
-    Modellvariante                     & $R^2_{\text{Train}}$ & $R^2_{\text{Test}}$ & RMSE\textsubscript{Test} \\
+    Modellvariante                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
     \midrule
-    Basis (Gewicht, Strom)             & 0.817 & 0.770 & 1.904 \\
-    Basis + Rohmaterialien             & 0.904 & 0.567 & 2.140 \\
-    Basis + Rohmaterialien ($n >=10$)  & 0.842 & 0.832 & 1.152 \\
-    Basis + PCA-Materialien ($n >=10$) & 0.890 & 0.882 & 1.095 \\
-    PCA auf alle Variablen             & 0.822 & 0.738 & 1.579 \\
+    Basis (Gewicht, Strom)             & 0.817 & \textbf{0.770} & 1.904 \\
+    Basis + Rohmaterialien             & 0.904 & \textbf{0.567} & 2.140 \\
+    Basis + Rohmaterialien ($n >=10$)  & 0.842 & \textbf{0.832} & 1.152 \\
+    Basis + PCA-Materialien ($n >=10$) & 0.887 & \textbf{0.882} & 1.095 \\
+    PCA auf alle Variablen             & 0.822 & \textbf{0.738} & 1.579 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -126,19 +127,39 @@ mit einer klassischen linearen Regression auf Basis der der \texttt{LinearRegres
 \texttt{scikit-learn} nachgebildet und in eine Pipeline mit
 \texttt{StandardScaler}, optionaler PCA und Train/Test-Aufteilung eingebettet.
 
-Im nächsten Schritt wurde das lineare Modell anschließend mit \texttt{SGDRegressor}
-implementiert. Dieser schätzt dieselbe lineare Funktion wie
-\texttt{LinearRegression}, optimiert die Parameter jedoch iterativ mittels
-stochastischem Gradientenabstieg über mehrere Epochen. 
+Im nächsten Schritt wird das lineare Modell anschließend mit 
+\texttt{Ridge} und \texttt{Lasso}
+implementiert,
+die über einen Regularisierungsparameter $\alpha$ die Modellkomplexität steuern und 
+dadurch insbesondere bei vielen, korrelierten Regressoren stabilere Schätzungen 
+liefern können.
 
 Bei festem Feature-Set
 (Gewicht, Stromverbrauch, PCA-Materialkomponenten) lieferten
-\texttt{LinearRegression} und \texttt{SGDRegressor} über mehrere äußere
-Train/Test-Wiederholungen nahezu identische $R^2$- und RMSE-Werte.
-Die Wahl des Regressors war damit deutlich weniger bedeutend als der
-Einfluss von Feature-Set, Ausreißerbehandlung und Zielindikator.
+\texttt{Ridge} und \texttt{Lasso} über mehrere äußere
+Wiederholungen des Experiments ähnliche $R^2$- und RMSE-Werte.
+Beide Verfahren schnitten konstant besser ab als \texttt{LinearRegression}.
+Die Wahl des Regressors war allerdins, wie die Zahlen zur Modellgüte 
+in \ref{tab:vergleich_regressoren} 
+zeigen, damit deutlich weniger bedeutend als der Einfluss des Feature-Sets.
 
-Für die weiteren Analysen wurde das \texttt{SGDRegressor} Modell verwendet,
-da es sich über die wiederholten äußeren Train/Test-Splits hinweg als minimal robuster
-und konstanter erwies, was vor allem auf die integrierte Regularisierung und die
-iterative Schätzung zurückzuführen ist.
+\begin{table}[h]
+  \centering
+  \caption{Vergleich der Regressionsverfahren auf dem festgelegten Feature-Set.}
+  \label{tab:vergleich_regressoren}
+  \begin{tabular}{lccc}
+    \toprule
+    Regressionsverfahren                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
+    \midrule
+    LinearRegression                   & 0.887 & \textbf{0.882} & 77565.84 \\
+    Ridge                              & 0.906 & \textbf{0.896} & 59635.57 \\
+    Lasso                              & 0.906 & \textbf{0.896} & 59636.03 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Für die weiteren Analysen wurde das \texttt{Ridge} Modell verwendet,
+da es sich über mehrere Wiederholungen mit verschiedenen zufälligen 
+Test-/Trainingssplits als minimal robuster und konstanter erwies.
+
+

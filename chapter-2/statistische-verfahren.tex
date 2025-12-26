@@ -40,30 +40,79 @@ Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert d
 In der explorativen Praxis werden zudem log-transformierte Werte betrachtet, 
 um stark asymmetrische Verteilungen zu symmetrisieren und visuell leichter interpretierbar zu machen.\cite{Marshall2010}
 
+\iffalse
 \paragraph{Log-Transformation und methodische Alternativen}
 Wenn eine Verteilung deutlich von einer Normalverteilung abweicht, bestehen drei grundlegende Optionen:
 (i) eine regelbasierte \emph{Ausreißerprüfung} mit dokumentierter Entfernung, \cite{Fisher2009}
 (ii) eine \emph{Log-Transformation} zur Annäherung an Symmetrie und zur besseren Vergleichbarkeit in Visualisierungen \cite{Marshall2010},
 oder (iii) die Anwendung \emph{nicht-parametrischer} Verfahren, die keine Normalverteilung voraussetzen \cite{Fisher2009}.
 Die Entscheidung erfolgt im Rahmen der explorativen Analyse.
+\fi
 
 \subsection{Explorative Datenanalyse und Visualisierungen}
 Die explorative Datenanalyse ergänzt die deskriptive Statistik durch strukturentdeckende Verfahren. 
 Sie dient der visuellen Erkundung und Bewertung von Mustern, Ausreißern oder Zusammenhängen zwischen Variablen, 
 ohne dass zuvor Hypothesen formuliert werden müssen. 
-Zentrale Visualisierungen sind Histogramme und Boxplots. \cite{Kaur2018}
+Zentrale Visualisierungen sind Histogramme, Boxplots und QQ-Plots. \cite{Kaur2018}
 
-\paragraph{Histogramme}
-Histogramme stellen Häufigkeitsverteilungen kontinuierlicher Merkmale über Klassen dar. 
+\emph{Histogramme} stellen Häufigkeitsverteilungen kontinuierlicher Merkmale über Klassen dar. 
 Sie erlauben Rückschlüsse auf Symmetrie, Schiefe und Mehrgipfligkeit und dienen zur
 Prüfung von Verteilungsannahmen. \cite{Marshall2010}
 
-\paragraph{Boxplots}
-Boxplots visualisieren Median ($Q_2$), Quartile ($Q_1$, $Q_3$) und potenzielle Ausreißer.
+\emph{Boxplots} visualisieren Median ($Q_2$), Quartile ($Q_1$, $Q_3$) und potenzielle Ausreißer.
 Die sogenannten \emph{Whisker} markieren üblicherweise den Bereich bis zum 1{,}5-fachen Interquartilsabstand. 
 Werte außerhalb gelten als potenzielle Ausreißer. \cite{Marshall2010} 
 Diese Darstellungsform ermöglicht die Beurteilung von Streuung, Schiefe und Extremwerten
 und eignet sich für den Vergleich mehrerer Merkmale. \cite{Kaur2018}
+
+\emph{QQ-Plots (Quantile-Quantile Plots)} untersuchen grafisch, wie gut ein Datensatz einer bestimmten 
+theoretischen Verteilung folgt \cite{Seltman2018}. 
+In dieser Arbeit werden sie eingesetzt, um zu prüfen, 
+ob ein Datensatz normalverteilt ist. 
+
+\subsection{Mathematische Transformationen}
+Um reale Daten einer Normalverteilung anzunähern und somit die Nutzung parametrischer Tests zu ermöglichen, 
+werden nach \cite{Marshall2010} und \cite{Fisher2009} mathematische Transformationen angewendet.
+Die logarithmische Transformation (Log-Transformation) wird als eine der gängigsten Methoden, um Rechtsschiefe zu korrigieren, 
+erwähnt.
+Da der Logarithmus extrem hohe Werte stärker staucht als kleine Werte, kann die Transformation nach \cite{Marshall2010} den 
+Einfluss von Ausreißern auf das Gesamtergebnis reduzieren.
+Für sehr kleine Werte von $x$ nahe $0$ gilt die Näherung $\log(1+x) \approx x$.
+Kleine Werte werden demnach kaum verändert. 
+
+Neben der festen Log-Transformation kann nach \cite{Atkinson2021} auch die 
+Box-Cox-Transformation verwendet werden, die eine Familie von Potenztransformationen 
+mit dem Parameter $\lambda$ darstellt.
+Für positive Daten ist sie definiert als
+\[
+y^{(\lambda)} =
+\begin{cases}
+\dfrac{y^\lambda - 1}{\lambda}, & \lambda \neq 0, \\
+\log(y), & \lambda = 0.
+\end{cases}
+\]
+Damit ist die Log-Transformation als Spezialfall für $\lambda = 0 $ enthalten.
+Ansonsten gilt $\lambda = 1$ entspricht keiner Transformation und 
+$\lambda = 1/2$ entspricht der Quadratwurzeltransformation.
+Im Unterschied zu $\log(1+x)$ ist die Form der Transformation hier nicht fest vorgegeben, 
+sondern wird über $\lambda$ angepasst.
+Ziel ist es, eine Skala zu finden, auf der sich ein lineares Modell einfacher und mit 
+besser erfüllten Verteilungsannahmen der Fehler beschreiben lässt \cite{Atkinson2021}.
+In Softwarebibliotheken wird der Parameter $\lambda$ datengetrieben bestimmt.
+In Python übernimmt dies beispielsweise die Bibliothek \texttt{scipy}, indem $\lambda$ 
+intern per Maximum-Likelihood geschätzt wird \cite{scipy-boxcox}.
+
+Die Wirkung der Transformationen wird in Abbildung \ref{fig:log_transform_hist} exemplarisch gezeigt.
+Links ist die rechtsschiefe Verteilung auf Originalskala dargestellt, in der Mitte dieselben Werte 
+nach der Transformation $\log(1+x)$ und rechts nach einer Box-Cox-Transformation.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{images/transform_demo_log1p_vs_boxcox_kde.png}
+  \caption{Beispiel einer rechtsschiefen Verteilung vor und nach Transformationen. 
+  Die überlagerte Dichtekurve verdeutlicht die Form der Verteilung.}
+  \label{fig:log_transform_hist}
+\end{figure}
 
 \iffalse
 \subsection{Automatisierung, Reproduzierbarkeit und Datenqualität}
@@ -108,8 +157,8 @@ können grafisch auf wenigen Achsen dargestellt werden. \cite{Abdi2010}
 
 Die PCA beruht darauf, aus einer Menge korrelierter Variablen neue,
 unkorrelierte Variablen (\emph{Hauptkomponenten}) zu erzeugen. Dafür wird die
-Varianz-Kovarianz-Matrix $S$ (bzw.\ die Korrelationsmatrix bei normierten
-Variablen) zerlegt \cite{Maćkiewicz1993}. Die Hauptkomponenten ergeben sich aus den Eigenwerten
+Varianz-Kovarianz-Matrix $S$ zerlegt \cite{Maćkiewicz1993}. 
+Die Hauptkomponenten ergeben sich aus den Eigenwerten
 und Eigenvektoren dieser Matrix. Dazu wird
 \[
   |S - \lambda I| = 0
@@ -122,7 +171,7 @@ entstehen:
   V = A^{\prime} X.
 \]
 \cite{Maćkiewicz1993}
-Die Hauptkomponenten sind orthogonal und damit unkorreliert \cite{Abdi2010}.
+Die Hauptkomponenten sind unkorreliert \cite{Abdi2010}.
 
 \paragraph{Singulärwertzerlegung}
 
@@ -202,6 +251,9 @@ Die Koeffizienten \(\beta_i\) geben an, wie stark sich der Zielindikator \(y\) i
 wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben. 
 Das \emph{Bestimmtheitsmaß} \(R^2\) beschreibt den Anteil der Varianz des Zielindikators, der durch die 
 erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte. \cite{Montgomery2022}
+Der \emph{Root Mean Square Error} (RMSE) misst die durchschnittliche Abweichung zwischen 
+beobachteten und vorhergesagten Werten. Er hat die gleiche Einheit wie die Zielvariable und 
+ist dadurch leicht interpretierbar und ebenfalls ein Indikator für die Modellgüte. \cite{Montgomery2022}
 
 
 \paragraph{Anwendungsrahmen}

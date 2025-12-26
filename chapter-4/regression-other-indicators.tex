@@ -9,106 +9,170 @@ sich diese mit denselben Produktmerkmalen erklären lassen.
 \label{sec:reg_acidification}
 
 Neben den CO$_2$-Äquivalenten wurde das lineare Regressionsmodell auch auf den
-Indikator \emph{Acidification} angewendet. Die Zielvariable ist dabei der
+Indikator \emph{Acidification} angewendet. 
+Es wurden keine Transformation, \texttt{log1p} und 
+eine Box-Cox Transformation verglichen.
+Die beste Testgüte wird mit \texttt{log1p} erreicht, 
+daher wird im Folgenden dieses Modell berichtet.
+Daher wird im Folgenden dieses Modell berichtet.
+Die Zielvariable ist dabei der
 log-transformierte Gesamtwert des Indikators
 $\text{log\_acid} = \log(1 + \text{acidification}_\text{total})$.
 Es konnten 177 PEPs benutzt werden. 
-Tabelle~\ref{tab:reg_acidification} fasst die Testleistung zusammen.
+Tabelle~\ref{tab:reg_acidification} fasst die Testleistung nach Rücktransformation 
+zusammen.
 
 \begin{table}[h]
   \centering
-  \caption{Gütekennzahlen der Regression für den Indikator
-           \emph{Acidification} (Zielvariable auf der Skala $\log(1+\text{acidification})$)
-           über $R = 100$ äußere Train/Test-Splits.}
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Acidification} als Zielvariable).}
   \label{tab:reg_acidification}
-  \begin{tabular}{lcc}
+  \begin{tabular}{lc}
     \toprule
-    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    Größe & Wert (Test) \\
     \midrule
-    $R^2_{\text{Test}}$           & $0.800 \pm 0.158$ & $0.923$ \\
-    $\mathrm{RMSE}_{\text{Test}}$ & $0.975 \pm 0.281$ & $0.640$ \\
+    $R^2_{\text{Test}}$   & $0.845$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $490.87\,\mathrm{kg\ SO_2}$ \\
+    \midrule
+    Median absoluter Fehler & $0.2864\,\mathrm{kg\ SO_2}$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0.9579$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $3.8258$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Im Mittel erklärt das Modell damit rund 80\,\% der Varianz der
-log-transformierten Acidification-Werte, bei zugleich moderater Streuung
-über die verschiedenen Train/Test-Aufteilungen. Der beste Lauf erreicht ein
-Test-$R^2$ von 0{,}923 bei einem RMSE von 0{,}640 (jeweils in
-log1p-Einheiten der Zielvariable) und zeigt damit, dass das lineare Modell
-mit Gewicht, Stromverbrauch und Material-PCs auch für diesen Indikator eine
-sehr hohe Vorhersagegüte erreichen kann.
+
+
+Das Modell erklärt rund $85\%$ der Varianz mit einem RMSE von
+$490{,}87\,\mathrm{kg\ SO_2}$, was auf eine insgesamt gute 
+Vorhersagegüte für den Indikator \texttt{Acidification} hinweist.
+Die robusten Fehlermaße ergänzen dieses Bild.
+Der Median des absoluten Fehlers liegt weit unter dem RMSE 
+bei etwa $0{,}29\,\mathrm{kg\ SO_2}$ und beschreibt damit die typische 
+Abweichung eines repräsentativen Produkts.
+Der Median der relativen Fehler ($\mathrm{MdARE} \approx 0{,}96$) zeigt, dass die 
+Vorhersage für ein typisches Produkt häufig in der Größenordnung des wahren Werts liegt.
+Der deutlich größere Mittelwert der relativen Fehler ($\mathrm{MARE} \approx 3{,}83$) weist 
+zugleich auf eine stark schiefe Fehlerverteilung mit einzelnen sehr großen 
+relativen Abweichungen hin.
+Dies ist insbesondere bei kleinen Zielwerten plausibel, 
+da dort bereits kleine absolute Fehler zu sehr großen relativen Fehlern führen.
+Insgesamt ist das Modell damit für \texttt{Acidification} gut geeignet, 
+einzelne Produkte können jedoch deutlich schlechter getroffen werden.
+
 
 Zur Veranschaulichung zeigt Abbildung~\ref{fig:reg_acidification_scatter}
-für den besten Lauf ein Streudiagramm der vorhergesagten gegenüber den
-tatsächlichen Werten von \texttt{log\_acid}.
+ein Streudiagramm der vorhergesagten gegenüber den
+tatsächlichen Werten von \texttt{Acidification}.
 
-\begin{figure}[H]
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_acid.png}
-  \caption{Vorhersagte gegenüber tatsächlichen Acidification-Werten
-           (log1p-Skala) für den besten Lauf der Regression.}
+  \caption{Vorhergesagte gegenüber tatsächlichen Acidification-Werten. Beide Achsen sind 
+  logarithmisch skaliert.}
   \label{fig:reg_acidification_scatter}
 \end{figure}
 
 Die meisten Punkte liegen in der Nähe der Diagonalen, insbesondere im
-Bereich mittlerer bis hoher Acidification-Werte, was auf eine gute
-Abbildung des allgemeinen Trends hinweist. Im Bereich sehr kleiner Werte
-($\text{log1p} \approx 0$) ist die Streuung relativ größer, die absoluten
+Bereich mittlerer Acidification-Werte, was auf eine gute
+Abbildung des allgemeinen Trends hinweist. Hohe Werte werden tendenziell
+leicht unterschätzt und im Bereich von $10^1$ gibt es ein Cluster, der überschätzt wird.
+Im Bereich der sehr kleinen Werte schätzt das Modell relativ betrachtet sehr ungenau, 
+die absoluten
 Fehler bleiben dort jedoch gering. Das Fehlerverhalten von Trainings- und
 Testdaten ist vergleichbar, so dass keine starke Überanpassung erkennbar
 ist. Insgesamt bestätigt die Analyse, dass das aus dem CO$_2$-Fall
 übernommene Modell auch für den Indikator \emph{Acidification} robuste und
 plausible Vorhersagen liefert.
 
+Abbildung~\ref{fig:regression_acid_qq} zeigt
+einen QQ Plot der Schätzfehler des Modells im Vergleich zu einer Normalverteilung.
+Wie beim CO$_2$ Indikator zeigen sich auf der Originalskala der Fehler 
+typischerweise sehr starke Abweichungen, die eine schwache Interpretationsebene bereitstellen.
+Daher wird hier nur die Transformationsskala dargestellt.
+Im mittleren Bereich liegen die Punkte nah an der Referenzgeraden, was darauf hindeutet,
+dass der Großteil der Fehler näherungsweise normalverteilt ist.
+In den Randbereichen sind jedoch Abweichungen erkennbar.
+Insgesamt ist die Fehlerverteilung im Zentrum gut durch eine Normalverteilung approximierbar,
+während die Extrembereiche durch schwerere Verteilungsschwänze
+geprägt sind.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_acid_qq.png}
+  \caption{QQ Plot der Schätzfehler des Acidification Modells (Test- und Trainingsset).}
+  \label{fig:regression_acid_qq}
+\end{figure}
+
 
 
 \subsection{Regression des Indikators Hazardous Waste Disposed}
 \label{sec:reg_hazardous_waste}
 
-Für den Indikator Hazardous Waste Disposed wurden 168 PEP benutzt.
+Für den Indikator \emph{Hazardous waste disposed} konnten $n = 168$ PEPs verwendet werden.
+Es wurden keine Transformation, \texttt{log1p} und eine Box Cox Transformation verglichen.
+Die beste Testgüte wird mit \texttt{log1p} erreicht, daher wird im Folgenden dieses Modell betrachtet.
+Die Zielvariable ist damit
+$\text{log\_hwd} = \log(1 + \text{hazardous\_waste\_disposed}_{\text{total}})$.
+Tabelle~\ref{tab:reg_hazardous_waste} fasst die Testleistung nach Rücktransformation zusammen.
 
 \begin{table}[h]
   \centering
-  \caption{Gütekennzahlen der Regression für den Indikator
-           \emph{Hazardous waste disposed} (Zielvariable auf der Skala
-           $\log(1+\text{hazardous\_waste\_disposed})$) über
-           $R = 100$ äußere Train/Test-Splits.}
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Hazardous waste disposed} als Zielvariable).}
   \label{tab:reg_hazardous_waste}
-  \begin{tabular}{lcc}
+  \begin{tabular}{lc}
     \toprule
-    Größe & Mittelwert (Test) $\pm$ Std. & Bester Lauf (Test) \\
+    Größe & Wert (Test) \\
     \midrule
-    $R^2_{\text{Test}}$           & $0.627 \pm 0.343$ & $0.906$ \\
-    $\mathrm{RMSE}_{\text{Test}}$ & $1.780 \pm 0.622$ & $1.015$ \\
+    $R^2_{\text{Test}}$   & $0.813$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $18489.74\,\mathrm{kg}$ \\
+    \midrule
+    Median absoluter Fehler & $176.7890\,\mathrm{kg}$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0.6639$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $13.1431$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Im Mittel erklärt das Modell rund 63\,\% der Varianz der
-log-transformierten Werte, bei deutlich größerer Streuung der
-Gütemaße als bei \emph{Climate change} oder \emph{Acidification}.
-Der beste Lauf erreicht ein Test-$R^2$ von 0{,}906 bei einem
-RMSE von 1{,}015 (log1p-Einheiten), einzelne Splits fallen jedoch
-deutlich schwächer aus, was auf eine geringere Stabilität der
-Regression hinweist.
+Das Modell erklärt damit rund $81\%$ der Varianz auf dem Testset.
+Der RMSE auf Originalskala ist vergleichsweise hoch, was auf einzelne sehr große Abweichungen hinweist.
+Der Median des absoluten Fehlers liegt bei etwa $177\,\mathrm{kg}$ und somit erneut weit unter dem RMSE.
+Der Median der relativen Fehler ($\mathrm{MdARE}\approx 66\%$) zeigt eine vergleichsweise gut Genauigkeit.
+Der deutlich größere Mittelwert der relativen Fehler ($\mathrm{MARE}\approx 1314\%$) weist allerdings 
+auf eine stark schiefe Fehlerverteilung mit wenigen extremen relativen Abweichungen hin, 
+was insbesondere bei sehr kleinen Zielwerten plausibel ist.
 
-\begin{figure}[H]
+Zur Veranschaulichung zeigt Abbildung~\ref{fig:reg_hazardous_waste_scatter}
+ein Streudiagramm der vorhergesagten gegenüber den tatsächlichen Werten von \texttt{Hazardous waste disposed}.
+Beide Achsen sind logarithmisch skaliert.
+
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_h_w_d.png}
-  \caption{Vorhersagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Hazardous waste disposed} (log1p-Skala) für den besten
-           Lauf der Regression.}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Hazardous waste disposed}. Beide Achsen sind logarithmisch skaliert.}
   \label{fig:reg_hazardous_waste_scatter}
 \end{figure}
 
-Das Streudiagramm zeigt, dass die Punkte insgesamt entlang der
-Diagonalen $y=x$ liegen und der generelle Trend gut erfasst wird.
-Gegenüber den Indikatoren \emph{Climate change} und \emph{Acidification}
-ist der Streubereich jedoch sichtbar größer, insbesondere im mittleren
-Wertebereich. Über- und Unterschätzungen treten in der Schätzung häufiger auf.
-Insgesamt liefert das Modell sinnvolle, aber weniger präzise und
-weniger robuste Vorhersagen als in den Fällen CO$_2$ und Acidification.
+Die meisten Punkte liegen im mittleren bis hohen Wertebereich nahe 
+der Diagonalen, so dass der generelle Trend erfasst wird.
+Bei sehr kleinen tatsächlichen Werten ist die Streuung deutlich größer 
+und es treten ausgeprägte Über und Unterschätzungen auf.
+Dies passt zu den hohen relativen Fehlern, da bereits kleine absolute 
+Abweichungen dort sehr große relative Fehler erzeugen.
+
+Abbildung~\ref{fig:reg_hazardous_waste_qq} zeigt den QQ Plot der Residuen auf der Transformationsskala.
+Im Zentrum folgen die Punkte der Referenzgeraden weitgehend, in den Randbereichen sind Abweichungen sichtbar.
+Damit ist die Normalitätsannahme näherungsweise im mittleren Bereich erfüllt, 
+während einzelne große Fehler auf schwerere Verteilungsschwänze hinweisen.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_hwd_qq_new.png}
+  \caption{QQ Plot der Schätzfehler des \emph{Hazardous waste disposed} Modells auf der Transformationsskala.}
+  \label{fig:reg_hazardous_waste_qq}
+\end{figure}
 
 
 \subsection{Regression des Indikators Water Use}
@@ -154,7 +218,7 @@ Lauf erreicht ein Test-$R^2$ von 0{,}872 bei einem RMSE von 1{,}431
 \end{figure}
 
 Das Streudiagramm in Abbildung~\ref{fig:reg_water_use_scatter} zeigt, dass die
-meisten der 171 Produkte nahe der Diagonalen $y=x$ liegen und der
+meisten Schätzungen in der Nähe der Diagonalen $y=x$ liegen und der
 Wasserverbrauch damit insgesamt moderat getroffen wird. Für kleine bis mittlere
 Werte (unter etwa 6 log1p-Einheiten) ist die Streuung relativ groß und es gibt
 sowohl Über- als auch Unterschätzungen. Im Bereich höherer Werte liegen die Werte dagegen 
@@ -245,7 +309,7 @@ alle im Mittel ein Test-$R^2$ von
 $0{,}790 \pm 0{,}145$ bei einem $\mathrm{RMSE}_{\text{Test}}$ von
 $1{,}669 \pm 0{,}463$ (log1p-Skala). Im besten Lauf werden sogar
 ein Test-$R^2$ von 0{,}940 und ein RMSE von 0{,}990 erreicht. 
-Der fossile Ressourcenverbrauch ähnlich gut geschätzt wie \emph{Acidification}.
+Der fossile Ressourcenverbrauch wird ähnlich gut geschätzt wie \emph{Acidification}.
 
 
 \begin{figure}[H]
@@ -260,7 +324,7 @@ Der fossile Ressourcenverbrauch ähnlich gut geschätzt wie \emph{Acidification}
 
 
 Das Streudiagramm in Abbildung~\ref{fig:reg_resource_use_fossils_scatter}
-zeigt, dass die meisten der 171 Produkte dicht entlang der Diagonalen
+zeigt, dass die meisten Schätzungen dicht an der Diagonalen
 $y=x$ liegen. Kleine und mittlere Werte weisen lediglich eine moderate
 Streuung mit geringfügigen Über- und Unterschätzungen auf, während hohe
 Werte besonders gut getroffen werden. Eine deutliche systematische Abweichung
@@ -313,17 +377,17 @@ zeigt, dass der Großteil der Punkte nahe der Diagonalen $y=x$ liegt.
 Sehr kleine Werte (nahe $\log(1+x)=0$) streuen relativ stark, die
 absoluten Fehler bleiben dort jedoch gering. Im mittleren Bereich um
 2–3 log-Einheiten treten etwas stärkere Über- und Unterschätzungen auf,
-während hohe Eutrophierungswerte ab etwa 4 log-Einheiten überwiegend gut
-getroffen und nur leicht unterschätzt werden.
+während hohe Eutrophierungswerte ab etwa 4 log-Einheiten leicht unterschätzt werden.
 
 
 \subsection{Indikatoren mit geringer Modellgüte}
 \label{sec:weak_indicators}
 
-Neben den oben beschriebenen Indikatoren mit moderater bis hoher Modellgüte wurden
+Neben den oben be\-schriebenen In\-di\-ka\-toren mit moderater 
+bis hoher Modell\-güte wurden
 alle weiteren Umweltindikatoren mit derselben Regressionspipeline
 geschätzt. Für einige Zielgrößen bleibt das erreichte
-Test-$R^2$ jedoch deutlich unter 0{,}5, so dass hier nicht von einem
+Test-$R^2$ jedoch unter 0{,}5, so dass hier nicht von einem
 zuverlässigen Vorhersagemodell gesprochen werden kann. Tabelle~\ref{tab:weak_indicators}
 fasst diese Indikatoren zusammen.
 
@@ -372,4 +436,5 @@ durchschnittliche Test-$R^2$ sogar leicht negativ.
 Ähnliche Muster zeigen sich bei weiteren Indikatoren. 
 Weitere Streudiagramme für alle hier 
 aufgeführten Indikatoren sind im Anhang~\ref{app:scatter_weak_indicators} dargestellt.
-! TODO: Anhang (?) !
+
+! TODO: Evtl. Anhang für weitere Scatter (und Rohdaten?) !

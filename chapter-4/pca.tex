@@ -1,14 +1,42 @@
 \section{PCA der Materialien}
 
-Zur explorativen Analyse der hochdimensionalen Materialdaten wurde eine Hauptkomponentenanalyse
+Zur explorativen Analyse und zur Reduktion der Di\-men\-sionali\-tät der 
+Material\-daten wurde eine Haupt\-komponenten\-analyse
 (PCA) durchgeführt.
 Benutzt wurde die Python-Bibliothekt \emph{scikit-learn} \cite{scikit-learn-pca}.
-Die Eingangsdaten wurden zuvor pro Spalte z-standardisiert (Mittelwert 0, Varianz 1).
 Alle Materialien, die in einem Produkt nicht vorkommen, wurden als 0 interpretiert.
+
+Vor der PCA wurden die Verteilungen der Materialanteile 
+grafisch untersucht. Die Histogramme, von welchen die 3 häufigsten Materialien 
+in Abbildung~\ref{fig:material_hists}
+dargestellt sind,
+zeigen, dass die Daten teilweise multimodal verteilt sind und viele Beobachtungen 
+im Bereich sehr kleiner Anteile liegen. Eine einfache z-Standardisierung 
+würde diese Verteilungen nicht normalisieren und wäre durch 
+Ausreißer stark beeinflusst.
+
+TODO: Titel hinzufügen
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/material_histograms.png}
+  \caption{Beispiele für Histogramme ausgewählter Materialanteile 
+           (nur PEPs mit positivem Anteil).}
+  \label{fig:material_hists}
+\end{figure}
+
+Für die PCA auf dem Materialblock wird daher der \emph{scikit-learn RobustScaler} 
+verwendet, der jede Materialsäule um den Median zentriert und durch die 
+Interquartilsbreite skaliert. Dadurch werden die typischen Wertebereiche 
+der Materialien stärker gewichtet und einzelne extreme PEPs sind weniger 
+dominant. Die PCA selbst wird anschließend auf der robust skalierten 
+Materialmatrix durchgeführt.
+
+
+\subsection{Ergebnis der PCA}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=1.0\textwidth]{images/pca_kum.png}
+  \includegraphics[width=1.0\textwidth]{images/pca_kum_robust.png}
   \caption{Kumulative erklärte Varianz}
   \label{fig:pca_kum}
 \end{figure}
@@ -42,49 +70,64 @@ des Musters aber weniger wichtig als die absolute Größe.
 Auf Basis der Top-Loadings pro Komponente lassen sich die ersten
 Hauptkomponenten wie folgt interpretieren:
 \begin{itemize}
-  \item \textbf{PC$_1$ (Stahl- / Kältemittel):}
-        Die erste Komponente wird vor allem durch \texttt{Stahl} und
-        \texttt{Kältemittel} auf der einen, sowie \texttt{Epoxid},
-        \texttt{Papier/Karton} und \texttt{PC} auf der anderen Seite geprägt.
-        Sie trennt damit Produkte mit hohem Stahl- und Kältemittelanteil
-        (z.\,B.\ schwere, kältemittelführende Geräte) von Produkten, bei denen
-        Epoxidharze, Papier und PC-Kunststoffe dominieren (typisch für Leiterplatten,
-        Gehäuse und Verpackungs- bzw.\ Isolationsanteile).
-        Auffällig ist, dass das Kältemittel trotz eines im Mittel sehr geringen
-        Massenanteils von nur rund 0{,}35\,\% mit einem hohen Loading in der ersten
-        Hauptkomponente erscheint. Das deutet darauf hin, dass Kältemittel zwar nur
-        in wenigen Produkten vorkommt, dort aber gemeinsam mit hohen
-        Stahlanteilen auftritt und damit ein charakteristisches Materialmuster
-        schwerer, kältemittelführender Geräte beschreibt.
-  \item \textbf{PC$_2$ und PC$_3$ (elektromechanische Baugruppen):}
-        In PC$_2$ und PC$_3$ treten insbesondere \texttt{Hartlot},
-        \texttt{Elektrische Motoren}, \texttt{Kältemittel} und \texttt{PE-HD}
-        mit hohen Loadings auf, teilweise kontrastiert mit Aluminium,
-        Messing oder PU. Diese Komponenten beschreiben Varianten
-        von Produkten mit ausgeprägten elektromechanischen Baugruppen (Motoren,
-        Lötverbindungen, Hochdichte-PE) gegenüber eher metallischen oder mit
-        PU-Schaum ausgestatteten Ausführungen.
-  \item \textbf{PC$_4$ und PC$_5$ (Oberflächen und Gehäusematerialien):}
-        PC$_4$ wird vor allem durch \texttt{Farbe}, \texttt{Aluminium},
-        \texttt{PVC} und \texttt{PU} geprägt, PC$_5$ durch \texttt{Messing},
-        \texttt{Quartz} und \texttt{Polyester}. Diese Komponenten fassen
-        unterschiedliche Typen von Oberflächen- und Gehäusematerialien zusammen,
-        also Kombinationen aus metallischen Gehäusen, Beschichtungen, Kunststoffen
-        und Füllstoffen.
-  \item \textbf{Weitere Komponenten (PC$_6$\,ff.):}
-        Die nachfolgenden Hauptkomponenten erfassen zunehmend speziellere
-        Materialkombinationen, etwa unterschiedliche Kunststoffmischungen, 
-        Isolations- und Dichtmaterialien, sowie
-        Elektronik-spezifische Stoffe und Flammschutzmittel. Viele dieser
-        Komponenten unterscheiden damit Varianten von elektronischen Produkten mit
-        hohem Leiterplatten- und Metallanteil von Geräten mit höheren Anteilen an
-        klassischen Struktur- und Dämmmaterialien.
+  \item \textbf{PC$_1$ (\emph{PS (Polystyrol)} dominiert):}
+        Die erste Hauptkomponente wird fast vollständig durch
+        \texttt{ps} geprägt, mit deutlich kleineren Beiträgen von
+        \texttt{pe} und anderen Kunststoffen. Sie unterscheidet
+        damit Produkte mit hohen Polystyrolanteilen
+        (zum Beispiel bestimmte Gehäuse oder Schäume) von Produkten,
+        bei denen PS kaum eine Rolle spielt.
+
+  \item \textbf{PC$_2$ (\emph{PE (Polyethylen)} versus übrige Kunststoffe):}
+        PC$_2$ hat ein sehr hohes positives Loading auf
+        \texttt{pe}, während \texttt{other\_plastics} und
+        \texttt{ps} eher negativ geladen sind. Diese Komponente
+        beschreibt also eine Achse zwischen Produkten mit ausgeprägtem
+        PE-Anteil und solchen, bei denen eher andere Kunststoffe oder
+        unspezifische Kunststoffmischungen dominieren.
+
+  \item \textbf{PC$_3$ (unspezifische Kunststoffmischungen):}
+        In PC$_3$ dominiert \texttt{other\_plastics}, ergänzt durch
+        positive Beiträge von \texttt{pe}, \texttt{electronics}
+        und \texttt{other} sowie leicht negative Beiträge von
+        \texttt{pvc}. Diese Komponente steht für Produkte mit einem
+        breiten Kunststoffmix und einem gewissen Elektronikanteil,
+        die sich von eher PVC-basierten Gehäusen abgrenzen.
+
+  \item \textbf{PC$_4$ (Leiterplatten und Elektronik versus PVC):}
+        PC$_4$ wird stark durch \texttt{pcba (Leiterplattenbestückung)} geprägt, mit
+        zusätzlichen positiven Beiträgen von Glas und Elektronik
+        und einem deutlich negativen Loading auf \texttt{pvc}.
+        Sie trennt damit Produkte mit hohem Leiterplatten und
+        Elektronikanteil von solchen, bei denen PVC-Gehäusematerial
+        im Vordergrund steht.
+
+  \item \textbf{PC$_5$ (Elektronikschwerpunkt):}
+        In PC$_5$ weist \texttt{electronics} das höchste positive
+        Loading auf, während \texttt{pvc}, \texttt{pcba},
+        \texttt{pe} und \texttt{other\_plastics} überwiegend negativ
+        geladen sind. Diese Komponente beschreibt Produkte, bei denen
+        Elektronikbauteile in der Masse dominieren und klassische
+        Gehäuse und Strukturkunststoffe relativ weniger Gewicht haben.
+
 \end{itemize}
 
-Insgesamt zeigt die Material-PCA, dass sich der Materialmix der betrachteten PEPs auf
-wenige wiederkehrende Muster zurückführen lässt: Kombinationen aus Strukturmetallen
-(z.\,B.\ Stahl, Aluminium), Kunststoffen, Elektronik- und Leiterplattenmaterialien
-sowie Isolations- und Spezialstoffen. Diese Hauptkomponenten werden in der folgenden
-Regression als verdichtete Materialindikatoren verwendet, um den Einfluss des
-Materialmixes auf die CO$_2$-Äquivalente zu erfassen, ohne alle stark korrelierten
-Materialspalten einzeln berücksichtigen zu müssen.
+Bemerkenswert ist, dass klassische Strukturmetalle wie Stahl oder Kupfer
+sowie Materialien wie Papier bzw.\ Karton in den ersten
+Hauptkomponenten nicht mit den höchsten Ladungen auftreten. Das liegt daran,
+dass ihre Anteile über viele PEPs hinweg vergleichsweise stabil sind und
+dadurch weniger zur Gesamtvarianz beitragen als die stark schwankenden
+Kunststoff und Elektronikanteile. Ihr Einfluss verteilt sich daher auf
+spätere Hauptkomponenten mit geringerem Varianzanteil.
+
+Insgesamt zeigt die Material-PCA, dass sich die sehr unterschiedlichen
+Materiallisten auf wenige dominante Muster verdichten lassen. Die ersten
+drei Komponenten beschreiben vor allem verschiedene Kunststoffmischungen
+(PS, PE und andere Kunststoffe), während PC$_4$ und
+PC$_5$ Leiterplatten und Elektronik gegenüber PVC lastigen Gehäusen
+abgrenzen. Diese fünf Hauptkomponenten erklären zusammen knapp
+90\,\% der Varianz im Materialblock und bilden damit die prägendsten
+Materialmuster der PEPs ab. In den folgenden
+Regressionsmodellen werden sie als kompakte Materialindikatoren genutzt,
+um den Einfluss des Materialmixes auf die Umweltindikatoren zu erfassen,
+ohne alle einzelnen Materialspalten separat berücksichtigen zu müssen.
