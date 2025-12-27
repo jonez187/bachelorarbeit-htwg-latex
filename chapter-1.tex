@@ -1,4 +1,86 @@
 \chapter{Einleitung}
 
-Hier Einleitung schreiben
+\section{Motivation und Relevanz}
+\label{sec:motiation}
 
+Gebäudeautomation und IoT Komponenten gewinnen stark an Bedeutung.
+Sensoren, Gateways und Steuerungen werden in Gebäuden zunehmend eingesetzt, um
+Energieflüsse zu optimieren, Komfort zu erhöhen und Prozesse zu automatisieren.
+Mit der wachsenden Verbreitung solcher Geräte steigt auch ihr Anteil an
+Materialverbrauch, Energieeinsatz und Abfallaufkommen entlang des Lebenszyklus.
+
+Parallel dazu rücken Nachhaltigkeit, Berichtspflichten und vergleichbare
+Umweltkennzahlen stärker in den Fokus. Unternehmen benötigen für Entscheidungen in
+Entwicklung, Beschaffung und Portfolio Management zunehmend belastbare Indikatoren,
+um ökologische Hotspots zu identifizieren und Maßnahmen zu priorisieren.
+In frühen Phasen sind jedoch oft nur wenige Produktmerkmale bekannt, während eine
+vollständige Ökobilanz typischerweise aufwendig ist und detaillierte Annahmen
+erfordert.
+
+PEP Ecopassport Dokumente liefern standardisierte Umweltindikatoren und stellen
+damit eine wertvolle Datenquelle dar. In der Praxis sind sie jedoch heterogen
+aufgebaut und liegen meist als PDF vor, wodurch eine automatisierte Auswertung und
+eine konsistente Vergleichbarkeit erschwert werden. Damit entsteht eine Lücke
+zwischen dem Bedarf an schnellen, nachvollziehbaren Umweltabschätzungen und der
+tatsächlich verfügbaren Datengrundlage.
+
+Diese Arbeit adressiert diese Lücke durch eine automatisierte Pipeline zur
+Extraktion strukturierter Umweltindikatoren aus PEP Dokumenten und durch eine
+Modellierung, die prüft, wie weit sich zentrale Indikatoren mit wenigen, leicht
+messbaren Produktmerkmalen approximieren lassen. Ziel ist dabei eine robuste
+heuristische Einordnung und nicht die exakte Rekonstruktion einzelner PEP Werte.
+
+
+\section{Zielsetzung der Arbeit}
+\label{sec:intro_objectives}
+
+Ziel dieser Arbeit ist der Aufbau einer durchgängigen Pipeline, die PEP
+Ecopassport Dokumente automatisiert verarbeitet und daraus eine strukturierte,
+analysierbare Datenbasis erzeugt. Auf der Datenbasis aufbauend soll untersucht werden, in
+welchem Umfang zentrale Umweltindikatoren aus wenigen, grundsätzlich auch ohne
+PEP verfügbaren Produktmerkmalen erklärbar sind.
+
+Im Zentrum steht also die Entwicklung eines Modells für
+eine robuste heuristische Abschätzung, die als Orientierung und Einordnung
+der Umweltauswirkungen von Smart-Home Produkten dienen kann. 
+Ergänzend werden die Grenzen dieser
+Herangehensweise sowie die Rolle von Datenheterogenität und Ausreißern
+herausgearbeitet.
+
+
+\section{Wissenschaftliche Fragestellung}
+\label{sec:intro_research_questions}
+
+Aus der Zielsetzung ergeben sich die folgenden Fragestellungen.
+
+\begin{enumerate}
+  \item Wie lassen sich heterogene PEP PDF Dokumente automatisiert in ein
+        konsistentes, maschinenlesbares Datenformat überführen, das
+        Umweltindikatoren, Materialinformationen und technische Merkmale
+        vergleichbar macht?
+  \item In welchem Ausmaß lassen sich die in PEPs ausgewiesenen
+        Umweltindikatoren. insbesondere \texttt{Climate change (total)}. durch
+        wenige Produktmerkmale wie Gewicht, Stromverbrauch und verdichtete
+        Materialinformationen erklären.
+  \item Welche Indikatoren sind mit dem gewählten Feature Set gut vorhersagbar
+        und bei welchen Indikatoren bleibt die Modellgüte gering. Welche
+        Fehlerstrukturen treten auf und welche Konsequenzen ergeben sich daraus
+        für Modellannahmen und Interpretation.
+\end{enumerate}
+
+
+
+\section{Aufbau der Arbeit}
+\label{sec:intro_structure}
+
+Die Arbeit gliedert sich wie folgt. Kapitel~\ref{chapter:methodik} beschreibt
+die Datenbasis und den Aufbau der Pipeline. von der PEP Recherche über Parsing,
+LLM gestützte Extraktion bis zur Normalisierung und Bereinigung der Daten.
+Kapitel~\ref{sec:regression_co2} untersucht anhand des Indikators
+\texttt{Climate change (total)} die Regressionspipeline, Transformationen und
+Fehlerdiagnostik. Kapitel~\ref{sec:reg_other_indicators} überträgt die
+Herangehensweise auf weitere Umweltindikatoren und vergleicht die
+resultierende Modellgüte. Kapitel~\ref{sec:discussion} ordnet die Ergebnisse
+ein, diskutiert Unsicherheiten sowie Grenzen der Daten und Modelle. Das Fazit
+fasst die zentralen Erkenntnisse zusammen und skizziert praktikable
+Weiterentwicklungen.

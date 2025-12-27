@@ -118,6 +118,7 @@
   bibliography = {References},
 }
 
+\RequirePackage{placeins}
 
 \ifxetex
     %% If the document is compiled with XeLaTeX, we load the

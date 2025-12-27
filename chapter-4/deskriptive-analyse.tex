@@ -145,8 +145,9 @@ Entsprechende Auswertungen werden mit erhöhter Unsicherheit und geringerer Date
 Eine weitere Variable, die die Umweltindikatoren stark beeinflussen, und damit in der zu entwickelnden Heuristik eine Rolle spielen muss,
 ist die Zusammensetzung des Produkts aus den verschiedenen Materialien.
 In der Tabelle \ref{tab:materials_threecols} wird aufgeführt, aus welchen Materialien das 
-durchschnittliche PEP-Produkt aus dem Datensatz besteht (Mittelwert).
-\emph{N} gibt die Anzahl der Produkte an, in welchen das aufgeführte Material auftaucht. 
+durchschnittliche PEP-Produkt aus dem Datensatz besteht.
+Dazu wurde der Mittelwert jedes Materials über alle Produkte hinweg berechnet.
+\emph{N} gibt zusätzlich die Anzahl der Produkte an, in welchen das aufgeführte Material auftaucht. 
 Wie in den meisten PEP-Dokumenten werden die modularen Materialien in
 die Gruppen \emph{Metalle, Plastik und andere} gegliedert. 
 
@@ -275,9 +276,9 @@ Die Umweltindikatoren bilden die Output-Variablen, auf deren Basis später die
 Heuristik entwickelt wird. Eine deskriptive Betrachtung verdeutlicht bereits die
 Verteilungsstruktur der Daten.
 
-! TODO: Übersetzen, EINHEITLICH! Layout anpassen !
+% TODO: Übersetzen, einheitlich, Layout anpassen.
 
-\begin{table}[H]
+\begin{table}[tbp]
   \centering
   \small
   \resizebox{\textwidth}{!}{
@@ -295,29 +296,51 @@ Verteilungsstruktur der Daten.
   \textbf{IQR} & \textbf{Mean} & \textbf{Einheit} \\
   \hline
   Acidification & 0.000017 & 0.4295 & 3650 & 10.31 & 110.78 & kg SO$_2$ eq \\
-  Climate change (total) & 0.0031 & 86.75 & 1040000 & 1979.43 & 22740.20 & kg CO$_2$ eq \\
-  Eutrophication (freshwater) & 0.000001 & 0.0266 & 236 & 0.314 & 2.624 & kg P eq \\
+  Climate change (total) & 0.0031 & 86.75 & 1040000 & 1979.43 & 22740.20 &
+  kg CO$_2$ eq \\
+  Eutrophication (freshwater) & 0.000001 & 0.0266 & 236 & 0.314 & 2.624 &
+  kg P eq \\
   Hazardous waste disposed & 0.0001 & 39.3 & 489000 & 596.69 & 6438.71 & kg \\
-  Ozone depletion & 0 & 0.000007 & 0.192 & 0.000286 & 0.00323 & kg CFC-11 eq \\
-  Photochemical ozone formation (HH) & 0.000002 & 0.181 & 1410 & 3.126 & 40.60 & kg C$_2$H$_4$ eq \\
-  Resource use (fossils) & 0.0326 & 1620 & 106000000 & 95076 & 1583968.96 & MJ \\
-  Resource use (minerals/metals) & 0.000001 & 0.00392 & 5.87 & 0.0495 & 0.2279 & kg Sb eq \\
+  Ozone depletion & 0 & 0.000007 & 0.192 & 0.000286 & 0.00323 &
+  kg CFC-11 eq \\
+  Photochemical ozone formation (HH) & 0.000002 & 0.181 & 1410 & 3.126 &
+  40.60 & kg C$_2$H$_4$ eq \\
+  Resource use (fossils) & 0.0326 & 1620 & 106000000 & 95076 & 1583968.96 &
+  MJ \\
+  Resource use (minerals/metals) & 0.000001 & 0.00392 & 5.87 & 0.0495 &
+  0.2279 & kg Sb eq \\
   Radioactive waste disposed & 0 & 0.0656 & 3260 & 0.5381 & 22.56 & kg \\
   Water use & 0.000093 & 42.4 & 5770000 & 383.85 & 98836.32 & m$^{3}$ \\
   \hline
   \end{tabular}}
-  \caption{Gesamtindikatoren (Total) mit Median/IQR und Mittelwert
+  \caption{Gesamtindikatoren (Total) mit Median, IQR und Mittelwert
   (gerundet auf zwei Nachkommastellen).}
   \label{tab:desc_indicators}
 \end{table}
 
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\linewidth]{images/boxplots_indicators.png}
+  \caption{Boxplots der Total-Werte je Indikator auf logarithmischer Skala.}
+  \label{fig:boxplot_indicators}
+\end{figure}
+
 Wie Tabelle~\ref{tab:desc_indicators} zeigt, weisen alle Umweltindikatoren deutlich
-\textbf{rechtsschiefe Verteilungen} auf: Der Mittelwert liegt bei allen Größen um ein
-Vielfaches über dem Median. Besonders ausgeprägt ist dies bei \emph{Climate change
-(total)}, \emph{Resource use (fossils)}, \emph{Water use} und \emph{Hazardous waste
-disposed}, bei denen einzelne Extremwerte die Verteilungen dominieren. Dagegen zeigen
-\emph{Ozone depletion} und \emph{Resource use (minerals/metals)} geringere Abstände
-zwischen Mittelwert und Median, bleiben aber ebenfalls schief. Insgesamt bestätigt
-sich eine stark heterogene Datenbasis mit wenigen Produkten, die sehr hohe
-Umweltwirkungen aufweisen.
+rechtsschiefe Verteilungen auf. Der Mittelwert liegt bei allen Größen um ein
+Vielfaches über dem Median. Besonders ausgeprägt ist die Schiefe bei
+\emph{Climate change (total)}, \emph{Resource use (fossils)}, \emph{Water use} und
+\emph{Hazardous waste disposed}.
+
+Abbildung~\ref{fig:boxplot_indicators} ergänzt diese Zusammenfassung, indem sie die
+Streuung innerhalb der Indikatoren sowie die Ausreißerstruktur in Boxplots auf
+logarithmischer Skala zeigt. Bei den meisten Indikatoren erstreckt sich die
+Verteilung über mehrere Größenordnungen und es treten zahlreiche Ausreißer nach
+oben auf. Die logarithmische
+Skala komprimiert große Werte, weshalb extrem hohe Beobachtungen im Plot
+optisch näher zusammenrücken, obwohl sie sich in den Originaleinheiten stark
+unterscheiden.
+
+Insgesamt bestätigt sich eine heterogene, rechtsschiefe Datenbasis mit
+einigen Produkten, die sehr hohe Umweltwirkungen aufweisen.
+
 

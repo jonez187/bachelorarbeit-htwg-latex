@@ -1,0 +1,98 @@
+\chapter{Fazit}
+\label{sec:fazit}
+
+\section{Zusammenfassung des methodischen Vorgehens}
+
+Diese Arbeit untersucht, inwieweit Umweltindikatoren aus PEP-Ecopassport-
+Dokumenten mit wenigen, allgemein verfügbaren Produktmerkmalen geschätzt werden
+können, um auch für Produkte ohne PEP eine belastbare Größenordnungsabschätzung
+zu ermöglichen. Im Fokus steht damit nicht die exakte Rekonstruktion einer
+vollständigen Ökobilanz, sondern ein kompakter, praxistauglicher Ansatz zur
+Vorhersage zentraler Umweltwirkungen.
+
+Als Grundlage wurde eine automatisierte Pipeline aufgebaut, die heterogene
+PEP-PDFs in ein einheitliches, maschinenlesbares Datenformat überführt. Die
+Pipeline umfasst die Recherche und Erfassung relevanter PEPs, das PDF-Parsing
+und die strukturierte Extraktion von Produkt- und Umweltinformationen sowie die
+Normalisierung und Validierung der resultierenden Daten. Dadurch entsteht eine
+Datenbasis, die eine systematische statistische Auswertung der
+Indikatoren und die anschließende Modellierung ermöglicht.
+
+Für die statistische Auswertung werden ausschließlich Datensätze berücksichtigt,
+bei denen die jeweiligen Zielindikatoren sowie zentrale Produktmerkmale
+(z.\,B.\ Gesamtgewicht und Stromverbrauch) plausibel und numerisch verfügbar
+sind. Bereits die deskriptive Analyse zeigt, dass sämtliche Umweltindikatoren
+stark rechtsschief verteilt sind und mehrere Größenordnungen abdecken.
+Einzelne Produkte weisen sehr hohe Werte auf und prägen Mittelwerte und
+RMSE-basierte Kennzahlen überproportional.
+
+Um diese Skaleneffekte zu reduzieren und die Modellierung zu stabilisieren,
+wurden für alle Indikatoren systematisch verschiedene Transformationen der
+Zielvariablen verglichen. Je nach Indikator wurden keine Transformation,
+\texttt{log1p} sowie Box-Cox-Transformationen getestet. In den meisten Fällen
+führte eine logarithmische Transformation zu der besten oder zumindest
+stabilsten Testgüte, während Box-Cox die Ergebnisse teilweise noch leicht
+verbessern konnte. Die endgültig berichteten Fehlermaße werden nach Möglichkeit
+nach Rücktransformation auf der Originalskala angegeben, damit sie in der
+jeweiligen Einheit interpretierbar bleiben.
+
+Als Modellansatz wurde eine lineare Regression mit bewusst kompaktem
+Feature-Set gewählt, um die Zielsetzung der Arbeit zu verfolgen. 
+Als erklärende Variablen dienen das log-transformierte
+Produktgewicht, der log-transformierte, über die Lebensdauer aggregierte
+Stromverbrauch sowie verdichtete Materialinformationen, die über eine PCA aus
+dem Materialblock abgeleitet werden. Dadurch bleibt das Modell auch bei vielen
+Materialspalten handhabbar und nutzt wenige, interpretierbare
+Hauptkomponenten statt viele einzelne Materialinformationen.
+
+Die Modellgüte wird mit einer streng getrennten Train/Test-Auswertung beurteilt.
+Dazu werden die Daten einmalig in Trainings- und Testdaten aufgeteilt und das
+Modell ausschließlich auf den Trainingsdaten angepasst. Hyperparameter, etwa
+bei Ridge oder Lasso, werden über wiederholte innere Train/Valid-Splits im
+Trainingsdatensatz bestimmt. Die abschließende Bewertung erfolgt genau einmal
+auf dem unabhängigen Testset. Als Kennzahlen werden neben $R^2$ und RMSE auch
+robuste Fehlermaße berichtet, insbesondere der Median des absoluten Fehlers
+sowie Median und Mittelwert der relativen absoluten Fehler, um die typische
+Modellleistung trotz Ausreißern nachvollziehbar zu charakterisieren.
+
+\section{Einordnung der Ergebnisse}
+
+Die Ergebnisse der Regressionmodelle zeigen, dass sie als
+\emph{heuristische Abschätzung} zu verstehen sind und nicht als Ersatz für eine
+vollständige Berechnung. Auch bei hoher erklärter Varianz
+können einzelne Produkte deutlich verfehlt werden, insbesondere in Bereichen
+mit sehr kleinen oder sehr großen Zielwerten und bei Nischenprodukten. Die
+Ergebnisse liefern damit keine belastbare Grundlage, um PEP Werte präzise zu
+replizieren oder einzelne Produkte auf Dezimalstellen genau zu vergleichen.
+
+Der Mehrwert liegt vielmehr in der schnellen, datengetriebenen Einordnung von
+Größenordnungen und in der Priorisierung. Das Modell kann beispielsweise
+genutzt werden, um frühe Design und Beschaffungsentscheidungen grob zu
+unterstützen, Produkte oder Varianten hinsichtlich erwarteter Umweltwirkungen
+vorzusortieren, sowie Auffälligkeiten in PEP Angaben zu identifizieren, wenn
+ein ausgewiesener Wert stark von der erwarteten Größenordnung abweicht. Damit
+passt der Ansatz besonders zu Anwendungen, in denen nur wenige Merkmale
+verfügbar sind, aber trotzdem eine erste Orientierung benötigt wird.
+
+
+\section{Ausblick und zukünftiger Forschungsbedarf}
+
+Ein zentraler Entwurfsgedanke war die Beschränkung auf Merkmale, die auch ohne
+PEP typischerweise messbar oder zumindest plausibel abschätzbar sind. Es wäre allerdings
+prinzipiell möglich, zusätzliche erklärende Variablen in das Modell aufzunehmen,
+etwa die verwendete Berechnungsmethode und die verwendete Datenbank. 
+Solche Informationen könnten die Genauigkeit erhöhen,
+würden jedoch die Einfachheit und Übertragbarkeit des Ansatzes verringern, da
+sie für neue Produkte häufig nicht verlässlich oder nicht in standardisierter
+Form vorliegen. Damit stünde eine solche Erweiterung im Spannungsfeld zur
+Zielsetzung, mit einem bewusst kompakten Feature Set robuste, breit nutzbare
+Abschätzungen zu ermöglichen.
+
+Eine naheliegende Erweiterung, die diese Zielsetzung weitgehend erhält, ist
+die Modellierung getrennt nach Produktkategorien. Eine Kategorisierung lässt
+sich meist aus Metadaten oder Produktbeschreibungen ableiten und führt
+gleichzeitig zu homogeneren Teilmengen, in denen sich die Beziehungen zwischen
+Gewicht, Stromverbrauch, Materialmix und Indikatoren stabiler verhalten
+dürften. Dadurch könnte die Vorhersagegüte insbesondere für Indikatoren mit
+mittlerer Stabilität deutlich steigen, ohne dass das Modellkonzept wesentlich 
+komplizierter wird und damit die Zielsetzung verloren geht.

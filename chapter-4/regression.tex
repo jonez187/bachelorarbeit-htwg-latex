@@ -6,8 +6,7 @@ ausgewiesenen Treibhausgasemissionen (\emph{Climate Change, total})
 durch wenige, aus den Dokumenten verfügbare Produktmerkmale erklären lassen,
 die grundsätzlich auch für Produkte ohne PEP messbar sind.
 Im Fokus steht in diesem Kapitel ausschließlich der CO$_2$-Indikator und ein
-lineares Regressionsmodell. Weitere Umweltindikatoren und alternative
-Modellklassen werden in späteren Abschnitten betrachtet.
+lineares Regressionsmodell. Weitere Umweltindikatoren werden in späteren Abschnitten betrachtet.
 
 \subsection{Datenbasis und Transformation}
 
@@ -51,6 +50,9 @@ In der log-transformierten Skala hat das Modell die Form
 \]
 wobei $\text{PC\_mat}_j$ die Material-Hauptkomponenten aus der PCA bezeichnen
 und k die Anzahl der verwendeten Komponenten ist.
+Wichtig ist, dass die Materialanteile selbst nicht log transformiert werden.
+Sie liegen als Massenanteile vor, werden skaliert und anschließend per PCA zu
+Hauptkomponenten zusammengefasst.
 Diese Hauptkomponenten fassen jeweils ein charakteristisches Muster aus
 Materialanteilen zusammen (vgl.~\ref{sub:mat_pc}) und
 fungieren als verdichtete Materialindikatoren im Regressionsmodell.
@@ -61,7 +63,7 @@ Mess- und Rundungsfehler.
 
 Zur Bewertung der Modellgüte wird ein Train/Test-Split mit einem
 Testanteil von 10\,\% verwendet.
-Das Modell wird ausschließlich auf die 90\% Trainingsdaten 
+Das Modell wird ausschließlich durch weitere AUfteilungen der 90\% Trainingsdaten 
 angepasst und anschließend auf dem unabhängigen Testset ausgewertet.
 Auf diese Weise erhält man Gütemaße, die angeben, wie gut das Modell
 auf die nie zuvor gesehenen Testdaten generalisieren kann.
@@ -76,8 +78,6 @@ Dieser innere Loop dient ausschließlich der Stabilitätsanalyse der linearen
 Regression und der gewählten Features; es werden keine Hyperparameter
 optimiert.
 \fi
-
-\paragraph{Ergebnisse der CO$_2$-Regression}
 
 Die Modelle werden über das Bestimmtheitsmaß $R^2$ und den
 Root-Mean-Square-Error (RMSE) bewertet.

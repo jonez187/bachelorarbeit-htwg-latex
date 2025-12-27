@@ -5,92 +5,68 @@ Aus den in Kapitel~\ref{sec:regression_co2} und
 \ref{sec:reg_other_indicators} vorgestellten Regressionsmodellen 
 ergibt sich ein differenziertes Bild. Einige Indikatoren lassen sich 
 sehr gut, andere nur eingeschränkt durch Gewicht, Stromverbrauch und der benutzten 
-Materialien erklären. Dieses Kapitel diskutiert die Ergebnisse und 
-bereitet damit die spätere Ableitung einer einfachen Heuristik zur Abschätzung der Indikatoren 
-vor.
+Materialien erklären. Dieses Kapitel ordnet die Ergebnisse ein und diskutiert Unsicherheiten und Grenzen.
 
-\section{Einordnung der CO2-Regressionsergebnisse}
-\label{sec:disc_co2_main}
 
-Die Diskussion bezieht sich auf das in Abschnitt~\ref{sec:regression_co2}
-eingeführte Regressionsmodell, in dem die Zielvariable als
-$\text{log\_cc} = \log(1 + \text{cc\_total})$ definiert ist. Als
-Prädiktoren gehen das log-transformierte Produktgewicht
-($\text{log\_w}$), der Stromverbrauch ($\text{log\_e}$) sowie die aus
-dem Materialblock abgeleiteten PCA-Hauptkomponenten ein. Die Ergebnisse
-basieren auf rund 173 PEPs und einer SGD-basierten linearen Regression
-mit mehrfach wiederholten äußeren Train/Test-Splits.
+\section{Einordnung der Ergebnisse}
+\label{sec:disc_interpretation}
 
-\paragraph{Interpretationsebene}
-Die Kombination aus Gewicht, Stromverbrauch und
-Material-Hauptkomponenten erklärt mit 88\% einen großen Anteil der
-Varianz der ausgewiesenen PEP-CO$_2$-Werte.
-Praktisch bedeutet dies, dass das Modell auf Basis weniger,
-relativ einfach zugänglicher Merkmale typischerweise die
-Größenordnung der CO$_2$-Äquivalente trifft.
-12\% der Varianz liegt damit noch außerhalb des Modells und kommt vermutlich
-aus verschiedenen Rechenmethoden innerhalb der PEPs und feineren Einflussfaktoren wie
-die Lebensdauer und das genaue benutzte Energiemodell. 
-Der RMSE liegt grob im Bereich eines Faktors zwei bis drei
-auf der Originalskala und erlaubt daher eher eine heuristische
-Abschätzung als eine exakte Bilanzierung einzelner Geräte.
+Die höchste und stabilste Modellgüte wird für den Indikator
+\emph{Climate change (total)} erreicht. 
+Insgesamt kann die CO$_2$ Regression als obere Schranke der erreichbaren
+Genauigkeit unter den gegebenen Featureeinschränkungen interpretiert werden.
 
-\begin{itemize}
-\item \textbf{Bereiche mit guter bzw.\ schwächerer Modellpassung}
-  \begin{itemize}
-    \item Mittlere CO$_2$-Bereiche:
-      \begin{itemize}
-        \item Im Bereich typischer CO$_2$-Werte liegen die Punkte im
-              Streudiagramm dicht um die Diagonale, sowohl für
-              Trainings- als auch für Testdaten. Es ist keine
-              ausgeprägte systematische Über- oder Unterschätzung
-              erkennbar.
-        \item Die Streuung der Testpunkte ist dabei sehr ähnlich zur
-              Streuung der Trainingspunkte, was darauf hindeutet, dass
-              das Modell den Zusammenhang in diesem Wertebereich gut
-              erfasst und vernünftig generalisiert.
-      \end{itemize}
+Das gewählte Feature-Set kann etwas 90\% der Vaianz der CO$_2$-Werte erklären,
+was eine hohe Modellgüte beschreibt.
+Da die geschätzten Werte im Mittel trotzdem um 120\% abweichen, ist auch dieses Modell 
+nicht präzise. 
+Für die anderen Indikatoren wurde die Pipeline im Wesentlichen nur über die
+Transformation der Zielvariablen angepasst. 
+Eine ähnlich ausführliche
+explorative Entwicklung wie für CO$_2$ fand dort nicht statt.
 
-    \item Extreme bzw.\ sehr große Produkte:
-      \begin{itemize}
-        \item Einige wenige PEPs mit sehr hohem Gewicht (z.\,B.\ 
-              $\geq 720$\,kg) treten als deutliche Ausreißer auf und
-              liegen sichtbar abseits der Diagonalen. Diese Beobachtungen
-              tragen überproportional zur Gesamtsumme der Fehler bei und
-              verzerren die Fit-Kennzahlen etwas.
-        \item Naheliegende Ursachen sind abweichende Systemgrenzen oder
-              besondere Anwendungsfälle (z.\,B.\ Spezialanlagen),
-              zusätzliche Prozessschritte wie aufwendige Installation
-              oder Transporte sowie mögliche Inkonsistenzen in den
-              zugrunde liegenden PEP-Daten.
-        \item Ins\-gesamt spricht dies dafür, dass sich das Modell primär
-              für typische Produkte der Stichprobe eignet und
-              sehr große, außergewöhnliche Geräte nur eingeschränkt
-              abbilden kann, weil sich deren Berechnung der Emission noch
-              einmal deutlich vom Rest der PEPs unterscheidet.
-      \end{itemize}
+Trotzdem lässt sich das Modell auf mehrere weitere Indikatoren wie
+\emph{Acidification}, \emph{Resource use (fossils)} oder \emph{Water use} übertragen und
+liefert brauchbare Ergebnisse, die Streuung ist jedoch größer. 
+Für Indikatoren mit geringer Modellgüte
+(vgl.\ Tab.~\ref{tab:weak_indicators}) gelingt es dagegen nur, einen
+begrenzten Anteil der Varianz zu erklären. Dies deutet darauf hin, dass die
+verwendeten Eingangsgrößen entweder nur einen schwachen Einfluss haben oder
+dass die Datenlage für diese Zielgrößen stark verrauscht ist.
 
-    \item Sehr kleine CO$_2$-Werte:
-      \begin{itemize}
-        \item Im Bereich sehr kleiner Emissionswerte ist die
-              relative Streuung auf der log1p-Skala zwar sichtbarer,
-              die absoluten Abweichungen bleiben jedoch gering.
-        \item Für die Gesamtbewertung der Modellgüte sind diese
-              Unterschiede daher weniger kritisch als Fehlerschätzungen
-              im mittleren und hohen CO$_2$-Bereich, in dem der Großteil
-              der betrachteten PEPs liegt und der Beitrag zum
-              Gesamtemissionsniveau am größten ist.
-      \end{itemize}
-  \end{itemize}
-\end{itemize}
+\section{Fehlerstruktur und Modellannahmen}
+\label{sec:disc_residuals}
 
-\section{Grenzen und Unsicherheiten des Modells}
+Ein zentrales Diagnoseergebnis ist, dass die Schätzfehler der Modelle nicht
+normalverteilt sind. Dies zeigt sich in den QQ Plots durch systematische
+Abweichungen von der Referenzgeraden, insbesondere in den äußeren Quantilen.
+Die Residuen weisen damit schwere Verteilungsschwänze und Ausreißer auf.
+
+Für die Interpretation bedeutet dies Folgendes. Klassische
+Schlussfolgerungen der OLS Theorie, etwa Standardfehler und p Werte sind nur
+eingeschränkt zuverlässig. Zudem ist die Fehlerverteilung trotzdem plausibel, 
+da die Indikatoren über mehrere Größenordnungen streuen und einzelne Produkte
+sehr große Umweltwirkungen aufweisen. 
+Eine Transformation wie log1p oder Box Cox die Fehlerstruktur typischerweise, sie führt aber
+nicht zu perfekter Normalität, weil Datenheterogenität und
+Ausreißer weiterhin bestehen.
+
+Für die Zielsetzung dieser Arbeit, nämlich robuste Vorhersagen für neue
+Produkte mit einem simplen Modell, ist daher eine testbasierte Bewertung zentral. 
+Ergänzend zu RMSE werden robuste Kennzahlen wie Median absoluter Fehler und Median relativer
+Fehler berichtet. Dadurch wird die Modellleistung weniger durch
+Extremwerte verzerrt und über verschiedene Größenordnungen hinweg besser
+interpretierbar.
+
+
+\section{Grenzen des Modells}
 
 Die Aussagekraft der CO$_2$-Regression wird wesentlich durch die Qualität und
 Homogenität der zugrunde liegenden PEP-Daten bestimmt. 
-Die PEPs selbst beruhen
-Hintergrunddatensätzen, Annahmen, unterschiedlichen Berechnungsmodellen und Systemgrenzen, womit sie keine
-ultimative Wahrheitsquelle darstellen können. Das Modell lernt
+Die PEPs selbst beruhen auf
+Hintergrunddatensätzen, Annahmen, unterschiedlichen Berechnungsmodellen und Systemgrenzen.
+Damit können sie keine
+ultimative Wahrheitsquelle darstellen. Das Modell lernt
 damit nicht nur physikalische Zusammenhänge zwischen Gewicht, Stromverbrauch,
 Materialmix und Emissionen, sondern auch diese Heterogenität mit. Ein Teil der
 beobachteten Streuung ist daher als Unsicherheit zu
@@ -99,44 +75,10 @@ eliminierbar sein.
 
 Hinzu kommt, dass die Stichprobe zwar 173 PEPs umfasst, diese aber
 unterschiedliche Produktkategorien abdecken. Positiv ist, dass das Modell der Zielsetzung entsprechend
-geräteübergreifende Muster erkennen kann und damit nicht nur für einen einzelnen
-Gerätetyp gültig ist. Gleichzeitig bedeutet die Produktvielfalt, dass für
-spezielle Nischenprodukte ohne vergleichbare Vertreter in der Stichprobe mit
+geräteübergreifende die Muster und Trends erkennen kann und damit nicht nur für 
+einen einzelnen Gerätetyp gültig ist. 
+Gleichzeitig bedeutet die Produktvielfalt, dass vor allem
+für Nischenprodukte ohne vergleichbare Vertreter in der Stichprobe mit
 deutlich größeren Prognosefehlern gerechnet werden muss. Das Modell ist somit
 vor allem als Näherung für typische Produkte innerhalb des betrachteten
-Datenraums zu verstehen. 
-
-Auch methodisch ergeben sich Einschränkungen. Die verwendete
-\texttt{log1p}-Transformation stabilisiert die Regression, reduziert den
-Einfluss extremer Werte und führt zu einem weitgehend linearisierbaren
-Zusammenhang. Dadurch wird allerdings die direkte Interpretation der Fehler in kg
-CO$_2$-Äquivalenten weniger intuitiv, da Fehler auf der
-Log-Skala grob multiplikativen Abweichungen auf der Originalskala entsprechen.
-Zudem kann das lineare Modell auf der Log-Skala theoretisch negative Werte
-vorhersagen, die nach der Rücktransformation zu sehr kleinen, aber dennoch
-positiven Emissionen führen. In der praktischen Anwendung könnte daher eine
-Untergrenze der Vorhersagen sinnvoll sein.
-
-Ein weiterer wichtiger Punkt ist die Indikatorabhängigkeit der Ergebnisse.
-Die höchste und stabilste Modellgüte wird für den Indikator \emph{Climate
-change (total)} erreicht. Für einige andere Indikatoren wie
-\emph{Acidification}, \emph{Hazardous waste disposed}, \emph{Water use},
-\emph{Photochemical ozone formation}, \emph{Resource use (fossils)} oder
-\emph{Eutrophication (terrestrial)} liefert die gleiche Pipeline zwar noch
-brauchbare Ergebnisse, die Test-R$^2$-Werte und die Streuung über die Splits
-sind jedoch schwächer als im CO$_2$-Fall. Für mehrere weitere
-Indikatoren mit geringer Modellgüte (vgl.\ Tab.~\ref{tab:weak_indicators})
-gelingt es kaum, wenn überhaupt einen moderaten Anteil der Varianz zu erklären. Hier
-scheinen die betrachteten Eingangsgrößen (Gewicht, Strom, Materialmix) nur
-einen begrenzten Einfluss zu haben oder die Datenlage ist zu verrauscht.
-
-Insgesamt kann die CO$_2$-Regression daher als obere Schranke der erreichbaren
-Genauigkeit unter den gegebenen Daten- und Featureeinschränkungen gelesen
-werden. Die im Mittel beobachtete Fehlerspanne bildet die Grundlage für die in
-Kapitel~7 abgeleitete Heuristik zur Abschätzung von CO$_2$-Äquivalenten ohne
-PEP. Auch in dieser Abschätzung kann man keine genauen Ergebnisse erwarten. 
-Das Modell kann nur die Größenordnung zuverlässig einschätzen.
-Außerdem sollte diese Heuristik ausdrücklich als auf den Indikator
-\emph{Climate change (total)} beschränkt verstanden werden. Eine direkte
-Übertragung auf andere Umweltindikatoren ist aufgrund der beschriebenen
-Unterschiede in der Modellgüte nur eingeschränkt möglich.
+Datenraums zu verstehen.
