@@ -10,68 +10,63 @@ um heuristische Beziehungen zwischen Einflussgrößen und den resultierenden Umw
 Diese Kombination ermöglicht eine robuste, nachvollziehbare und datengetriebene Einschätzung ökologischer Wirkzusammenhänge
 im Datensatz.
 
-\subsection{Deskriptive und explorative Statistik}
-Die deskriptive und explorative Statistik bilden die Grundlage der quantitativen Datenanalyse. 
-Beide dienen der Zusammenfassung, Beschreibung und Visualisierung von Datensätzen, 
-um zentrale Merkmale einer Verteilung zu charakterisieren und potenzielle Muster oder Auffälligkeiten zu erkennen. \cite{Fisher2009}
-Der Schwerpunkt liegt nicht auf Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten. \cite{Dimić2019}
-
+\FloatBarrier
+\subsection{Deskriptive Statistik}
+Die deskriptive Statistik bildet die Grundlage der quantitativen Datenanalyse. 
+Sie dient der Zusammenfassung und Beschreibung von Datensätzen, 
+um zentrale Merkmale einer Verteilung zu charakterisieren und potenzielle 
+Muster oder Auffälligkeiten zu erkennen \cite{Fisher2009}.  Der Schwerpunkt liegt nicht auf 
+Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten \cite{Dimić2019}. 
 
 Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung
 der \emph{Lage} und der \emph{Streuungskennzahlen} von Daten. \cite{Fisher2009}
 Ziel ist die Abbildung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
-Zu den typischen Lagemaßen gehören \emph{Mittelwert}, \emph{Median} und \emph{Modalwert}.
+Zu den typischen Lagemaßen gehören \emph{Mittelwert} und \emph{Median}.
 Der Mittelwert beschreibt die durchschnittliche Ausprägung, während der Median die geordnete Verteilung 
 in zwei gleich große Hälften teilt. 
 Der Median gilt als \emph{robustes Lagemaß}, da er, im Gegensatz zum Mittelwert, wenig durch Ausreißer beeinflusst wird.
-Der Modalwert ist der Wert, der in der Stichprobe am häufigsten vorkommt. \cite{Dimić2019}
 Für die Streuung werden Standardabweichung, Spannweite und insbesondere der \emph{Interquartilsabstand (IQR)} verwendet.
 Der IQR beschreibt die mittleren 50~\% der Daten und ist ein robustes Maß, das gegenüber Extremwerten stabil bleibt.
 Für ordinale Merkmale ist der Median das geeignete Lagemaß. Der IQR, ergänzt um Minimum und Maximum, quantifiziert 
-die Streuung. \cite{Fisher2009}
+die Streuung \cite{Fisher2009}. 
 
 
 Ein zentrales Merkmal numerischer Daten ist die Form ihrer Verteilung. 
-In symmetrischen Verteilungen fallen Mittelwert, Median und Modalwert zusammen.
-Bei \emph{rechtsschiefen} Verteilungen liegen einzelne hohe Werte weit über dem zentralen Bereich, sodass der Mittelwert größer als der Median ist; 
-bei \emph{linksschiefen} Verteilungen gilt das umgekehrte Muster. \cite{Kaur2018}
-Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert den Einsatz robuster Kennwerte wie Median und IQR.
-In der explorativen Praxis werden zudem log-transformierte Werte betrachtet, 
-um stark asymmetrische Verteilungen zu symmetrisieren und visuell leichter interpretierbar zu machen.\cite{Marshall2010}
+In symmetrischen Verteilungen fallen Mittelwert und Median zusammen.
+Bei \emph{rechtsschiefen} Verteilungen liegen einzelne hohe Werte weit über dem zentralen Bereich, 
+sodass der Mittelwert größer als der Median ist. 
+Bei \emph{linksschiefen} Verteilungen gilt das umgekehrte Muster \cite{Kaur2018}. 
+Schiefe beeinflusst die Interpretation von Lage- und Streumaßen und motiviert den 
+Einsatz robuster Kennwerte wie Median und IQR \cite{Marshall2010}.
 
-\iffalse
-\paragraph{Log-Transformation und methodische Alternativen}
-Wenn eine Verteilung deutlich von einer Normalverteilung abweicht, bestehen drei grundlegende Optionen:
-(i) eine regelbasierte \emph{Ausreißerprüfung} mit dokumentierter Entfernung, \cite{Fisher2009}
-(ii) eine \emph{Log-Transformation} zur Annäherung an Symmetrie und zur besseren Vergleichbarkeit in Visualisierungen \cite{Marshall2010},
-oder (iii) die Anwendung \emph{nicht-parametrischer} Verfahren, die keine Normalverteilung voraussetzen \cite{Fisher2009}.
-Die Entscheidung erfolgt im Rahmen der explorativen Analyse.
-\fi
 
 \subsection{Explorative Datenanalyse und Visualisierungen}
 Die explorative Datenanalyse ergänzt die deskriptive Statistik durch strukturentdeckende Verfahren. 
 Sie dient der visuellen Erkundung und Bewertung von Mustern, Ausreißern oder Zusammenhängen zwischen Variablen, 
 ohne dass zuvor Hypothesen formuliert werden müssen. 
-Zentrale Visualisierungen sind Histogramme, Boxplots und QQ-Plots. \cite{Kaur2018}
+Zentrale Visualisierungen sind Histogramme, Boxplots und QQ-Plots \cite{Kaur2018}. 
 
 \emph{Histogramme} stellen Häufigkeitsverteilungen kontinuierlicher Merkmale über Klassen dar. 
 Sie erlauben Rückschlüsse auf Symmetrie, Schiefe und Mehrgipfligkeit und dienen zur
-Prüfung von Verteilungsannahmen. \cite{Marshall2010}
+Prüfung von Verteilungsannahmen \cite{Marshall2010}. 
 
 \emph{Boxplots} visualisieren Median ($Q_2$), Quartile ($Q_1$, $Q_3$) und potenzielle Ausreißer.
+Quartile teilen die Verteilung in vier gleich große Teile.
 Die sogenannten \emph{Whisker} markieren üblicherweise den Bereich bis zum 1{,}5-fachen Interquartilsabstand. 
-Werte außerhalb gelten als potenzielle Ausreißer. \cite{Marshall2010} 
+Werte außerhalb gelten als potenzielle Ausreißer \cite{Marshall2010}. 
 Diese Darstellungsform ermöglicht die Beurteilung von Streuung, Schiefe und Extremwerten
-und eignet sich für den Vergleich mehrerer Merkmale. \cite{Kaur2018}
+und eignet sich für den Vergleich mehrerer Merkmale \cite{Kaur2018}. 
 
-\emph{QQ-Plots (Quantile-Quantile Plots)} untersuchen grafisch, wie gut ein Datensatz einer bestimmten 
+\emph{QQ-Plots (Quantile-Quantile-Plots)} untersuchen grafisch, wie gut ein Datensatz einer bestimmten 
 theoretischen Verteilung folgt \cite{Seltman2018}. 
 In dieser Arbeit werden sie eingesetzt, um zu prüfen, 
-ob ein Datensatz normalverteilt ist. 
+ob die Schätzfehler eines Modells normalverteilt sind. 
 
+\FloatBarrier
 \subsection{Mathematische Transformationen}
-Um reale Daten einer Normalverteilung anzunähern und somit die Nutzung parametrischer Tests zu ermöglichen, 
-werden nach \cite{Marshall2010} und \cite{Fisher2009} mathematische Transformationen angewendet.
+Transformationen dienen nach \cite{Marshall2010} und \cite{Fisher2009} dazu, 
+Schiefe zu reduzieren, Varianz zu stabilisieren und parametrische Tests zu ermöglichen, 
+damit die Modellierung auf der Transformationsskala sinnvoller wird. 
 Die logarithmische Transformation (Log-Transformation) wird als eine der gängigsten Methoden, um Rechtsschiefe zu korrigieren, 
 erwähnt.
 Da der Logarithmus extrem hohe Werte stärker staucht als kleine Werte, kann die Transformation nach \cite{Marshall2010} den 
@@ -113,89 +108,54 @@ nach der Transformation $\log(1+x)$ und rechts nach einer Box-Cox-Transformation
   \label{fig:log_transform_hist}
 \end{figure}
 
-\iffalse
-\subsection{Automatisierung, Reproduzierbarkeit und Datenqualität}
-Eine \emph{skriptbasierte}, reproduzierbare Umsetzung (z.\,B.\ in~R oder Python) 
-gewährleistet konsistente Analysen und Nachvollziehbarkeit aller Berechnungsschritte. 
-Im Rahmen der explorativen Datenanalyse unterstützt sie die Datenqualitätsbewertung durch:
-Erkennung von Datenfehlern, Ausreißern und fehlenden Werten, 
-und die Überwachung einfacher Profilierungsmaße (z.\,B.\ Anteil fehlender oder eindeutiger Werte) 
-zur Bewertung von Vollständigkeit und Eindeutigkeit.
-Diese systematische, nachvollziehbare Vorgehensweise bildet die Grundlage 
-für die Qualitätssicherung entlang der Pipeline \emph{PDF~$\rightarrow$~JSON} 
-und schafft Transparenz über den Zustand der analysierten Daten.
-\fi
+In dieser Arbeit wird vor allem log1p
+für Indikatorwerte und Residuenanalysen verwendet
 
+\FloatBarrier
 \subsection{Hauptkomponentenanalyse (PCA)}
-Die \emph{Hauptkomponentenanalyse} (Principal Component Analysis, PCA) ist eine weit 
-verbreitete multivariate statistische Methode zur
-Vereinfachung komplexer Datensätze, 
-Extraktion der wesentlichen Informationen und der Erkennung von Strukturen in den Daten.
-Ihre mathematischen Grundlagen beruhen auf fundamentalen Konzepten der linearen Algebra. \cite{Abdi2010}
+Die Haupt\-kom\-ponenten\-analy\-se (Prin\-cipal Component Analysis, PCA) reduziert die
+Komplexität multi\-variater Daten, indem neue Variablen, die \emph{Hauptkomponenten},
+als Linearkombinationen der ursprünglichen Variablen konstruiert werden.
+In \cite{Maćkiewicz1993} wird dieses Prinzip so beschrieben, dass die erste
+Komponente die größtmögliche Varianz der Daten erfasst, während weitere
+Komponenten orthogonal dazu definiert werden und jeweils möglichst viel der
+verbleibenden Varianz erklären.
 
-Die PCA verfolgt zwei zentrale Ziele:
+Eine anschauliche Interpretation liefert die geometrische Sichtweise.
+In \cite{Abdi2010} wird erläutert, dass die Werte der Hauptkomponenten für jede
+Beobachtung als Projektionen der Datenpunkte auf neue Achsen verstanden werden
+können. Diese Hauptkomponenten lassen sich als gedrehte Achsen im Merkmalsraum
+interpretieren. Genau das illustriert Abbildung~\ref{fig:pca_basiswechsel}.
+Die Standardachsen $(x_1,x_2)$ beschreiben die Daten zunächst in der ursprünglichen
+Basis. Die PCA wählt stattdessen eine neue orthogonale Basis $(v_1,v_2)$, wobei
+$v_1$ entlang der Richtung maximaler Streuung der Punktwolke liegt. Die zweite
+Achse $v_2$ steht senkrecht dazu und beschreibt die Reststreuung.
 
-\paragraph{Reduktion der Dimensionalität}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/pca_basiswechsel.png}
+  \caption{PCA als Basiswechsel: Standardachsen $(x_1,x_2)$ und Hauptachsen
+  $(v_1,v_2)$ der Punktwolke.}
+  \label{fig:pca_basiswechsel}
+\end{figure}
 
-Die ursprünglichen Variablen werden durch eine kleinere Menge neuer, 
-orthogonaler Variablen ersetzt, die \emph{Hauptkomponenten}. Diese werden als 
-lineare Kombinationen der Ausgangsvariablen konstruiert und erklären maximal 
-mögliche Varianz. Die erste Hauptkomponente trägt dabei den größten Anteil 
-der Gesamtvarianz. \cite{Maćkiewicz1993}
+Für viele Anwendungen genügt es, nur die ersten wenigen Komponenten
+weiterzuverwenden, weil sie den dominanten Teil der Varianz tragen. Dadurch
+vereinfachen sich Visualisierung und Modellierung, ohne dass die Datenstruktur
+vollständig verloren geht. In \cite{Abdi2010} werden diese Ziele als
+Informationsverdichtung und Strukturanalyse der Variablen
+beschrieben.
 
-\paragraph{Vereinfachung und Interpretation}
-
-Durch Komprimierung ohne wesentlichen Informationsverlust ermöglicht die PCA 
-eine vereinfachte Darstellung des Datensatzes sowie die Analyse von 
-Beziehungen zwischen Beobachtungen und Variablen. Muster von Ähnlichkeiten 
-können grafisch auf wenigen Achsen dargestellt werden. \cite{Abdi2010}
- 
-
-
-
-Die PCA beruht darauf, aus einer Menge korrelierter Variablen neue,
-unkorrelierte Variablen (\emph{Hauptkomponenten}) zu erzeugen. Dafür wird die
-Varianz-Kovarianz-Matrix $S$ zerlegt \cite{Maćkiewicz1993}. 
-Die Hauptkomponenten ergeben sich aus den Eigenwerten
-und Eigenvektoren dieser Matrix. Dazu wird
-\[
-  |S - \lambda I| = 0
-\]
-gelöst. Die Eigenwerte $\lambda_i$ geben an, wie viel Varianz jede
-Hauptkomponente erklärt. Die zugehörigen Eigenvektoren liefern die
-Gewichte der linearen Kombinationen, aus denen die Hauptkomponenten
-entstehen:
-\[
-  V = A^{\prime} X.
-\]
-\cite{Maćkiewicz1993}
-Die Hauptkomponenten sind unkorreliert \cite{Abdi2010}.
+In dieser Arbeit wird PCA als Baustein für die Principal Component Regression
+(PCR) genutzt. Dabei werden korrelierte Regressoren, hier insbesondere
+Materialanteile, durch unkorrelierte Hauptkomponenten ersetzt. In
+\cite{Jolliffe1982} wird dieses Vorgehen damit begründet, dass die Regression
+durch orthogonale Prädiktoren stabiler werden kann. Dadurch lässt sich
+Multikollinearität reduzieren, während das Modell weiterhin auf denselben
+Eingangsinformationen basiert.
 
 
-Statt über Eigenwerte kann die PCA auch mit der
-Singulärwertzerlegung (SVD) berechnet werden, wie es in modernen Softwarebibliotheken (z.B.
-Python scikit-learn \cite{scikit-learn-pca} und Matlab \cite{matlab-pca}) üblich ist:
-\[
-  X = P \Lambda Q^{T}.
-\]
-Die quadrierten Singulärwerte entsprechen dabei den Eigenwerten, und die
-Hauptkomponenten der Beobachtungen ergeben sich zu
-\[
-  F = P \Lambda.
-\]
-Die SVD zeigt, dass die PCA eine optimale Niedrigrang-Approximation der
-Datenmatrix im Sinne der kleinsten Quadrate liefert. \cite{Abdi2010}
-
-
-In dieser Arbeit bildet die Hauptkomponentenanalyse die Grundlage der Principal Component 
-Regression (PCR), bei der eine, mehrere oder alle der ursprünglichen Regressorvariablen durch 
-die Hauptkomponenten ersetzt werden. Dies ist insbesondere dann 
-vorteilhaft, wenn starke Multikollinearität zwischen den Variablen besteht,
-da die Schätzung der Regressionskoeffizienten durch die Entkorrelierung 
-wesentlich stabiler wird. \cite{Jolliffe1982}
-Da die in den PEP-Daten enthaltenen Materialanteile 
-teils ausgeprägt korrelieren, wird die PCA vor allem dafür eingesetzt.
-
+\FloatBarrier
 \subsection{Lineare Regression}
 
 Die lineare Regression dient in dieser Arbeit als methodische Grundlage zur 
@@ -219,7 +179,7 @@ Die Koeffizienten \(\beta_i\) quantifizieren die Richtung und Stärke des Einflu
 Für die lineare Regression gelten folgende Grundannahmen:
 \begin{itemize}
     \item \textbf{Linearität:} Die Beziehung zwischen abhängiger und unabhängigen Variablen ist näherungsweise linear.
-    \item \textbf{Erwartungswert Null:} Die Fehlerterme haben einen Erwartungswert von null \(E(\varepsilon)=0\) und sind Normalverteilt.
+    \item \textbf{Erwartungswert Null:} Die Fehlerterme haben einen Erwartungswert von null \(E(\varepsilon)=0\) und sind normalverteilt.
     \item \textbf{Homoskedastizität:} Die Varianz der Fehler ist konstant und unabhängig von den erklärenden Variablen.
     \item \textbf{Unabhängigkeit:} Die Fehlerterme sind voneinander unkorreliert.
 \end{itemize}
@@ -236,8 +196,7 @@ beobachteten und modellierten Werten minimal wird:
 \[
 S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
 \]
-Die resultierenden Schätzer sind unter den genannten Modellannahmen unverzerrt 
-und besitzen die kleinste Varianz unter allen linearen, unverzerrten Schätzverfahren (Gauss-Markov-Eigenschaft). \cite{Su2012}
+\cite{Su2012}
 
 Die Koeffizienten \(\beta_i\) geben an, wie stark sich der Zielindikator \(y\) im Mittel verändert, 
 wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben. 

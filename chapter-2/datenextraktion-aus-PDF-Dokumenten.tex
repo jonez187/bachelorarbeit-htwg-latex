@@ -8,6 +8,7 @@ Strukturierung und Analyse der Umweltindikatoren.
 
 
 \subsection{PDF-Struktur und Herausforderungen der Textextraktion}
+\label{sec:pdf-challenges}
 
 \cite{Lovegrove1995} beschreibt PDF als ein weit verbreitetes, primär layoutbasiertes
 Dokumentenformat. Das Format enthält die Platzierung und Darstellung von Textobjekten
@@ -29,7 +30,7 @@ die Rekonstruktion des Textflusses und der semantischen Einheiten
 ausschließlich auf den Positionen einzelner Zeichen basiert.
 
 Die folgenden Herausforderungen der PDF-Extraktion sind bekannt und in der Literatur gut
-dokumentiert, vgl.\ \cite{Bast2017,Lipinski2013,Chao2004,Lovegrove1995}.
+dokumentiert (vgl.\ \cite{Bast2017,Lipinski2013,Chao2004,Lovegrove1995}).
 Explizit ergeben sich dabei vier typische Problemklassen:
 
 \begin{itemize}
@@ -68,10 +69,10 @@ Mehrere weit verbereutete Softwarebibliotheken implementieren regelbasierte Pars
 darunter \emph{pdfplumber}, \emph{pypdfium2} und \emph{pypdf}.
 Da die Arbeit von Selg auf \emph{pdfplumber} aufbaut, wird diese Bibliothek näher besprochen \cite{Selg2025}. 
 
-Die Eigenschaften und Grenzen des Tools werden von \cite{Yang2025} und \cite{Adhikari2025} beschrieben:
+Die Eigenschaften und Grenzen des Tools werden in \cite{Yang2025} und \cite{Adhikari2025} beschrieben:
 
 Jede Seite wird als Sammlung
-von Textfragmenten, Linien, Rechtecken und Bildern mit ihren Positionen in Python-Objekten beschrieben.
+von Textfragmenten, Linien, Rechtecken und Bildern mit ihren Positionen in Python-Objekte gespeichert.
 Für die Tabellenerkennung werden horizontale und vertikale
 Linien als potenzielle Zellgrenzen interpretiert.
 
@@ -82,178 +83,122 @@ wie juristischen oder technischen Dokumenten hohe F1-Scores
 (beispielsweise 0{,}98 im Bereich \emph{Law}).
 
 Die Grenzen des Werkzeugs zeigen sich bei komplexen oder unregelmäßig
-formatierten PDF-Dateien. Insbesondere wissenschaftliche Dokumente mit mathematischen Ausdrücken, 
+formatierten PDF-Dateien. Insbesondere wissenschaftliche Dokumente mit mathematischen Ausdrücken 
 und verschachtelten Tabellen führen zu deutlichen Leistungseinbußen. 
 In der Kategorie \emph{Scientific} sank der F1-Score auf 0{,}76, was vor allem auf unvollständige 
 Tabellenerkennung und fehlerhafte Segmentierung zurückzuführen ist. 
 
-Aus sicht der zuvor beschriebenen Herausforderungen adressiert \emph{pdfplumber} 
+Aus Sicht der zuvor beschriebenen Herausforderungen adressiert \emph{pdfplumber} 
 also Probleme auf der Ebene der Zeichen- und Worterkennung weitgehend.
 Die Wiederherstellung der Lesereihenfolge erfolgt allerdings rein geometrisch, 
 ohne semantisches Verständnis, wodurch Textpassagen aus mehrspaltigen Layouts
 häufig in falscher Reihenfolge extrahiert werden. 
 Absatzgrenzen, semantische Rollen (z.\,B.\ Überschriften, Fließtext, Bildunterschriften) 
-und komplexe Tabellenstrukturen werden nicht erkannt zuverlässig.
+und komplexe Tabellenstrukturen werden nicht zuverlässig erkannt.
 
 Damit steht \emph{pdfplumber} exemplarisch für klassische Extraktionstools, die ohne maschinelles 
-Lernen und tieferen Dokumentenverständnis-Modellen arbeiten und deshalb bei komplex strukturierten Dokumenten 
+Lernen und Modellen zum Dokumentenverständnis arbeiten und deshalb bei komplex strukturierten Dokumenten 
 wie den PEP-Ecopassports an ihre methodischen Grenzen stoßen.
 
 
 
 \paragraph{Erweiterte Verfahren (z.B. Docling)}
-Neben klassischen regelbasierten Parsern existieren mittlerweile  
+Neben klas\-sischen re\-gel\-ba\-sier\-ten Parsern etablierten sich  
 moderne, KI-gestützte Dokumentenanalyse-Frameworks. 
-Dazu gehören etwa komplexe Layout-Modelle wie \emph{LayoutParser} \cite{layout-parser}, 
-\emph{GROBID} \cite{grobid}, sowie \emph{Docling} . 
-Diese Systeme kombinieren visuelle Merkmale, Textinformationen und 
+Dazu gehören komplexe Layout-Modelle wie \emph{LayoutParser} \cite{layout-parser}, 
+\emph{GROBID} \cite{grobid}, sowie \emph{Docling}. 
+Sie kombinieren visuelle Merkmale, Textinformationen und 
 semantische Modelle, um Dokumente mit anspruchsvoller Struktur automatisch 
 zu analysieren und in maschinenlesbare Formate zu überführen.
 
-TODO: GROBID Doku suchen
+Für diese Arbeit wird \emph{Docling} näher betrachtet, da es ein lokal ausführbares 
+Open-Source-Toolkit ist, das eine vollständige 
+End-to-End-Pipeline für Layout-Analyse, Strukturerkennung und Tabellensegmentierung bereitstellt.
 
-Für diese Arbeit wird \emph{Docling} näher betrachtet, da es ein vollständig 
-offenes, lokal ausführbares Toolkit darstellt, das eine vollständige 
-End-to-End-Pipeline für Layout-Analyse, Strukturerkennung und Tabellensegmentierung bereitstellt. 
-Es integriert moderne Deep-Learning-Modelle, berücksichtigt gleichzeitig geometrische Informationen und 
-und lässt sich einfach in eine Python Pipeline einbauen. \cite{Auer2024}
-
-Es wurde mit dem Ziel entwickelt, PDF-Dokumente und andere Formate in eine maschinell verarbeitbare, 
-strukturierte Repräsentation zu überführen. 
-Im Gegensatz zu Werkzeugen wie \emph{pdfplumber}, die auf geometrischen Heuristiken basieren, 
+Die Funktion und Hintergründe von \emph{Docling} werden in der Dokumentation (vgl. \cite{Auer2024, Auer2025}) 
+ausführlich beschrieben und im Folgenden zusammengefasst:
+Im Gegensatz zu regelbasierten Werkzeugen wie \emph{pdfplumber}, 
 kombiniert \emph{Docling} klassische Parsing-Verfahren mit 
-tiefen neuronalen Modellen für Layout- und Strukturerkennung. \cite{Auer2024}
+tiefen neuronalen Modellen für Layout- und Strukturerkennung. 
 
-Technisch basiert \emph{Docling} auf einer linearen Verarbeitungs-Pipeline, 
-die mehrere spezialisierte Komponenten kombiniert. 
-Nach dem initialen Parsen durch ein PDF-Backend (z.\,B.\ \emph{qpdf} oder \emph{pypdfium}) 
-werden für jede Seite Bitmap-Abbilder erzeugt, 
-auf denen KI-Modelle für Layout- und Strukturerkennung ausgeführt werden. \cite{Auer2024}
-Das zugrunde liegende Layout-Analysemodell \emph{DocLayNet} identifiziert auf 
-Basis eines trainierten Objektdetektors verschiedene 
-Seitenelemente und deren Begrenzungsrahmen als Absätze, Überschriften, Listen, Abbildungen oder Tabellen. \cite{Auer2024}
-Diese visuellen Einheiten werden mit den extrahierten Text-Tokens verknüpft und zu 
-konsistenten Dokumentstrukturen zusammengeführt. 
-Für erkannte Tabellenobjekte kommt anschließend das Vision-Transformer-Modell \emph{TableFormer} 
-zum Einsatz, das die logische Zeilen- und Spaltenstruktur 
-einer Tabelle rekonstruiert und die Zellen semantisch klassifiziert (z.\,B.\ Kopf- oder Körperzellen).  
-Für gescannte oder bildbasierte Dokumente steht optional eine OCR-Komponente auf Basis von \emph{EasyOCR} 
-zur Verfügung. \cite{Auer2025}
+\emph{Docling} verarbeitet Dokumente in einer linearen Pipeline. 
+Das Layoutmodell \emph{DocLayNet} ist Teil dieser Pipeline und detektiert Seitenelemente wie Absätze,
+Überschriften, Listen, Abbildungen und Tabellen, die anschließend mit den
+extrahierten Text-Tokens zu einer konsistenten Dokumentstruktur
+zusammengeführt werden. Tabellen werden mit
+\emph{TableFormer} in ihrer Zeilen- und Spaltenlogik rekonstruiert und die
+Zellen semantisch klassifiziert.
 
-Nach Abschluss aller Erkennungs\-schritte werden die Ergebnisse zu einem vollständigen 
-\emph{DoclingDocument} zusammengeführt.
-\emph{DoclingDocument} ist eine vereinheitlichte
-interne Repräsentation, die sämtliche Inhalte eines Dokuments (Text, Tabellen, Bilder, Layoutinformationen,
-Hierarchieebenen und Metadaten) in strukturierter Form abbildet und damit 
-das Herzstück der \emph{Docling}-Extraktion.  
-Diese Dokumente können in verschiedene Formate übersetzt und 
-exportiert werden, darunter JSON, Markdown und HTML.
-Im Post-Processing ergänzt ein sprachsensitives Modell weitere Merkmale wie die Korrektur 
-der Lesereihenfolge, die automatische Spracherkennung und die 
-Extraktion zentraler Metadaten (Titel, Autoren, Referenzen). \cite{Auer2024}
+Die Ergebnisse
+werden in einem \emph{DoclingDocument} gebündelt, das Inhalte, Layout und
+Metadaten einheitlich repräsentiert und in Formate wie JSON, Markdown
+oder HTML exportiert. Ein Post-Processing verbessert zudem die
+Lesereihenfolge, erkennt die Sprache und extrahiert zentrale Metadaten.
 
-Durch diese Architektur adressiert \emph{Docling} mehrere der in \ref{subsec:pdf_challenges}
-beschriebenen Extraktionsprobleme, die klassische Tools nur unzureichend lösen können. 
-Es rekonstruiert eine konsistente Lesereihenfolge auch bei mehrspaltigen Layouts, 
-erkennt logische Dokumentstrukturen und kann Tabellen semantisch 
-interpretieren, anstatt sie rein geometrisch zu segmentieren.  \cite{Auer2025}
-Darüber hinaus bietet es eine robuste Metadaten- und Inhaltsklassifizierung, die zwischen Fließtext, Überschriften, Listen, 
-Bildunterschriften und Formeln unterscheidet. Die erzeugten Ausgaben sind reich strukturiert 
-und dienen als Grundlage für weiterführende 
-Analysen oder Datenpipelines, etwa zur Wissensextraktion, 
-semantischen Suche oder automatisierten Inhaltsklassifikation. \cite{Auer2024}
-
-Tabelle~\ref{tab:extraktion_vergleich} fasst die Extraktionsfähigkeiten der beiden Ansätze zusammen. 
-
-\begin{table}[H]
-\centering
-\caption{Vergleich der Extraktionsfähigkeiten von \textit{pdfplumber} und \textit{Docling}}
-\label{tab:extraktion_vergleich}
-\begin{tabular}{p{5cm}p{4cm}p{4cm}}
-\hline
-\textbf{Aspekt} & \textbf{pdfplumber} & \textbf{Docling} \\
-\hline
-Zeichen- und Worterkennung & gut – präzise Koordinatenanalyse für editierbare PDFs & gut – kombiniert geometrische und visuelle Merkmale \\
-Lesereihenfolge (Reading Order) & schlecht – keine Korrektur v.a. bei mehrspaltigem Layout & gut – erkennt Spalten und Lesefluss kontextsensitiv \\
-Absatz- und Textstruktur & teilweise – heuristisch aus Zeilenabständen abgeleitet & gut – erkennt Absätze, Überschriften und Listen \\
-Tabellenerkennung & teilweise – zuverlässig bei klaren Linien, sonst fehlerhaft & gut – rekonstruiert Tabellen semantisch mit KI-Modell \\
-Grafiken und eingebettete Objekte & nicht – keine Analyse oder Erkennung & teilweise – erkennt Abbildungen und Beschriftungen \\
-Metadatenextraktion & nicht – keine Unterstützung & gut – extrahiert Titel, Autoren, Referenzen \\
-Nicht-textuelle Inhalte (OCR) & nicht – nur editierbare PDFs & gut – optionale OCR für gescannte Dokumente \\
-Komplexe Layouts (mehrspaltig, technisch) & schlecht – häufige Fehlsegmentierung & gut – robuste Layout-Analyse durch \emph{DocLayNet} \\
-Semantische Rollen (z.\,B.\ Caption, Footnote) & nicht – keine Klassifizierung & gut – unterscheidet semantische Dokumentelemente \\
-\hline
-\end{tabular}
-\end{table}
+Durch diese Architektur können zentrale Herausforderungen
+adressiert werden (vgl.\ \ref{sec:pdf-challenges}). \emph{Docling}
+rekonstruiert den Lesefluss auch bei mehrspaltigen Layouts, erkennt logische
+Dokumentelemente und interpretiert Tabellen strukturell statt rein geometrisch.
+Zusätzlich klassifiziert es Inhalte nach Rollen wie Fließtext, Überschrift oder
+Bildunterschrift, wodurch die Ausgaben als strukturierte Basis für
+weiterführende Analysen nutzbar sind.
 
 
 \subsection{Zielformat JSON}
 
-Die aus PDF-Dokumenten extrahierten Inhalte, beispielsweise in Markdown- oder Textform, 
-bieten trotz ihrer besseren Lesbarkeit keine strukturierte Grundlage für eine automatisierte Datenanalyse. 
-Weder die mit \emph{pdfplumber} gewonnenen Textsegmente noch die von \emph{Docling} erzeugten Markdown-Dateien 
-enthalten eine einheitliche logische Struktur, die eine konsistente Zuordnung von Umweltindikatoren, Materialien oder 
-Metadaten über verschiedene PEPs hinweg erlaubt. 
-Für weiterführende Analysen ist daher ein fest definiertes, maschinenlesbares Zielformat erforderlich, 
-das alle relevanten Inhalte in klar benannten Feldern abbildet. 
+Die aus den PEP-PDFs extrahierten Inhalte liegen zunächst als Text oder
+Markdown vor. Diese Formate sind zwar lesbar, liefern aber kein stabiles Schema,
+um Umweltindikatoren, Materialien und Metadaten über viele Dokumente hinweg
+eindeutig und konsistent zuzuordnen. Für die quantitative, automatisierte Auswertung und Analyse 
+ist daher ein fest definiertes, maschinenlesbares Zielformat erforderlich.
 
-Das in dieser Arbeit verwendete textbasierte Austauschformat \emph{JavaScript Object Notation (JSON)} 
-hat sich als Standard für den strukturierten Datenaustausch etabliert und ist sowohl für Menschen lesbar 
-als auch für Maschinen leicht zu verarbeiten \cite{Pezoa2016}. 
-Obwohl es historisch aus der JavaScript-Syntax hervorgegangen ist, wird JSON sprachunabhängig in nahezu allen modernen 
-Programmiersprachen eingesetzt \cite{Pezoa2016}. 
-JSON kombiniert einfache Datentypen (\emph{string, number, boolean, null}) mit komplexen Strukturen wie 
-\emph{objects} (Schlüssel–Wert-Paare) und \emph{arrays} (geordnete Listen), wodurch hierarchische, verschachtelte Informationen 
-kompakt und eindeutig dargestellt werden können \cite{Pezoa2016}. 
-
-In dieser Arbeit dient JSON als einheitliches Zielformat für die harmonisierte Speicherung der extrahierten PEP-Ecopassport-Daten. 
-Das Format ermöglicht eine konsistente, maschinenlesbare Repräsentation komplexer Strukturen wie Umweltindikatoren, 
-Materialkompositionen und Energieverbrauchsmodellen und lässt sich nahtlos in nachgelagerte Analyseumgebungen 
-(z.\,B.\ Python, R oder Datenbanken) integrieren \cite{Pezoa2016}. 
-Damit bildet JSON die Grundlage für eine standardisierte und reproduzierbare Datenanalyse.
+Als Zielformat wird \emph{JavaScript Object Notation (JSON)} verwendet, das sich
+als Standard für strukturierten Datenaustausch etabliert hat \cite{Pezoa2016}.
+JSON bildet Daten über einfache Typen sowie hierarchische Strukturen wie
+Objekte und Arrays ab und eignet sich damit für verschachtelte Informationen
+\cite{Pezoa2016}. In dieser Arbeit dient JSON als einheitliche Repräsentation
+der extrahierten PEP-Daten und ermöglicht eine reproduzierbare Weiterverarbeitung
+in Analyseumgebungen wie Python oder R \cite{Pezoa2016}.
 
 
-\subsection{Informationsextraktion Markdown/Text -> JSON}
-! TODO: Kapitel benennen ! 
 
-Die Informationsextraktion \emph{(Information Extraction, IE)} dient dazu,
-aus unstrukturierten Texten, wie die Markdown Dateien in dieser Arbeit, gezielt Informationen zu gewinnen
-und diese in eine strukturierte Form, wie JSON, zu bringen \cite{Grishman2015}.
-Grundsätzlich lassen sich zwei methodische Ansätze unterscheiden: 
-(1) klassische, regel- oder modellbasierte 
-Pipeline-Systeme und (2) moderne, auf großen Sprachmodellen (LLMs) basierende Verfahren.
+\subsection{Informationsextraktion von Markdown nach JSON}
 
-Traditionelle IE-Systeme folgen einer mehrstufigen Verarbeitungspipeline. 
-Typischerweise werden dabei in aufeinanderfolgenden Schritten benannte Entitäten erkannt, syntaktische Strukturen analysiert,
-Koreferenzen aufgelöst und schließlich Relationen zwischen Entitäten extrahiert. 
-Solche Systeme nutzen überwiegend probabilistische Sequenzmodelle wie Hidden Markov Models (HMMs),
-Conditional Random Fields (CRFs) oder Feature-basierte Klassifikatoren. \cite{Grishman2015}
-Der Vorteil liegt in der hohen Präzision und der Nachvollziehbarkeit einzelner Verarbeitungsschritte und ihrer Deterministik. 
-Ihre Schwächen zeigen sich jedoch bei komplexen oder stark heterogenen Textformaten, wie sie in aus PDF-Dokumenten extrahierten
-Markdown- oder Textsegmenten vorkommen: 
-Fehler in einer frühen Pipeline-Stufe können sich fortpflanzen (Fehlersummierung) 
-und die Erstellung regelbasierter Komponenten ist zeit- und ressourcenintensiv, vor allem bei großen Unterschieden in der
-Struktur des inputs, wie es in dem Kontext dieser Arbeit gegeben ist. \cite{Grishman2015}
+In \cite{Grishman2015} wird Informationsextraktion (IE) als Aufgabe beschrieben,
+aus unstrukturiertem Text gezielt relevante Informationen zu gewinnen und sie in
+eine strukturierte Repräsentation wie ein JSON-Schema zu überführen. Für
+diese Aufgabe lassen sich zwei Ansätze unterscheiden. Erstens klassische, regelbasierte Pipeline-Systeme. 
+Zweitens Verfahren auf Basis großer
+Sprachmodelle (LLMs).
 
-Eine neuere Möglichkeit stellen große Sprachmodelle (LLMs) dar, 
-um Informationsextraktion als semantisches Verständnisproblem zu formulieren. 
-LLMs können Textpassagen kontextsensitiv interpretieren und strukturierte Ausgaben, etwa in 
-JSON-Form, direkt generieren. \cite{Nadeem2024}
-Sie sind in der Lage, Entitäten, Relationen und numerische Werte inhaltlich zuzuordnen, ohne dass ein manuelles Regelwerk
-oder ein domänenspezifisch annotiertes Trainingskorpus erforderlich ist. \cite{Filho2025}
-Zudem ermöglichen sie die Extraktion aus komplexen Layouts, indem sie zuvor durch 
-Tools wie \emph{Docling} generierte Markdown- oder Textsegmente semantisch analysieren. 
-Damit entfällt die sequentielle Verarbeitung einzelner Pipeline-Stufen. \cite{Nadeem2024}
-Der Hauptnachteil besteht in der verlorenen Deterministik und möglichen Halluzinationen (falsch generierten Werten), 
-die durch präzises Prompt-Design und Validierungsschritte minimiert, aber 
-nicht vollständig ausgeschlossen werden können. \cite{Filho2025}
+\cite{Grishman2015} beschreibt die Grund\-sätze und 
+He\-raus\-for\-derun\-gen tra\-ditio\-nel\-ler IE-Systeme.
+Traditionelle IE-Systeme sind meist
+mehrstufig aufgebaut, zum Beispiel mit Entitätserkennung, syntaktischer
+Analyse, Koreferenzauflösung und Relations\-extraktion. Ein Vorteil dieser
+Pipeline-Ansätze ist die hohe Nachvollziehbarkeit und die weitgehend
+deterministische Verarbeitung. Bei heterogenen Textformaten können allerdings Fehler aus frühen Stufen leicht
+in spätere Schritte übertragen werden und die Entwicklung robuster Regeln
+oder Feature-Sets ist mit erheblichen Aufwand verbunden.
 
-Während klassische regelbasierte Verfahren beim Transfer von Markdown-Dateien 
-in strukturierte JSON-Formate durch ihre klare Logik und Nachvollziehbarkeit überzeugen, 
-stoßen sie bei komplexen Textstrukturen und uneinheitlichen Formulierungen an Grenzen.
-LLM-basierte Methoden bieten hier eine deutlich höhere Flexibilität, da sie Inhalte kontextsensitiv 
-interpretieren und direkt in das definierte JSON-Schema überführen können.
-Allerdings erfordern sie eine Validierung der Modellantworten, da geringere 
-Transparenz und vereinzelte Fehlinterpretationen möglich sind.
+In \cite{Nadeem2024} werden große Sprachmodelle (LLMs) als neuere Möglichkeit
+beschrieben, Informationsextraktion semantisch zu lösen. 
+LLMs können Textpassagen kontextsensitiv interpretieren und
+strukturierte Ausgaben direkt erzeugen. Wie
+\cite{Filho2025} zeigt, lassen sich dabei Entitäten, Relationen und numerische
+Werte häufig ohne manuelles Regelwerk oder domänenspezifisch annotiertes
+Trainingskorpus zuordnen. Zudem können LLMs zuvor durch Tools wie
+\emph{Docling} erzeugte Markdown- oder Textsegmente semantisch auswerten, sodass
+eine strikt sequentielle Abarbeitung einzelner Pipeline-Stufen teilweise
+entfällt \cite{Nadeem2024}. Ein zentraler Nachteil ist die fehlende
+Deterministik und das Risiko von Halluzinationen, also falsch generierten
+Werten, das sich durch präzises Prompt-Design und Validierungsschritte zwar
+reduzieren, aber nicht vollständig ausschließen lässt \cite{Filho2025}.
+
+
+Zusammenfassend sind regelbasierte Verfahren gut nachvollziehbar, stoßen bei den
+heterogenen und layoutbedingt uneinheitlichen PEP-Texten jedoch schnell an
+Grenzen. LLM-basierte Methoden sind flexibler und können Inhalte direkt in das
+vorgegebene JSON-Schema überführen, erfordern dafür aber Validierungsschritte.
 Da diese Arbeit auf eine quantitative Analyse der PEP-Ecopassport PDFs abzielt, wird trotzdem
 ein LLM für die Extraktion und Überführung in das harmonisierte JSON-Zielformat eingesetzt.
