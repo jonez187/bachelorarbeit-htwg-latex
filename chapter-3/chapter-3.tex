@@ -53,13 +53,11 @@ die sich auf Geräte der Gebäudeautomatisierung oder IoT Komponenten beziehen. 
 die Quelle der Untersuchung. Für jedes gefundene Dokument wurden Produktinformationen,
 Material- und Energiedaten sowie Metadaten in strukturierter Form erfasst.
 
-\paragraph{Zielsetzung}
 Im ersten Schritt der Arbeit sollte eine Datenbasis zu IoT-Produkten in der PEP-Datenbank 
 aufgebaut werden. Dazu wurden die Dokumente automatisiert recherchiert, die zugehörigen PDFs
 heruntergeladen, analysiert und nach Relevanz für den Smart-Home- bzw. IoT-Bereich klassifiziert.  Das Ergebnis
 wurde in CSV-Formaten gespeichert und diente als Grundlage für die weitergehende Analyse.
 
-\paragraph{Keyword-basierte Suche}
 Zur Ermittlung der verfügbaren PEP-Dokumente wurde zunächst die Suchfunktion der
 PEP-Datenbank analysiert. Über die Browser-Entwicklertools konnten die zugrunde liegenden
 Netzwerkanfragen identifiziert werden. Insbesondere der Endpoint \texttt{/xhr/searchPep}
@@ -77,7 +75,6 @@ der Ergebnisse, da die Suchbegriffe im Produktitel nicht ausnahmslos auf Kompone
 Zudem wendet die Suchfunktion der PEP-Plattform nicht alle Filter korrekt
 an und es treten Überschneidungen zwischen den Seiten auf.
 
-\paragraph{Klassifikation der Produkte}
 Die ermittelten Produkte wurden in einer Excel-Datei manuell kategorisiert. Neben dem
 Produktnamen und der URL enthielt die Datei eine Spalte \emph{IoT-Einschätzung} mit
 vordefinierten Auswahloptionen. Farbcodierungen erleichterten die visuelle Trennung
@@ -86,7 +83,6 @@ und, falls erforderlich, weitere Produktinformationen aus Herstellerportalen
 herangezogen. So konnten 102 Smart-Home-relevante Geräte eindeutig als IoT oder
 IoT-nah eingestuft werden.
 
-\paragraph{Kategorisierung}
 Die Zuordnung erfolgte nach funktionalen Kriterien:
 \begin{itemize}
   \item \textbf{Gebäudeautomatisierung:} Geräte mit Konnektivität (z.\,B.\ ZigBee, WiFi, KNX) oder Cloud-Anbindung,
@@ -96,7 +92,6 @@ Die Zuordnung erfolgte nach funktionalen Kriterien:
   \item \textbf{keine IoT-Relevanz:} Produkte ohne Kommunikationsfähigkeit (z.\,B.\ Kabel, Trafos, LED-Panels). (Aussortiert)
 \end{itemize}
 
-\paragraph{Manuelle Ergänzungen}
 Zusätzlich zur halbautomatisierten Suche wurden IoT-relevante Unternehmen gezielt
 identifiziert (z.\,B.\ ABB, Siemens, Schneider Electric, Legrand, Somfy, Daikin,
 Bosch, Honeywell). Deren PEP-Dokumente wurden manuell durchsucht und ergänzt. Dadurch
@@ -114,7 +109,6 @@ Metadaten zu erzeugen, welche entsrechend der Zielsetzung der Arbeit analysiert 
 Die finale Lösung kombiniert eine robuste Layoutanalyse mit
 Docling und eine LLM-basierte, schema­gesteuerte Inhaltsinterpretation.
 
-\paragraph{Entwicklung und Vorläufer}
 Zu Beginn wurde eine auf \texttt{pdfplumber} basierende Pipeline eingesetzt, die auf der von Selg \cite{Selg2025} entwickelten Pipeline aufbaut.
 Sie erkennt mithilfe Regex- und Textheuristiken Tabellen und Materiallisten. 
 Obwohl dieser Ansatz für einzelne PDFs funktionierte, erwies sich die Übertragbarkeit als unzureichend.
@@ -137,7 +131,6 @@ und exportiert diese in Markdown oder JSON. Dadurch konnte die textuelle Logik v
 Layout entkoppelt und die Zuverlässigkeit der Downstream-Verarbeitung deutlich
 verbessert werden.
 
-\paragraph{Methodisches Konzept}
 Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
 \begin{itemize}
   \item \textbf{Docling-Konvertierung:} PDF-Dateien werden in eine Markdown-Struktur
@@ -158,7 +151,6 @@ Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
         klare Feldbezeichnungen. 
 \end{itemize}
 
-\paragraph{Wahl des Modells und der LLM Schnittstelle}
 Für die semantische Extraktion wurde \emph{GPT-5} verwendet, angesprochen über die
 \emph{Responses-API}. Diese neue Schnittstelle unterstützt native strukturierte
 Ausgaben und optional eine Schema-Validierung. Der Aufruf erfolgt im
@@ -173,7 +165,6 @@ Die Temperatur des LLMs wurde auf 0 gesetzt um Zufälligkeit und Kreativität m�
 Die Kombination aus Docling und GPT-5 führte somit zu einem 
 skalierbaren Verfahren, das auch bei komplexen Layouts konsistente Ergebnisse liefert.
 
-\paragraph{Extraktionslogik}
 \begin{itemize}
   \item \textbf{Indikatoren:} Matching über Name und Einheit auf Basis der EF 3.1-Labels
         (z.\,B.\ \(\mathrm{kg\,CO_2\,eq}\), \(\mathrm{kg\,Sb\,eq}\), \(\mathrm{MJ}\)).
@@ -184,7 +175,6 @@ skalierbaren Verfahren, das auch bei komplexen Layouts konsistente Ergebnisse li
         in das Feld \texttt{unit} extrahiert, ohne heuristische Ergänzung oder Raten.
 \end{itemize}
 
-\paragraph{Robustheit und Grenzen}
 Die neue Pipeline konnte die Anzahl fehlerhafter oder unvollständiger Einträge deutlich
 reduzieren. Fallback-Mechanismen greifen bei fehlerhaften Tabellen automatisch auf den
 Fließtext zurück, wodurch auch reine Text-PEPs ausgewertet werden können. 
@@ -199,14 +189,12 @@ Diese Einschränkungen sind angesichts der PDF-Heterogenität nicht zu umgehen u
 
 \subsection{Normalisierung der Daten}
 \label{subsec:normalisierung}
-\paragraph{Zielsetzung}
 Nach der Extraktion lag ein heterogenes Datenset mit uneinheitlichen Bezeichnungsformen
 für Länder, Materialien, Lebenszyklusphasen, Energiequellen und Einheiten vor.
 Um eine konsistente Auswertung zu ermöglichen, wurden sämtliche Schreibweisen vereinheitlicht.
 Ziel war es, strukturell vergleichbare Werte zu schaffen und gruppierte Analysen über
 mehrere PEPs hinweg zu ermöglichen.
 
-\paragraph{Vokabularanalyse}
 Zur systematischen Erfassung der vorhandenen Begriffe wurde ein Hilfsskript
 (\texttt{pep\_vocab\_scan.py}) entwickelt, das die in den JSON-Dateien vorkommenden
 Rohwerte inventorisiert. Für jedes relevante Feld (z.\,B. Indikatoreinheiten,
@@ -216,7 +204,6 @@ Die Ausgabe diente der Identifikation inkonsistenter Schreibweisen, Abkürzungen
 Synonyme, die anschließend über Zuordnungstabellen (\emph{Mapping Dateien}) vereinheitlicht
 wurden.
 
-\paragraph{Normalisierung mittels Mapping-Tabellen}
 Für jede Datendomäne (z.\,B. Einheit, Material, Land, Energiequelle, Phase)
 wurde eine Zuordnungstabelle erstellt, die reguläre Ausdrücke den vereinheitlichten
 Standardbegriffen zuordnet. 
@@ -231,7 +218,6 @@ zusammengeführt.
 Auch Länderangaben wurden vereinheitlicht, indem Bezeichnungen und ISO-Kürzel
 (z.\,B. „France“, „FR“) zu konsistenten Formen zusammengefasst wurden.
 
-\paragraph{Phasen- und Energiemodell-Normalisierung}
 Für Lebenszyklusphasen wurden die in den PEPs auftretenden Varianten (z.\,B.
 „A1–A3“, „Production“, „Manufacturing“) auf ein einheitliches Schema
 („manufacturing“, „distribution“, „use“, „end\_of\_life“) abgebildet.
@@ -241,7 +227,6 @@ Modelle (z.\,B. „FR“, „France Mix“, „French grid“) zu klar benannten
 Diese Normalisierung ist entscheidend, um energiebezogene und phasenabhängige
 Indikatoren konsistent vergleichen zu können.
 
-\paragraph{Entscheidungen und Vereinfachungen}
 Bei der Vereinheitlichung wurden einige pragmatische Entscheidungen getroffen:
 \emph{Steel} und \emph{Iron} wurden beispielsweise zur Kategorie \emph{Steel (metals)} zusammengefasst,
 da beide ähnliche Materialeigenschaften und Umweltwirkungen aufweisen. 
@@ -250,7 +235,6 @@ Für Kunststoffe wurde eine vereinfachte Zusammenführung vorgenommen.
 Ein Python-Skript \emph{apply\_mappings.py} wendet die auf dem Vokabular
 basierenden Mapping Dateien auf alle extrahierten JSON Dateien an.
 
-\paragraph{Konsolidierung von Materialeinträgen}
 Durch das Mapping entstehen teilweise doppelte Materialeinträge, 
 welche innerhalb der Feldstruktur
 \texttt{material\_composition} mithilfe von \emph{merge\_material.py} zusammengeführt werden, 
@@ -261,8 +245,6 @@ Prozent- und Gewichtsangaben wurden bei Dubletten addiert und auf drei
 Nachkommastellen gerundet. Diese Maßnahme reduziert Redundanz und erleichtert
 die spätere Aggregation der Materialanteile.
 
-
-\paragraph{Ergebnis}
 Durch die Vokabularanalyse und anschließende Normalisierung entsteht so ein
 standardisierter Datensatz mit konsistenten Schreibweisen und eindeutiger
 Begriffssystematik. Diese Vereinheitlichung bildet die methodische Grundlage
@@ -280,8 +262,7 @@ für die nachfolgende quantitative Auswertung.
 
 \subsection{Datenbereinigung und Validierung}
 
-\paragraph{Ausschluss unvollständiger Datensätze}
-Nach der automatischen Extraktion und Normalisierung werden
+Nach der automatischen Extraktion und Normalisierung werden zuerst
 fehlerhafte oder unvollständige
 Datensätze mithilfe eines Python-Skripts \emph{sort\_out\_unusable.py} ausgeschlossen. 
 Ein Datensatz galt als unbrauchbar, wenn sämtliche
@@ -292,7 +273,6 @@ Diese Kriterien führten zur Aussonderung von 8 der insgesamt 242 Datensätze.
 Diese PEPs enthielten zwar Metadaten, jedoch keine quantitativen Werte
 und wurden daher nicht in die Analyse einbezogen.
 
-\paragraph{Qualitätssicherung und Validierung}
 Die Datenbereinigung wurde durch automatisierte Prüfmechanismen begleitet.
 Dazu zählten Validierungen auf fehlende oder ungültige Einheiten, numerische
 Typfehler (z.\,B. String statt numerischer Wert) sowie Plausibilitätsprüfungen,
@@ -303,7 +283,6 @@ Ein zusätzlicher Kontrolllauf identifizierte Datensätze mit nicht plausiblen
 Summen oder Flatline-Indikatoren (identische Werte in allen Phasen), die von der
 weiteren Analyse ausgeschlossen wurden.
 
-\paragraph{Entscheidungen und Grenzen}
 Mehrere alternative Ansätze wurden im Verlauf der Datenbereinigung geprüft und
 bewusst verworfen. Die Aktivierung von OCR für alle PDFs hätte den Aufwand und
 die Laufzeit erheblich erhöht, ohne die Datenqualität signifikant zu verbessern.
@@ -313,7 +292,6 @@ Eine Hierarchisierung der Materialien (z.\,B. \emph{Iron} als Unterkategorie von
 \emph{Metals}) oder eine gesonderte Behandlung von Verpackungsmaterialien wurde
 aus Gründen der Vergleichbarkeit nicht umgesetzt.
 
-\paragraph{Datenformatierung für die statistische Auswertung}
 Die bereinigten JSON-Dateien wurden anschließend mit \texttt{flatten\_jsons.py}
 in ein flaches, tabellenbasiertes Format überführt. 
 Während die ursprünglichen JSON-Strukturen sowohl menschen- als auch maschinenlesbar
@@ -321,7 +299,6 @@ angelegt waren, wurde das Format nun in eine einheitliche, analysierbare
 Datenstruktur überführt, die sich für statistische Auswertungen und Visualisierungen
 eignet.
 
-\paragraph{Ergebnis}
 Nach Abschluss der Bereinigung standen 234  
 strukturierte Datensätze zur Verfügung. Diese bilden die Grundlage für die
 nachfolgende statistische Analyse. Die zentrale Datenbasis umfasst vereinheitlichte

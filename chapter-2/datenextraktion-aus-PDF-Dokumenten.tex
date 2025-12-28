@@ -7,103 +7,51 @@ Dieser Prozess ist nicht trivial und bildet die Grundlage für die weitere Verar
 Strukturierung und Analyse der Umweltindikatoren. 
 
 
-\subsection{Das Portable Document Format (PDF)}
+\subsection{PDF-Struktur und Herausforderungen der Textextraktion}
 
-Das \emph{Portable Document Format (PDF)} ist eines der beliebtesten elektronischen Dokumentenformate und
-ist primär ein \emph{layoutbasiertes Format}. 
-Es wurde entwickelt, um das Erscheinungsbild der Originaldokumente plattform- und 
-anwendungsübergreifend zu bewahren. \cite{Lovegrove1995}
-Das Format beschreibt Objekte auf einer niedrigen Strukturebene und legt die 
-\emph{Positionen und Schriftarten der einzelnen Zeichen} fest, aus
-denen der sichtbare Text zusammengesetzt ist. 
-Zu den beschriebenen Objekten gehören:
+\cite{Lovegrove1995} beschreibt PDF als ein weit verbreitetes, primär layoutbasiertes
+Dokumentenformat. Das Format enthält die Platzierung und Darstellung von Textobjekten
+sowie grafischen Elementen wie Linien, Kurven und Bildern inklusive Stilattributen
+etwa Schriftart, Farbe oder Strichführung. Dadurch bleibt das visuelle Erscheinungsbild
+eines Dokuments zuverlässig über alle Geräte erhalten.
+
+Nach \cite{Bast2017} und \cite{Chao2004} fehlt dem PDF-Format eine
+explizite logische Struktur auf höherer Ebene. Semantische Einheiten wie Wörter,
+Textzeilen, Absätze oder Tabellen sind nicht direkt enthalten. Auch die Rolle
+eines Textblocks, etwa als Haupttext, Überschrift oder Fußnote, ist nicht
+eindeutig hinterlegt. Ebenso ist die Lese- und Wortreihenfolge, insbesondere bei
+mehrspaltigen Layouts oder eingebetteten Elementen, nicht definiert.
+
+Wie \cite{Corrêa2017} zeigt, erschwert das fehlende semantische
+Strukturgerüst in vielen PDFs die automatische Erkennung und
+Wiederverwendung von Layout und Inhalt deutlich, da
+die Rekonstruktion des Textflusses und der semantischen Einheiten 
+ausschließlich auf den Positionen einzelner Zeichen basiert.
+
+Die folgenden Herausforderungen der PDF-Extraktion sind bekannt und in der Literatur gut
+dokumentiert, vgl.\ \cite{Bast2017,Lipinski2013,Chao2004,Lovegrove1995}.
+Explizit ergeben sich dabei vier typische Problemklassen:
+
 \begin{itemize}
-    \item Gruppen von Zeichen (Textobjekte)
-    \item Linien, Kurven und Bilder
-    \item Stilattribute wie Schriftart, Farbe, Strichführung, Füllung und geometrische Formen.
-\end{itemize}
-\cite{Bast2017}
+  \item \textbf{Wort- und Zeichenrekonstruktion:}
+  Wortgrenzen sind aufgrund variierender Zeichenabstände uneindeutig.
+  Zusätzlich müssen Silbentrennungen, Ligaturen und diakritische Zeichen
+  korrekt zusammengeführt werden.
 
-Obwohl PDF die visuelle Darstellung eines Dokuments zuverlässig bewahrt, fehlt den meisten Dateien eine 
-explizite logische Struktur auf höherer Ebene. 
-Die folgenden semantischen Einheiten sind im Format nicht direkt enthalten und werden nur 
-durch die oben genannte niedrige Strukturebene zusammengesetzt:
-\begin{itemize}
-    \item logische Komponenten wie Wörter, Textzeilen, Absätze, Tabellen oder Abbildungen \cite{Chao2004}
-    \item Informationen über die \emph{semantischen Rollen} des Textes (z.\,B.\ Haupttext, Fußnote oder 
-    Bildunterschrift), \cite{Bast2017}
-    \item eine eindeutige Lese- und Wortreihenfolge, insbesondere bei mehrspaltigen Layouts oder 
-    eingebetteten Elementen. \cite{Bast2017}
-\end{itemize}
+  \item \textbf{Lesereihenfolge:}
+  In mehrspaltigen oder komplexen Layouts ist die interne Reihenfolge der
+  Textobjekte häufig nicht identisch mit dem menschlichen Lesefluss, was ohne
+  Korrektur zu falsch zusammengesetztem Text führt.
 
-Hinzuzufügen ist, dass PDF-Dokumente mit semantischen Informationen \emph{getaggt} werden können. 
-In der Praxis sind diese zusätzlichen Informationen selten gegeben. \cite{Bast2017}
-Die für diese Arbeit relevanten PEP-Ecopassport-PDFs sind alle nicht getaggt. 
+  \item \textbf{Absatz- und Blockstruktur:}
+  Absatzgrenzen sind nicht explizit kodiert. Textblöcke können durch Tabellen,
+  Formeln oder Abbildungen unterbrochen sein und über Seiten oder Spalten hinweg
+  fortgesetzt werden.
 
-Das Fehlen dieser semantischen Informationen erschwert die Erkennung, Wiederverwendung oder Bearbeitung 
-des Layouts und Inhalts erheblich. \cite{Corrêa2017}
-Die automatische Extraktion dieser Metadaten und Textinhalte ist daher eine zentrale, 
-aber fehleranfällige Aufgabe, da es keine 
-allgemein verbindlichen Standards für die Strukturierung solcher Informationen in PDF-Dokumenten gibt. \cite{Lipinski2013}
-
-
-
-
-
-\subsection{Herausforerungen bei der automatisierten Extraktion}
-\label{subsec:pdf_challenges}
-
-Die Rekonstruktion des Textflusses und der semantischen Einheiten 
-aus den Positionen einzelner Zeichen ist komplex:
-
-\paragraph{1. Wortidentifikation}
-Die korrekte Bestimmung von Wortgrenzen ist nicht trivial:
-\begin{itemize}
-    \item \emph{Abstände:} Die Abstände zwischen Zeichen können innerhalb einer 
-    Zeile variieren, sodass keine feste Regel existiert, 
-    um Wortgrenzen ausschließlich anhand der Zeichenpositionen zu bestimmen. \cite{Bast2017}
-    \item \emph{Silbentrennung:} In mehrspaltigen Layouts getrennte Wörter müssen korrekt 
-    wieder zusammengeführt werden. \cite{Bast2017}
-    \item \emph{Ligaturen:} Zeichenkombinationen wie „fl“ oder „fi“ werden im PDF 
-    oft als einzelnes Zeichen gespeichert und 
-    müssen beim Extrahieren in mehrere Zeichen aufgelöst werden. \cite{Lipinski2013}
-    \item \emph{Diakritische Zeichen:} Buchstaben mit Diakritika (z.\,B.\ à, ä, ã) können als 
-    zwei separate Zeichen gespeichert sein
-    und müssen beim Parsing zu einem Zeichen zusammengeführt werden. \cite{Bast2017}
-\end{itemize}
-
-\paragraph{2. Lesereihenfolge (Reading Order)}
-Die korrekte Lesereihenfolge ist entscheidend für die Verständlichkeit des 
-Textes und der weiterführenden Interpretation.  \cite{Bast2017}
-In mehrspaltigen Layouts sind Textzeilen im PDF häufig in einer 
-verschränkten Reihenfolge gespeichert. 
-Ohne Korrekturmechanismen führt dies zu unleserlichem, inhaltlich falsch zusammengesetztem Text.\cite{Lovegrove1995}
-
-\paragraph{3. Absatzgrenzen (Paragraph Boundaries)}
-Die Erkennung von Absatzanfängen und -enden ist besonders schwierig:
-\begin{itemize}
-    \item \emph{Unterbrechungen:} Text, der zu einem Absatz gehört, 
-    kann durch Formeln, Tabellen oder Abbildungen unterbrochen und später auf derselben Seite 
-    fortgesetzt werden.
-    \item \emph{Seitenumbrüche:} Absätze können am Seiten- oder 
-    Spaltenende abgeschnitten und auf der folgenden Seite fortgeführt werden, ohne dass dies
-    im PDF strukturell kenntlich gemacht wird.
-\end{itemize}
-\cite{Bast2017}
-
-\paragraph{4. Technologische und Layout-Herausforderungen}
-\begin{itemize}
-    \item \emph{Überlagerungen (Overlays):} 
-    In grafisch komplexen Dokumenten können Text- und Bildelemente überlappen, 
-    etwa wenn Beschriftungen in Abbildungen eingebettet sind. 
-    Dies erschwert die korrekte Segmentierung. \cite{Chao2004}
-    \item \emph{Segmentierungsfehler:} 
-    Bei Tabellen, Karten oder Diagrammen kann Text aus unterschiedlichen 
-    logischen Einheiten fälschlicherweise in dieselbe Gruppe aggregiert werden. \cite{Chao2004}
-    \item \emph{Type-3-Fonts:} 
-    Manche Zeichen (insbesondere Ligaturen und Sonderzeichen) werden im PDF nicht als Textobjekte,
-    sondern als Vektorgrafiken gespeichert. Solche Elemente sind mit herkömmlicher 
-    Textextraktion nicht identifizierbar und erfordern erweiterte, teils OCR- oder ML-basierte Verfahren. \cite{Bast2017}
+  \item \textbf{Layout- und Rendering-Artefakte:}
+  Überlagerungen, Segmentierungsfehler bei Tabellen und Diagrammen sowie
+  als Grafiken gerenderte Zeichen (z.\,B.\ Type-3-Fonts) erschweren die
+  zuverlässige Extraktion.
 \end{itemize}
 
 
@@ -116,35 +64,28 @@ mit dem Ziel sie anschließend weiter zu analysieren.
 \paragraph{Klassische Verfahren (regelbasierte Parser)}
 Regelbasierte PDF\--Parsing\--Methoden arbeiten mit
 fest definierten Regeln und benötigen kein Training. 
-Sie lassen sich schnell einsetzen, da sie ohne domänenspezifische Daten auskommen. \cite{Adhikari2025}
 Mehrere weit verbereutete Softwarebibliotheken implementieren regelbasierte Parser, 
 darunter \emph{pdfplumber}, \emph{pypdfium2} und \emph{pypdf}.
-Da die Arbeit von Selg auf \emph{pdfplumber} aufbaut, wird diese Bibliothek näher besprochen. \cite{Selg2025}
+Da die Arbeit von Selg auf \emph{pdfplumber} aufbaut, wird diese Bibliothek näher besprochen \cite{Selg2025}. 
 
-Sie ist vollständig in Python implementiert und baut auf der weit verbreiteten Bibliothek \emph{pdfminer.six} auf.
-Das Werkzeug wurde speziell für die Text- und Tabellenextraktion aus PDF-Dokumenten entwickelt und gilt als eine
-der benutzerfreundlichsten Lösungen im Python-Ökosystem. \cite{Adhikari2025}
+Die Eigenschaften und Grenzen des Tools werden von \cite{Yang2025} und \cite{Adhikari2025} beschrieben:
 
-\emph{pdfplumber} ist ein Python-Werkzeug, das PDF-Dateien so einliest, dass Text und einfache
-grafische Elemente jeder Seite als Python-Objekte vorliegen. Jede Seite wird dabei als Sammlung
-von Textfragmenten, Linien, Rechtecken und Bildern mit ihren Positionen beschrieben. \cite{Yang2025}
-Für die Tabellenerkennung nutzt \emph{pdfplumber} vor allem sichtbare horizontale und vertikale
-Linien als potenzielle Zellgrenzen. Über Optionen lässt sich diese
-Heuristik an unterschiedliche Layouts anpassen. \cite{Yang2025} 
+Jede Seite wird als Sammlung
+von Textfragmenten, Linien, Rechtecken und Bildern mit ihren Positionen in Python-Objekten beschrieben.
+Für die Tabellenerkennung werden horizontale und vertikale
+Linien als potenzielle Zellgrenzen interpretiert.
 
-Der regelbasierte Ansatz von \emph{pdfplumber} führt bei klar strukturierten, 
-editierbaren PDF-Dokumenten zu guten Ergebnissen. 
+Bei klar strukturierten, 
+editierbaren PDF-Dokumenten führt diese Methodik zu guten Ergebnissen. 
 In Studien zur Leistungsbewertung von Extraktionstools erzielte es in Domänen 
 wie juristischen oder technischen Dokumenten hohe F1-Scores 
-(beispielsweise 0{,}98 im Bereich \emph{Law}). \cite{Adhikari2025}
+(beispielsweise 0{,}98 im Bereich \emph{Law}).
 
-Die Grenzen des Werkzeugs zeigen sich jedoch vor allem bei komplexen oder unregelmäßig
+Die Grenzen des Werkzeugs zeigen sich bei komplexen oder unregelmäßig
 formatierten PDF-Dateien. Insbesondere wissenschaftliche Dokumente mit mathematischen Ausdrücken, 
-eingebetteten Formeln oder verschachtelten Tabellen führen zu deutlichen Leistungseinbußen. 
+und verschachtelten Tabellen führen zu deutlichen Leistungseinbußen. 
 In der Kategorie \emph{Scientific} sank der F1-Score auf 0{,}76, was vor allem auf unvollständige 
 Tabellenerkennung und fehlerhafte Segmentierung zurückzuführen ist. 
-Auch bei Patenten oder Dokumenten mit grafischen Strukturen (z.\,B.\ chemischen Formeln oder Bauzeichnungen) 
-stößt der regelbasierte Ansatz an seine Grenzen. \cite{Adhikari2025}
 
 Aus sicht der zuvor beschriebenen Herausforderungen adressiert \emph{pdfplumber} 
 also Probleme auf der Ebene der Zeichen- und Worterkennung weitgehend.
@@ -152,11 +93,11 @@ Die Wiederherstellung der Lesereihenfolge erfolgt allerdings rein geometrisch,
 ohne semantisches Verständnis, wodurch Textpassagen aus mehrspaltigen Layouts
 häufig in falscher Reihenfolge extrahiert werden. 
 Absatzgrenzen, semantische Rollen (z.\,B.\ Überschriften, Fließtext, Bildunterschriften) 
-und komplexe Tabellenstrukturen erkennt \emph{pdfplumber} nicht zuverlässig.
+und komplexe Tabellenstrukturen werden nicht erkannt zuverlässig.
 
 Damit steht \emph{pdfplumber} exemplarisch für klassische Extraktionstools, die ohne maschinelles 
-Lernen oder tiefere Dokumentenverständnis-Modelle arbeiten und deshalb bei komplexen, 
-visuell strukturierten Dokumenten wie den PEP-Ecopassports an ihre methodischen Grenzen stoßen.
+Lernen und tieferen Dokumentenverständnis-Modellen arbeiten und deshalb bei komplex strukturierten Dokumenten 
+wie den PEP-Ecopassports an ihre methodischen Grenzen stoßen.
 
 
 
@@ -282,7 +223,6 @@ Grundsätzlich lassen sich zwei methodische Ansätze unterscheiden:
 (1) klassische, regel- oder modellbasierte 
 Pipeline-Systeme und (2) moderne, auf großen Sprachmodellen (LLMs) basierende Verfahren.
 
-\paragraph{Regelbasierte Ansätze}
 Traditionelle IE-Systeme folgen einer mehrstufigen Verarbeitungspipeline. 
 Typischerweise werden dabei in aufeinanderfolgenden Schritten benannte Entitäten erkannt, syntaktische Strukturen analysiert,
 Koreferenzen aufgelöst und schließlich Relationen zwischen Entitäten extrahiert. 
@@ -295,7 +235,6 @@ Fehler in einer frühen Pipeline-Stufe können sich fortpflanzen (Fehlersummieru
 und die Erstellung regelbasierter Komponenten ist zeit- und ressourcenintensiv, vor allem bei großen Unterschieden in der
 Struktur des inputs, wie es in dem Kontext dieser Arbeit gegeben ist. \cite{Grishman2015}
 
-\paragraph{LLM-basierte Ansätze}
 Eine neuere Möglichkeit stellen große Sprachmodelle (LLMs) dar, 
 um Informationsextraktion als semantisches Verständnisproblem zu formulieren. 
 LLMs können Textpassagen kontextsensitiv interpretieren und strukturierte Ausgaben, etwa in 
@@ -309,7 +248,6 @@ Der Hauptnachteil besteht in der verlorenen Deterministik und möglichen Halluzi
 die durch präzises Prompt-Design und Validierungsschritte minimiert, aber 
 nicht vollständig ausgeschlossen werden können. \cite{Filho2025}
 
-\paragraph{Vergleich}
 Während klassische regelbasierte Verfahren beim Transfer von Markdown-Dateien 
 in strukturierte JSON-Formate durch ihre klare Logik und Nachvollziehbarkeit überzeugen, 
 stoßen sie bei komplexen Textstrukturen und uneinheitlichen Formulierungen an Grenzen.
