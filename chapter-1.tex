@@ -1,72 +1,101 @@
 \chapter{Einleitung}
 
 \section{Motivation und Relevanz}
-\label{sec:motiation}
+\label{sec:motivation}
 
-Gebäudeautomation und IoT Komponenten gewinnen stark an Bedeutung.
-Sensoren, Gateways und Steuerungen werden in Gebäuden zunehmend eingesetzt, um
-Energieflüsse zu optimieren, Komfort zu erhöhen und Prozesse zu automatisieren.
-Mit der wachsenden Verbreitung solcher Geräte steigt auch ihr Anteil an
-Materialverbrauch, Energieeinsatz und Abfallaufkommen entlang des Lebenszyklus.
+Gebäudeautomation und IoT-Komponenten gewinnen stark an Bedeutung. Sensoren, Gateways
+und Steuerungen werden in Gebäuden zunehmend eingesetzt, um Energieflüsse zu optimieren,
+Komfort zu erhöhen und Prozesse zu automatisieren. Mit der wachsenden Verbreitung solcher
+Geräte steigt auch ihr Anteil an Materialverbrauch, Energieeinsatz und Abfallaufkommen
+entlang des Lebenszyklus.
 
-Parallel dazu rücken Nachhaltigkeit, Berichtspflichten und vergleichbare
-Umweltkennzahlen stärker in den Fokus. Unternehmen benötigen für Entscheidungen in
-Entwicklung, Beschaffung und Portfolio Management zunehmend belastbare Indikatoren,
-um ökologische Hotspots zu identifizieren und Maßnahmen zu priorisieren.
-In frühen Phasen sind jedoch oft nur wenige Produktmerkmale bekannt, während eine
-vollständige Ökobilanz typischerweise aufwendig ist und detaillierte Annahmen
-erfordert.
+Der Gebäudesektor zählt neben Verkehr und der industriellen Produktion zu den wesentlichen
+Verursachern von CO$_2$-Emissionen. 
+In einer Studie von Bitkom e.V., dem Branchenverband der 
+deutschen Informations- und Telekommunikationsbranche,
+wird ein Anteil von etwa einem Drittel dem Ge\-bäu\-de\-sektor zugerechnet \cite{studie-einleitung}. 
+Di\-gi\-tale Ge\-bäu\-de\-tech\-no\-lo\-gien werden in dieser Studie als relevanter Hebel betrachtet, 
+durch bedarfsgerechte, intelligente Steuerung und fortgeschrittenem Monitoring 
+den Energieverbrauch und die Emissionen von Gebäuden zu senken.
 
-PEP Ecopassport Dokumente liefern standardisierte Umweltindikatoren und stellen
-damit eine wertvolle Datenquelle dar. In der Praxis sind sie jedoch heterogen
-aufgebaut und liegen meist als PDF vor, wodurch eine automatisierte Auswertung und
-eine konsistente Vergleichbarkeit erschwert werden. Damit entsteht eine Lücke
+Neben eines erhöhten Komforts können Gebäudeautomation und IoT-Komponenten somit tatsächlich 
+ökonomischen und ökologischen Nutzen liefern.
+
+Die Größen\-ordnung dieses Potenzials lässt sich anhand einer Szenariorechnung aus der
+Bitkom-Studie verdeutlichen. Abbildung~\ref{fig:bitkom_potential} zeigt die modellierten
+CO$_2$-Min\-derungs\-poten\-ziale di\-gi\-taler Ge\-bäu\-de\-tech\-no\-logi\-en im Ge\-bäu\-de\-sek\-tor in Deutschland,
+wobei die Ge\-bäu\-de\-au\-to\-mation gemäß DIN~EN~15232 in Ef\-fi\-zienz\-klassen eingeteilt wird.
+Klasse~D dient dabei als Referenz und entspricht Gebäuden ohne automatische Regelung. 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{images/studie-grafik.png}
+  \caption{Einsparungen thermischer Energie nach Automationsklassen, relativ zur Klasse D (Zahlen aus der Studie \cite{studie-einleitung}).}
+  \label{fig:bitkom_potential}
+\end{figure}
+
+Gleichzeitig sind die eingesetzten Geräte und die dadurch ermöglichten
+Einsparungen ökologisch nicht „gratis“. Herstellung,
+Materialeinsatz, Transport sowie die Nutzung verursachen eigene
+Treibhausgasemissionen und weitere Umweltwirkungen. Damit entsteht ein Zielkonflikt:
+Einerseits besteht ein Einsparpotenzial auf Gebäudeebene, andererseits müssen die
+zusätzlichen Umweltwirkungen der Hardware transparent und vergleichbar quantifiziert
+werden, um ökologische Hotspots zu identifizieren und fundierte Ent\-schei\-dungen in
+Entwicklung, Beschaffung und Port\-folio\-manage\-ment zu er\-mög\-lichen. Besonders in frühen
+Phasen liegen jedoch oft nur wenige robuste Produktmerkmale vor, während vollständige
+Ökobilanzen typischerweise aufwendig sind und detaillierte Annahmen erfordern.
+
+PEP-Ecopassport-Dokumente liefern standardisierte Umweltindikatoren und stellen damit
+eine wertvolle Datenquelle dar. In der Praxis sind sie jedoch heterogen aufgebaut und
+sind als PDF-Dateien veröffentlicht. Dadurch werden automatisierte Auswertung, Skalierung auf
+größere Datenmengen und konsistente Vergleichbarkeit erschwert. Es entsteht eine Lücke
 zwischen dem Bedarf an schnellen, nachvollziehbaren Umweltabschätzungen und der
 tatsächlich verfügbaren Datengrundlage.
 
-Diese Arbeit adressiert diese Lücke durch eine automatisierte Pipeline zur
-Extraktion strukturierter Umweltindikatoren aus PEP Dokumenten und durch eine
-Modellierung, die prüft, wie weit sich zentrale Indikatoren mit wenigen, leicht
-messbaren Produktmerkmalen approximieren lassen. Ziel ist dabei eine robuste
-heuristische Einordnung und nicht die exakte Rekonstruktion einzelner PEP Werte.
+Eine kürzlich abgeschlossene Bachelorarbeit von Selg \cite{Selg2025} entwickelte eine
+Extraktionspipeline, mit der relevante Daten aus PEP-Ecopassport-PDF-Dateien automatisiert
+ausgelesen und strukturiert gespeichert werden können, und führte erste statistische
+Analysen durch. Die vorliegende Arbeit knüpft an diese Vorarbeit an, erweitert die
+Pipeline für eine größere und robustere Datenbasis und nutzt die extrahierten Variablen
+für eine vertiefte quantitative Analyse und einer Modellentwicklung. 
 
 
+\FloatBarrier
 \section{Zielsetzung der Arbeit}
-\label{sec:intro_objectives}
+\label{sec:intro_ziele}
 
-Ziel dieser Arbeit ist der Aufbau einer durchgängigen Pipeline, die PEP
-Ecopassport Dokumente automatisiert verarbeitet und daraus eine strukturierte,
-analysierbare Datenbasis erzeugt. Auf der Datenbasis aufbauend soll untersucht werden, in
-welchem Umfang zentrale Umweltindikatoren aus wenigen, grundsätzlich auch ohne
-PEP verfügbaren Produktmerkmalen erklärbar sind.
+Ziel dieser Arbeit ist der Aufbau einer durchgängigen Pipeline, die PEP-Ecopassport-
+Dokumente automatisiert verarbeitet und in eine strukturierte, analysierbare Datenbasis
+überführt. Die Pipeline wird so ausgelegt, dass sie heterogene PDF-Layouts robust
+verarbeitet und eine skalierbare Datengrundlage für die nachfolgende Analyse
+und Modellentwicklung bereitstellt.
 
-Im Zentrum steht also die Entwicklung eines Modells für
-eine robuste heuristische Abschätzung, die als Orientierung und Einordnung
-der Umweltauswirkungen von Smart-Home Produkten dienen kann. 
-Ergänzend werden die Grenzen dieser
-Herangehensweise sowie die Rolle von Datenheterogenität und Ausreißern
-herausgearbeitet.
+Im Mittelpunkt steht die Ableitung eines robusten und in\-ter\-pretier\-baren Modells zur
+heu\-ris\-tischen Ab\-schätzung von Um\-welt\-aus\-wir\-kungen, ins\-besondere der CO$_2$-Emissionen.
+Dazu werden in den PEP-Daten wiederkehrende Muster zwischen wenigen, allgemein
+verfügbaren Produktmerkmalen und den ausgewiesenen Umweltindikatoren identifiziert und
+modelliert. Der Ansatz ist so gewählt, dass das Modell auch auf neue Produkte ohne
+verfügbare PEPs übertragbar ist und eine erste Einordnung der zu erwartenden
+Umweltauswirkungen ermöglicht.
+
+Die Genauigkeit des Modells soll analysiert und bewertet werden.
+Ergänzend sollen die Grenzen dieser Herangehensweise diskutiert, insbesondere im Hinblick
+auf Datenheterogenität, Ausreißer sowie die eingeschränkte Übertragbarkeit auf einzelne
+Produktkategorien und Nutzungsszenarien werden.
+
+
 
 
 \section{Wissenschaftliche Fragestellung}
 \label{sec:intro_research_questions}
 
-Aus der Zielsetzung ergeben sich die folgenden Fragestellungen.
+Aus der Zielsetzung ergibt sich die folgenden Fragestellung.
 
-\begin{enumerate}
-  \item Wie lassen sich heterogene PEP PDF Dokumente automatisiert in ein
-        konsistentes, maschinenlesbares Datenformat überführen, das
-        Umweltindikatoren, Materialinformationen und technische Merkmale
-        vergleichbar macht?
-  \item In welchem Ausmaß lassen sich die in PEPs ausgewiesenen
-        Umweltindikatoren. insbesondere \texttt{Climate change (total)}. durch
-        wenige Produktmerkmale wie Gewicht, Stromverbrauch und verdichtete
-        Materialinformationen erklären.
-  \item Welche Indikatoren sind mit dem gewählten Feature Set gut vorhersagbar
-        und bei welchen Indikatoren bleibt die Modellgüte gering. Welche
-        Fehlerstrukturen treten auf und welche Konsequenzen ergeben sich daraus
-        für Modellannahmen und Interpretation.
-\end{enumerate}
+\emph{Wie lassen sich Umweltwirkungen von Produkten der Gebäudeautomatisierung auf Basis von PEP-Ecopassport-
+Deklarationen systematisch extrahieren und statistisch analysieren, und inwieweit lassen sich daraus
+robuste, interpretierbare Modelle ableiten, die Umweltindikatoren auch für Produkte ohne PEP
+heuristisch abschätzen können?}
+
 
 
 

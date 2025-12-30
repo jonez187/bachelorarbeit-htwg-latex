@@ -2,7 +2,7 @@
 \label{sec:stat_grundlagen}
 
 Die in dieser Arbeit verwendeten statistischen Verfahren bilden 
-die methodische Grundlage zur Analyse und Modellierung der aus PEP~Ecopassports extrahierten Daten. 
+die methodische Grundlage zur Analyse und Modellierung der aus PEP-Ecopassports extrahierten Daten. 
 Dazu werden zunächst \emph{deskriptive und explorative} Verfahren eingesetzt, um Strukturen, 
 Streuungen und Ausreißer in den Daten sichtbar zu machen. 
 Darauf aufbauend wird die \emph{lineare Regression} als einfaches, interpretierbares Modell genutzt, 
@@ -15,10 +15,10 @@ im Datensatz.
 Die deskriptive Statistik bildet die Grundlage der quantitativen Datenanalyse. 
 Sie dient der Zusammenfassung und Beschreibung von Datensätzen, 
 um zentrale Merkmale einer Verteilung zu charakterisieren und potenzielle 
-Muster oder Auffälligkeiten zu erkennen \cite{Fisher2009}.  Der Schwerpunkt liegt nicht auf 
+Muster oder Auffälligkeiten zu erkennen \cite{Fisher2009}. Der Schwerpunkt liegt nicht auf 
 Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten \cite{Dimić2019}. 
 
-Die deskriptive Statistik umfasst numerische und grafische Verfahren zur Beschreibung
+Die deskriptive Statistik umfasst numerische Verfahren zur Beschreibung
 der \emph{Lage} und der \emph{Streuungskennzahlen} von Daten. \cite{Fisher2009}
 Ziel ist die Abbildung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
 Zu den typischen Lagemaßen gehören \emph{Mittelwert} und \emph{Median}.
@@ -67,9 +67,10 @@ ob die Schätzfehler eines Modells normalverteilt sind.
 Transformationen dienen nach \cite{Marshall2010} und \cite{Fisher2009} dazu, 
 Schiefe zu reduzieren, Varianz zu stabilisieren und parametrische Tests zu ermöglichen, 
 damit die Modellierung auf der Transformationsskala sinnvoller wird. 
-Die logarithmische Transformation (Log-Transformation) wird als eine der gängigsten Methoden, um Rechtsschiefe zu korrigieren, 
-erwähnt.
-Da der Logarithmus extrem hohe Werte stärker staucht als kleine Werte, kann die Transformation nach \cite{Marshall2010} den 
+Eine gängige Transformation um Rechtsschiefe zu korrigieren, ist die 
+logarithmische Transformation (Log-Transformation) erwähnt.
+Da der Logarithmus extrem hohe Werte stärker staucht als kleine Werte, 
+kann die Transformation nach \cite{Marshall2010} den 
 Einfluss von Ausreißern auf das Gesamtergebnis reduzieren.
 Für sehr kleine Werte von $x$ nahe $0$ gilt die Näherung $\log(1+x) \approx x$.
 Kleine Werte werden demnach kaum verändert. 
@@ -108,8 +109,10 @@ nach der Transformation $\log(1+x)$ und rechts nach einer Box-Cox-Transformation
   \label{fig:log_transform_hist}
 \end{figure}
 
-In dieser Arbeit wird vor allem log1p
-für Indikatorwerte und Residuenanalysen verwendet
+In dieser Arbeit wird vor allem die Transformation $\log(1+x)$ verwendet
+(\texttt{log1p}), um Indikatorwerte und Residuen auf einer besser interpretierbaren
+Skala zu analysieren.
+
 
 \FloatBarrier
 \subsection{Hauptkomponentenanalyse (PCA)}
@@ -172,18 +175,20 @@ und mehreren unabhängigen Variablen
 \[
 y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k + \varepsilon.
 \]
-Dabei ist \( \beta_0 \) der Achsenabschnitt, \( \beta_i \) die Regressionskoeffizienten der jeweiligen Einflussgrößen 
-und \( \varepsilon \) ein zufälliger Fehlerterm, der unerklärte Varianzanteile abbildet.
-Die Koeffizienten \(\beta_i\) quantifizieren die Richtung und Stärke des Einflusses einzelner Variablen auf den Zielindikator. \cite{Montgomery2022}
+Dabei ist \( \beta_0 \) der Achsenabschnitt, \( \beta_i \) die Regressionskoeffizienten der 
+jeweiligen Einflussgrößen und \( \varepsilon \) ein zufälliger Fehlerterm, der 
+unerklärte Varianzanteile abbildet. Die Koeffizienten \(\beta_i\) quantifizieren die 
+Richtung und Stärke des Einflusses einzelner Variablen auf den Zielindikator \cite{Montgomery2022}. 
 
 Für die lineare Regression gelten folgende Grundannahmen:
 \begin{itemize}
-    \item \textbf{Linearität:} Die Beziehung zwischen abhängiger und unabhängigen Variablen ist näherungsweise linear.
-    \item \textbf{Erwartungswert Null:} Die Fehlerterme haben einen Erwartungswert von null \(E(\varepsilon)=0\) und sind normalverteilt.
+    \item \textbf{Linearität:} Die Beziehung zwischen der abhängigen und den unabhängigen Variablen ist näherungsweise linear.
+    \item \textbf{Erwartungswert der Fehler:} Die Fehlerterme haben einen Erwartungswert von null \(E(\varepsilon)=0\) und sind normalverteilt.
     \item \textbf{Homoskedastizität:} Die Varianz der Fehler ist konstant und unabhängig von den erklärenden Variablen.
     \item \textbf{Unabhängigkeit:} Die Fehlerterme sind voneinander unkorreliert.
+    \cite{XiaogangSu2012}
 \end{itemize}
-\cite{Su2012}
+ 
 Diese Annahmen sichern die Unverzerrtheit und Effizienz der Parameterschätzungen. 
 Für explorative Anwendungen, wie sie in dieser Arbeit verfolgt werden, steht jedoch die 
 Struk\-tur\-ent\-deckung im Vor\-der\-grund.
@@ -196,15 +201,18 @@ beobachteten und modellierten Werten minimal wird:
 \[
 S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
 \]
-\cite{Su2012}
+\cite{XiaogangSu2012}
 
+Dabei ist $n$ die Anzahl der Beobachtungen, $y_i$ der beobachtete Zielwert und
+$\hat{y}_i$ die Modellvorhersage für Beobachtung $i$.
 Die Koeffizienten \(\beta_i\) geben an, wie stark sich der Zielindikator \(y\) im Mittel verändert, 
-wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben. 
+wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben.
+
 Das \emph{Bestimmtheitsmaß} \(R^2\) beschreibt den Anteil der Varianz des Zielindikators, der durch die 
-erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte. \cite{Montgomery2022}
+erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte \cite{Montgomery2022}. 
 Der \emph{Root Mean Square Error} (RMSE) misst die durchschnittliche Abweichung zwischen 
 beobachteten und vorhergesagten Werten. Er hat die gleiche Einheit wie die Zielvariable und 
-ist dadurch leicht interpretierbar und ebenfalls ein Indikator für die Modellgüte. \cite{Montgomery2022}
+ist dadurch leicht interpretierbar und ebenfalls ein Indikator für die Modellgüte \cite{Montgomery2022}. 
 
 In dieser Arbeit wird die multiple lineare Regression verwendet, 
 um Heuristiken zur Abschätzung der Umweltwirkungen von Elektro- und Elektronikprodukten zu entwickeln.

@@ -1,22 +1,31 @@
-\chapter{Explorative Modellentwicklung}
+\section{Explorative Modellentwicklung}
 \label{sec:exp_models}
 
 Dieses Kapitel beschreibt die Wahl des Regressionsmodells. 
 Im Mittelpunkt steht die
-explorative Entwicklung und experimentelle Erprobung verschiedener
+explorative Entwicklung und Auswertung verschiedener
 Modellvarianten, aus denen das in Abschnitt~\ref{sec:regression_co2}
 eingesetzte Hauptmodell für die CO$_2$-Äquivalente sowie die übrigen
-Indikatoren abgeleitet wurde.
+Indikatoren abgeleitet wird.
 
 Die Modellentwicklung erfolgte iterativ und datengetrieben: Unterschiedliche
 Feature-Sets, verschiedene PCA-Varianten sowie alternative lineare
 Schätzer wurden ausprobiert und anhand einheitlicher Gütemaße bewertet.
 Ziel ist es nachvollziehbar zu machen,
-welche Kombinationen sich in der Praxis als robust erwiesen haben und welche
+welche Kombinationen sich in der Praxis als robust erweisen und welche
 Ansätze verworfen wurden.
 
+Vor der Modellschätzung wurden die kontinuierlichen Eingangsvariablen standardisiert.
+Hierfür wurde der \texttt{StandardScaler} aus \emph{scikit-learn} verwendet, der jedes Feature
+gemäß $x' = (x - \mu_{\text{train}})/\sigma_{\text{train}}$ transformiert.
+Dabei werden Mittelwert $\mu_{\text{train}}$ und Standardabweichung $\sigma_{\text{train}}$
+ausschließlich auf dem Trainingsdatensatz geschätzt und anschließend unverändert auf
+Validierungs- und Testdaten angewendet (\texttt{with\_mean=True, with\_std=True}).
+Im \emph{Basisblock} betrifft dies \texttt{log\_w} und \texttt{log\_e}.
+Bei der globalen PCA wird die Standardisierung entsprechend auf alle Regressoren gemeinsam angewendet.
 
-\section{Experimentelle Fragestellungen}
+
+\subsection{Experimentelle Fragestellungen}
 \label{sec:exp_questions}
 
 Ausgehend von der Zielsetzung, mit möglichst wenigen und robust erfassbaren 
@@ -31,10 +40,12 @@ Modellentwicklung insbesondere folgende Fragestellungen ab:
   \item \textbf{Rohmaterialien vs.\ Material-PCA:}
         Ist es günstiger, die zahlreichen Materialspalten direkt zu verwenden,
       oder führt eine PCA des Materialblocks zu stabileren Modellen?
+  \item \textbf{Beitrg der Energiemodelle:}
+        Verbessert sich die Vorhersagegüte wenn zusätzlich Energiemodelle 
+        einbezogen werden?
   \item \textbf{Wahl des Regressionsverfahrens und Regularisierung:}
         Unterscheiden sich OLS, \texttt{Ridge} und \texttt{Lasso} hinsichtlich 
-        Stabilität und erzielbarer Gütemaße bei den vorhandenen PEP-Daten, 
-        insbesondere bei vielen korrelierten Regressoren?
+        Stabilität und erzielbarer Gütemaße bei den vorhandenen PEP-Daten?
   \item \textbf{Wahl der Zieltransformation:}
         Führt eine Log-Transformation (\texttt{log1p}) oder eine Box-Cox-Transformation zu 
         besserer Vorhersagegüte und plausibleren Residuen?
@@ -45,7 +56,7 @@ leiten aus den beobachteten Unterschieden einfache Heuristiken für die weitere 
 
 
 
-\section{Vergleich der Feature-Sets}
+\subsection{Vergleich der Feature-Sets}
 \label{sec:exp_feature_sets}
 
 Als erster Schritt der experimentellen Modellentwicklung wurde untersucht,
@@ -60,6 +71,7 @@ $\log(1+\text{CO2}_\text{total})$:
 
 \begin{itemize}
   \item \textbf{Basis:} nur Gewicht und Stromverbrauch.
+  \item \textbf{Basis + Energiemodelle:} Gewicht und Stromverbrauch + Energiemodelle.
   \item \textbf{Basis + Rohmaterialien:} zusätzlich alle ausgewählten
         Materialien als separate Regressoren.
   \item \textbf{Basis + Rohmaterialien mit Minimalvorkommen:}
@@ -67,6 +79,8 @@ $\log(1+\text{CO2}_\text{total})$:
   \item \textbf{Basis + PCA-Materialien:} statt der Rohmaterialspalten
         werden $k$ Hauptkomponenten aus einer PCA auf dem Materialblock
         verwendet (Varianzschwelle 90\,\%).
+  \item \textbf{Globale PCA (Basis + Rohmaterialien mit Minimalvorkommen):} Die PCA
+        wird auf alle Features global angewendet.
 \end{itemize}
 
 Für alle drei Varianten wurden dieselben Train/Test-Splits verwendet,
@@ -84,6 +98,7 @@ zeigt die erzielten Ergebnisse.
     Modellvariante                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
     \midrule
     Basis (Gewicht, Strom)             & 0.817 & \textbf{0.770} & 1.904 \\
+    Basis + Energiemodelle             & 0.668 & \textbf{0.501} & 2.302 \\
     Basis + Rohmaterialien             & 0.904 & \textbf{0.567} & 2.140 \\
     Basis + Rohmaterialien ($n >=10$)  & 0.842 & \textbf{0.832} & 1.152 \\
     Basis + PCA-Materialien ($n >=10$) & 0.887 & \textbf{0.882} & 1.095 \\
@@ -93,8 +108,24 @@ zeigt die erzielten Ergebnisse.
 \end{table}
 
 Das Basismodell aus Gewicht und Stromverbrauch erklärt bereits einen
-großen Anteil der Varianz der CO$_2$-Äquivalente. Die Erweiterung um
-Rohmaterialanteile erhöht zwar das Trainings-$R^2$ deutlich, bringt
+großen Anteil der Varianz der CO$_2$-Äquivalente.
+
+Obwohl die Einbeziehung des verwendeten Energiemodells intuitiv eine höhere Modellgüte
+erwarten lässt, liegt die Güte weit unter der des Basismodells. Ein plausibler Grund ist die 
+starke Dominanz weniger Strommixe, insbesondere des europäischen
+und französischen Mixes (siehe Abb.~\ref{fig:iso_energy}).
+Für die anderen Energiemodelle sind in den betrachteten PEPs zu wenig Datenpunkte
+um deren Effekt zuverlässig zu schätzen. 
+Ein weiterer Grund ist die unzureichende Abdeckung der Jahreszahlen der benutzten Strommixe in den PEPs.
+Sie sind nur in wenigen Datensätzen vorhanden und können daher nicht
+robust als erklärende Variable modelliert werden.
+Gleichzeitig kann sich die Stromerzeugungsstruktur zwischen Jahren deutlich verändern.
+Wenn unterschiedliche Jahre im Datensatz vermischt werden, entsteht zusätzliche Varianz in den
+Zielwerten, die durch das benutzte Feature-Set nicht erklärt werden kann und sich als Rauschen im
+Modell zeigt.
+
+Die Er\-wei\-terung um
+Roh\-ma\-terial\-an\-tei\-le erhöht zwar das Trainings-$R^2$ deutlich, bringt
 aber auf dem Testdatensatz keinen Mehrwert und verschlechtert $R^2_{\text{Test}}$ und den
 RMSE\textsubscript{Test} leicht. Dies ist ein Hinweis auf Überanpassung durch die vielen,
 teilweise korrelierten Materialvariablen.
@@ -115,17 +146,16 @@ anderen Modelle. Die Materialinformationen tragen also erkennbar
 zur Vorhersage bei, müssen dafür aber in verdichteter Form (PCA) in das
 Modell eingehen. Auf Basis dieser Experimente wurde das
 „Basis + PCA-Materialien“-Feature-Set als Ausgangspunkt für die weitere
-Modellentwicklung und den späteren SGD-Regressionsansatz gewählt.
+Modellentwicklung und den späteren Regressionsansatz gewählt.
 
 
-\section{Vergleich der Regressionsverfahren}
+\subsection{Vergleich der Regressionsverfahren}
 \label{sec:exp_regressionsverfahren}
 
 Die im vorherigen Abschnitt beschriebenen Experimente zum Vergleich der
 Feature-Sets wurden für den Indikator \emph{Climate change (total)} zunächst
 mit einer klassischen linearen Regression auf Basis der der \texttt{LinearRegression} aus
-\texttt{scikit-learn} nachgebildet und in eine Pipeline mit
-\texttt{StandardScaler}, optionaler PCA und Train/Test-Aufteilung eingebettet.
+\texttt{scikit-learn} nachgebildet.
 
 Im nächsten Schritt wird das lineare Modell anschließend mit 
 \texttt{Ridge} und \texttt{Lasso}
@@ -136,12 +166,12 @@ liefern können.
 
 Bei festem Feature-Set
 (Gewicht, Stromverbrauch, PCA-Materialkomponenten) lieferten
-\texttt{Ridge} und \texttt{Lasso} über mehrere äußere
+\texttt{Ridge} und \texttt{Lasso} über mehrere
 Wiederholungen des Experiments ähnliche $R^2$- und RMSE-Werte.
 Beide Verfahren schnitten konstant besser ab als \texttt{LinearRegression}.
 Die Wahl des Regressors war allerdins, wie die Zahlen zur Modellgüte 
 in \ref{tab:vergleich_regressoren} 
-zeigen, damit deutlich weniger bedeutend als der Einfluss des Feature-Sets.
+zeigen, damit deutlich bedeutend als der Einfluss des Feature-Sets.
 
 \begin{table}[h]
   \centering

@@ -1,0 +1,59 @@
+\section{Datenbereinigung und Validierung}
+
+Nach der automatischen Extraktion und Normalisierung werden zuerst
+fehlerhafte oder unvollständige
+Datensätze mithilfe eines Python-Skripts \emph{sort\_out\_unusable.py} ausgeschlossen. 
+Ein Datensatz galt als unbrauchbar, wenn sämtliche
+Umweltindikatoren fehlten oder ausschließlich Nullwerte enthielten, oder wenn
+die zentralen Felder \texttt{total\_weight}, \texttt{electricity\_consumption},
+\texttt{material\_composition} und \texttt{energy\_model} gleichzeitig leer waren.
+Diese Kriterien führten zur Aussonderung von 8 der insgesamt 242 Datensätze.
+Diese PEPs enthielten zwar Metadaten, jedoch keine quantitativen Werte
+und wurden daher nicht in die Analyse einbezogen.
+
+\begin{table}[h]
+\centering
+\caption{Anzahl der PEP-Dokumente von der Recherche bis zum Analysedatensatz.}
+\label{tab:pep_flow}
+\begin{tabular}{p{9cm}r}
+\toprule
+Schritt & Anzahl \\
+\midrule
+Automatisierte Keyword-Suche (identifiziert) & $+$ 184 \\
+Aussortiert ohne Gebäudeautomatisierungsrelevanz & $-$ 77 \\
+Manuell ergänzte PEPs & $+$ 145 \\
+\midrule
+Gesamtzahl recherchierter PEPs & 252 \\
+Aussortiert als unbrauchbar oder fehlerhaft & $-$ 18 \\
+\midrule
+Finaler Analysedatensatz & 234 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+Die Datenbereinigung wurde durch automatisierte Prüfmechanismen begleitet.
+Dazu zählten Validierungen auf fehlende oder ungültige Einheiten, numerische
+Typfehler (z.\,B. String statt numerischer Wert) sowie Plausibilitätsprüfungen,
+etwa auf Null- oder Extremwerte bei zentralen Variablen.
+Ein zusätzlicher Kontrolllauf identifizierte Datensätze mit nicht plausiblen
+Summen oder Flatline-Indikatoren (identische Werte in allen Phasen), die von der
+weiteren Analyse ausgeschlossen wurden.
+
+Mehrere alternative Ansätze wurden im Verlauf der Datenbereinigung geprüft und
+bewusst verworfen. Die Aktivierung von OCR für alle PDFs hätte den Aufwand und
+die Laufzeit erheblich erhöht, ohne die Datenqualität signifikant zu verbessern.
+Ebenso wurde auf ein vollautomatisches Mapping über Sprachmodelle verzichtet,
+da dieses zu unkontrollierten Korrekturen führte. 
+Eine Hierarchisierung der Materialien (z.\,B. \emph{Iron} als Unterkategorie von
+\emph{Metals}) oder eine gesonderte Behandlung von Verpackungsmaterialien wurde
+aus Gründen der Vergleichbarkeit nicht umgesetzt.
+
+Die bereinigten JSON-Dateien wurden anschließend mit \texttt{flatten\_jsons.py}
+in ein flaches, tabellenbasiertes Format überführt. 
+Während die ursprünglichen JSON-Strukturen sowohl menschen- als auch maschinenlesbar
+angelegt waren, wurde das Format nun in eine einheitliche, analysierbare
+Datenstruktur überführt, die sich für statistische Auswertungen und Visualisierungen
+eignet.
+
+

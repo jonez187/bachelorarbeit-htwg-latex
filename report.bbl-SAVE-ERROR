@@ -277,6 +277,49 @@
       \verb https://www.sciencedirect.com/science/article/pii/S1078817410000027
       \endverb
     \endentry
+    \entry{XiaogangSu2012}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=ce44997f883f8294792773dad220b242}{%
+           family={Su},
+           familyi={S\bibinitperiod},
+           given={Xiaogang},
+           giveni={X\bibinitperiod}}}%
+        {{hash=39c24818d14725f4a4d00ffd29de9e24}{%
+           family={Yan},
+           familyi={Y\bibinitperiod},
+           given={Xin},
+           giveni={X\bibinitperiod}}}%
+        {{hash=838773c5e12e6cdf09911cf2e0ff4cf4}{%
+           family={Tsai},
+           familyi={T\bibinitperiod},
+           given={Chih-Ling},
+           giveni={C\bibinithyphendelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{fullhash}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{fullhashraw}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{bibnamehash}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{authorbibnamehash}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{authornamehash}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{authorfullhash}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \strng{authorfullhashraw}{b7d59a6677a30cdf14ed27af3f7270f7}
+      \field{labelalpha}{SYT12}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Linear regression}
+      \field{year}{2012}
+      \verb{doi}
+      \verb 10.1002/wics.1198
+      \endverb
+      \verb{urlraw}
+      \verb https://wires.onlinelibrary.wiley.com/doi/full/10.1002/wics.1198
+      \endverb
+      \verb{url}
+      \verb https://wires.onlinelibrary.wiley.com/doi/full/10.1002/wics.1198
+      \endverb
+    \endentry
     \entry{Hassanzadeh2013}{article}{}{}
       \name{author}{4}{}{%
         {{hash=402ff948d7e5e2dc49d2ba212a6471c8}{%
@@ -705,6 +748,25 @@
       \endverb
       \verb{url}
       \verb https://projecteuclid.org/journals/statistical-science/volume-36/issue-2/The-BoxCox-Transformation-Review-and-Extensions/10.1214/20-STS778.full
+      \endverb
+    \endentry
+    \entry{studie-einleitung}{online}{}{}
+      \field{labelalpha}{21}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{note}{Durchgeführt von Bitkom e.V.}
+      \field{title}{Studie zum Klimaschutz und Energieeffizienz durch digitale Gebäudetechnologien}
+      \field{urlday}{30}
+      \field{urlmonth}{12}
+      \field{urlyear}{2025}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://telematik-markt.de/sites/default/files/news/attachments/211110-bitkom-klimaschutz-und-energieeffizienz-durch-digitale-gebaudetechnologien_0.pdf
+      \endverb
+      \verb{url}
+      \verb https://telematik-markt.de/sites/default/files/news/attachments/211110-bitkom-klimaschutz-und-energieeffizienz-durch-digitale-gebaudetechnologien_0.pdf
       \endverb
     \endentry
     \entry{Montgomery2022}{article}{}{}
@@ -1164,11 +1226,31 @@
       \verb https://arxiv.org/abs/2501.17887
       \endverb
     \endentry
-    \entry{layout-parser}{online}{}{}
+    \entry{grobid}{online}{}{}
       \field{labelalpha}{25}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{extraalpha}{1}
+      \field{labeltitlesource}{title}
+      \field{note}{Grobid Bibliothek auf Github}
+      \field{title}{Grobid Github Dokumentation}
+      \field{urlday}{23}
+      \field{urlmonth}{12}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/kermitt2/grobid
+      \endverb
+      \verb{url}
+      \verb https://github.com/kermitt2/grobid
+      \endverb
+    \endentry
+    \entry{layout-parser}{online}{}{}
+      \field{labelalpha}{25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extraalpha}{2}
       \field{labeltitlesource}{title}
       \field{note}{Dokumentation der Layout-Parser Bibliothek}
       \field{title}{Layout-Parser Dokumentation}
@@ -1182,26 +1264,6 @@
       \endverb
       \verb{url}
       \verb https://layout-parser.github.io/
-      \endverb
-    \endentry
-    \entry{matlab-pca}{online}{}{}
-      \field{labelalpha}{25}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{extraalpha}{2}
-      \field{labeltitlesource}{title}
-      \field{note}{Dokumentation der Matlab pca Bibliothek}
-      \field{title}{Matlab PCA Dokumentation}
-      \field{urlday}{22}
-      \field{urlmonth}{11}
-      \field{urlyear}{2025}
-      \field{year}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://de.mathworks.com/help/stats/pca.html
-      \endverb
-      \verb{url}
-      \verb https://de.mathworks.com/help/stats/pca.html
       \endverb
     \endentry
     \entry{Filho2025}{article}{}{}
@@ -1336,11 +1398,31 @@
       \verb https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
       \endverb
     \endentry
-    \entry{scipy-boxcox}{online}{}{}
+    \entry{sklearn-robust}{online}{}{}
       \field{labelalpha}{25}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{extraalpha}{5}
+      \field{labeltitlesource}{title}
+      \field{note}{Dokumentation der Python Bibliothek scikit-learn zu RobustScaler}
+      \field{title}{Scikit-learn RobustScaler Dokumentation}
+      \field{urlday}{30}
+      \field{urlmonth}{12}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
+      \endverb
+      \verb{url}
+      \verb https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
+      \endverb
+    \endentry
+    \entry{scipy-boxcox}{online}{}{}
+      \field{labelalpha}{25}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extraalpha}{6}
       \field{labeltitlesource}{title}
       \field{note}{Dokumentation der Python Bibliothek scipy zur boxcox Funktion}
       \field{title}{Scipy boxcox Dokumentation}
@@ -1424,7 +1506,6 @@
       \endverb
     \endentry
   \enddatalist
-  \missing{grobid}
 \endrefsection
 \endinput
 

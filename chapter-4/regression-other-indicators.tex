@@ -7,6 +7,7 @@ sich diese mit denselben Produktmerkmalen erklären lassen.
 
 \subsection{Regression des Indikators Acidification}
 \label{sec:reg_acidification}
+\FloatBarrier
 
 Neben den CO$_2$-Äquivalenten wurde das lineare Regressionsmodell auch auf den
 Indikator \emph{Acidification} angewendet. 
@@ -108,6 +109,7 @@ geprägt sind.
 \FloatBarrier 
 \subsection{Regression des Indikators Hazardous Waste Disposed}
 \label{sec:reg_hazardous_waste}
+\FloatBarrier
 
 Für den Indikator \emph{Hazardous waste disposed} konnten $n = 168$ PEPs verwendet werden.
 Es wurden keine Transformation, \texttt{log1p} und eine Box Cox Transformation verglichen.
@@ -177,19 +179,11 @@ während einzelne große Fehler auf schwerere Verteilungsschwänze hinweisen.
 \FloatBarrier 
 \subsection{Regression des Indikators Water Use}
 \label{sec:reg_water_use}
+\FloatBarrier
 
 Für den Indikator \emph{Water use} wird dieselbe Regressionspipeline wie zuvor verwendet.
 Es wurden keine Transformation, \texttt{log1p} und eine Box Cox Transformation verglichen.
 Die beste Testgüte wird mit der Box Cox Transformation erreicht, daher wird im Folgenden dieses Modell berichtet.
-Zur Sicherstellung positiver Werte wird die Transformation auf $(1 + \text{water\_use}_{\text{total}})$ angewendet.
-Die Zielvariable ist damit
-\[
-  \text{bc\_wu} =
-  \begin{cases}
-    \dfrac{(1+\text{water\_use}_{\text{total}})^{\lambda}-1}{\lambda}, & \lambda \neq 0, \\
-    \log(1+\text{water\_use}_{\text{total}}), & \lambda = 0 .
-  \end{cases}
-\]
 Tabelle~\ref{tab:reg_water_use} fasst die Testleistung nach Rücktransformation zusammen.
 
 \begin{table}[h]
@@ -261,6 +255,7 @@ Dies weist auf schwerere Verteilungsschwänze und einzelne extreme Residuen hin.
 \FloatBarrier 
 \subsection{Regression des Indikators Photochemical Ozone Formation (HH)}
 \label{sec:reg_pof_hh}
+\FloatBarrier
 
 Für den Indikator \emph{Photochemical ozone formation, human health}
 (\texttt{photochemical\_ozone\_formation\_hh}) wird dieselbe Regressionspipeline wie zuvor verwendet.
@@ -404,17 +399,6 @@ Es wurden keine Transformation, \texttt{log1p} und eine Box Cox Transformation
 verglichen.
 Die beste Testgüte wird mit der Box Cox Transformation erreicht, daher wird
 im Folgenden dieses Modell berichtet.
-Zur Behandlung von Nullwerten wird die Transformation auf $(1+y)$ angewendet,
-wobei $y$ den terrestrischen Eutrophierungs Gesamtwert in $\mathrm{mol\ N}$
-bezeichnet.
-
-\[
-  y_{\mathrm{BC}} =
-  \begin{cases}
-    \dfrac{(1+y)^{\lambda}-1}{\lambda}, & \lambda \neq 0, \\
-    \log(1+y), & \lambda = 0.
-  \end{cases}
-\]
 
 Tabelle~\ref{tab:reg_eutrophication_t} fasst die Testleistung nach
 Rücktransformation zusammen.

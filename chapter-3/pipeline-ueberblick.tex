@@ -1,0 +1,37 @@
+\section{Überblick der Pipeline}
+
+Ziel der entwickelten Pipeline ist die automatisierte Extraktion strukturierter Daten
+aus PEP-Ecopassport-Dokumenten im PDF-Format. Die PEPs bilden die zentrale Quelle für
+produktbezogene Umweltinformationen, enthalten jedoch uneinheitlich formatierte
+Tabellen und Textblöcke, die eine direkte Auswertung erschweren.
+
+Die Pipeline wandelt die heterogenen PDF-Dokumente in ein einheitliches,
+maschinenlesbares Datenformat um. Als Input dienen die PEP-PDFs, als Output entsteht
+eine strukturierte CSV-Datei, die sämtliche relevanten Variablen zu Produkt,
+Materialien, Energieverbrauch und Umweltindikatoren enthält. Der Prozess umfasst
+mehrere aufeinanderfolgende Schritte:
+
+\begin{itemize}
+  \item \textbf{Recherche und Erfassung:} Recherche, Speicherung und Bewertung der
+        verfügbaren PEP-Dokumente mit Gebäudeautomatisierungsbezug aus der öffentlichen PEP-Datenbank. \cite{PEPDB}
+  \item \textbf{Extraktion:} Umwandlung der PDF-Dateien in Rohtext und Tabelleninhalte
+        mittels Dokumentenparser; Layout- und Tabellenstrukturen werden erkannt.
+  \item \textbf{Interpretation:} Zuordnung der erkannten Inhalte zu definierten
+        Variablen mithilfe regelbasierter und LLM-gestützter Methoden.
+  \item \textbf{Normalisierung:} Harmonisierung von Einheiten, Materialnamen und
+        Energie­modellen zur Sicherstellung der Vergleichbarkeit.
+  \item \textbf{Export:} Zusammenführung aller Informationen in eine flache,
+        analysierbare CSV-Datei als Grundlage der nachfolgenden statistischen
+        Auswertung.
+\end{itemize}
+
+Abbildung~\ref{fig:pipeline_overview} zeigt den groben schematischen Aufbau des
+Gesamtprozesses von der Rohdatenerfassung bis zur strukturierten Datenbasis. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/Pipeline_Grafik.png}
+  \caption{Schematischer Aufbau der Pipeline: von der PEP-Erfassung bis zur
+  strukturierten Datenbasis.}
+  \label{fig:pipeline_overview}
+\end{figure}

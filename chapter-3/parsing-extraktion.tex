@@ -1,0 +1,72 @@
+\section{PDF-Parsing und Extraktion}
+
+Die Extraktion strukturierter Daten aus PEP-PDFs stellte den technisch anspruchsvollsten
+Teil der Arbeit dar. Ziel ist es, aus den heterogenen Dokumenten eine konsistente,
+maschinenlesbare Repräsentation der Umweltindikatoren, Gerätedaten und
+Metadaten zu erzeugen, welche entsprechend der Zielsetzung der Arbeit analysiert werden können. 
+Die finale Lösung kombiniert eine robuste Layoutanalyse mit
+Docling und eine LLM-basierte, schema­gesteuerte Inhaltsinterpretation.
+
+Zu Beginn wurde eine auf \texttt{pdfplumber} basierende Pipeline eingesetzt, 
+die auf der von Selg \cite{Selg2025} entwickelten Pipeline aufbaut.
+Sie erkennt mithilfe von Regex- und Textheuristiken Tabellen und Materiallisten. 
+Obwohl dieser Ansatz für einzelne PDFs funktionierte, erwies sich die Übertragbarkeit als unzureichend.
+Ursache waren typische Strukturprobleme von PDF-Dateien: eine verzerrte
+Zeilen- und Wortreihenfolge im Textlayer, stark variierende Layouts, Tabellen als
+Rasterbilder sowie uneinheitliche Bezeichnungs- und Einheitenformate. Bereits kleine
+Abweichungen in Tabellenköpfen führten zu fehlerhaften Zuordnungen von Indikatoren oder
+Spalten. 
+
+Die Vielzahl individueller Ausnahmen entwickelte sich zu einem unübersichtlichen Netz von abzufangenden Ausnahmefällen, 
+das neue Konflikte zwischen bestehenden und neu hinzugefügten
+Layouts verursachte.
+Auch die manuelle Ergänzung einzelner Werte ist bei der erforderlichen Datenmenge in dieser Arbeit nicht mehr praktikabel.
+Eine vollständige Generalisierung des pdfplumber-Parsers war im Rahmen
+der Arbeit nicht realistisch umsetzbar.
+
+Diese Limitierungen führten zur Entwicklung einer neuen, modularen Pipeline, die auf
+dem Open-Source-Framework \emph{Docling} von IBM basiert. Docling erlaubt die
+strukturierte Segmentierung von PDF-Inhalten in Absätze, Tabellen, Listen und Bilder
+und exportiert diese in Markdown oder JSON. Dadurch konnte die textuelle Logik vom
+Layout entkoppelt und die Zuverlässigkeit der Verarbeitung deutlich
+verbessert werden.
+
+Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
+\begin{itemize}
+  \item \textbf{Docling-Konvertierung:} PDF-Dateien werden in eine Markdown-Struktur
+        überführt. OCR und Bildbeschreibung sind deaktiviert, um Laufzeit und
+        Speicherverbrauch zu reduzieren. Tabellen- und Abschnittsgrenzen bleiben
+        erhalten.
+  \item \textbf{Regelbasierter Filter:}
+      Um Kontextverluste des nachgelagerten Sprachmodells zu vermeiden,
+      wurde ein regelbasierter Python-Filter auf die aus Docling generierten
+      Markdown-Dateien angewendet. Irrelevante Segmente (z.,B.\ Kopf- und Fußzeilen, Unternehmensinformationen)
+      werden über eine Blacklist entfernt.
+  \item \textbf{LLM-basierte Extraktion:} Der kon\-ver\-tierte Text wird in Ab\-schnit\-ten
+        an ein Sprachmodell übergeben, das definierte Variablen extrahiert und im
+        JSON-Format zurückgibt. Die Prompt\-struktur erzwingt strikte Datentypen und
+        klare Feldbezeichnungen. 
+\end{itemize}
+
+Für die semantische Extraktion wurde \emph{GPT-5} verwendet, angesprochen über die
+\emph{Responses-API}. Diese neue Schnittstelle unterstützt strukturierte
+Ausgaben und optional eine Schema-Validierung. Durch einen Aufruf im
+\texttt{response\_format=json\_object}-Modus, werden nur gültige JSON-Formate geliefert, 
+was den Post-Processing-Aufwand erheblich senkt. GPT-5 konnte
+Numerische Werte und Einheiten stabil erkennen, sowie Module (A1–A3, A4, A5,
+B*, C*, D) zuverlässig zuordnen. 
+Die Temperatur des LLMs wurde auf 0 gesetzt, um Zufälligkeit und Kreativität möglichst zu vermeiden.
+
+Die Kombination aus Docling und GPT-5 führte somit zu einem 
+skalierbaren Verfahren, das auch bei komplexen Layouts konsistente Ergebnisse liefert.
+
+Die neue Pipeline konnte die Anzahl fehlerhafter oder unvollständiger Einträge deutlich
+reduzieren.
+Für PDFs mit reinen Rastertabellen bleibt jedoch eine 
+Einschränkung bestehen, da ohne OCR keine
+Inhalts­extraktion möglich ist. 
+Der Einsatz eines LLMs führt aufgrund der stochastischen Modellkomponenten zudem zu einer eingeschränkten
+Reproduzierbarkeit und Transparenz. 
+Obwohl das Risiko minimiert wurde, könnte es vorkommen, dass identische Eingaben
+aufgrund von Halluzinationen nicht immer identische Ausgaben liefern.
+Diese Einschränkungen sind angesichts der PDF-Heterogenität nicht zu umgehen und methodisch vertretbar.

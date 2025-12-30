@@ -3,7 +3,7 @@
 Zur explorativen Analyse und zur Reduktion der Di\-men\-sionali\-tät der 
 Material\-daten wurde eine Haupt\-komponenten\-analyse
 (PCA) durchgeführt.
-Benutzt wurde die Python-Bibliothekt \emph{scikit-learn} \cite{scikit-learn-pca}.
+Benutzt wurde die Python-Bibliothek \emph{scikit-learn} \cite{scikit-learn-pca}.
 Alle Materialien, die in einem Produkt nicht vorkommen, wurden als 0 interpretiert.
 
 Vor der PCA wurden die Verteilungen der Materialanteile 
@@ -11,27 +11,32 @@ grafisch untersucht. Die Histogramme, von welchen die 3 häufigsten Materialien
 in Abbildung~\ref{fig:material_hists}
 dargestellt sind,
 zeigen, dass die Daten teilweise multimodal verteilt sind und viele Beobachtungen 
-im Bereich sehr kleiner Anteile liegen. Eine einfache z-Standardisierung 
-würde diese Verteilungen nicht normalisieren und wäre durch 
-Ausreißer stark beeinflusst.
+im Bereich sehr kleiner Anteile liegen. Bei einer einfachen z-Standardisierung 
+wäre die Verteilung durch 
+Ausreißer weiterhin stark beeinflusst.
 
-TODO: Titel hinzufügen
-\begin{figure}[H]
+Für die PCA der Materialien wird daher der \emph{scikit-learn RobustScaler} \cite{sklearn-robust}
+verwendet. Dieser zentriert jede Materialspalte um den Median und skaliert durch die
+Interquartilsbreite (IQR), wobei die Quantile standardmäßig als
+$Q_{0.25}$ und $Q_{0.75}$ definiert sind (\texttt{quantile\_range=(25,75)}).
+Im Gegensatz zur z-Standardisierung wird damit die Skalierung deutlich weniger durch
+Ausreißer beeinflusst.
+Die PCA wird anschließend auf der robust skalierten Materialmatrix durchgeführt.
+In den nachfolgenden Regressionsmodellen werden die Skalierungsparameter jeweils nur auf den
+Trainingsdaten geschätzt und anschließend auf Validierungs- bzw.\ Testdaten angewendet, um
+Data Leakage zu vermeiden.
+
+
+
+\begin{figure}[h]
   \centering
   \includegraphics[width=1.0\textwidth]{images/material_histograms.png}
-  \caption{Beispiele für Histogramme ausgewählter Materialanteile 
-           (nur PEPs mit positivem Anteil).}
+  \caption{Histogramme der Materialien mit den größten Anteilen über alle Podukte.}
   \label{fig:material_hists}
 \end{figure}
 
-Für die PCA auf dem Materialblock wird daher der \emph{scikit-learn RobustScaler} 
-verwendet, der jede Materialsäule um den Median zentriert und durch die 
-Interquartilsbreite skaliert. Dadurch werden die typischen Wertebereiche 
-der Materialien stärker gewichtet und einzelne extreme PEPs sind weniger 
-dominant. Die PCA selbst wird anschließend auf der robust skalierten 
-Materialmatrix durchgeführt.
 
-
+\FloatBarrier
 \subsection{Ergebnis der PCA}
 
 \begin{figure}[H]
@@ -43,10 +48,10 @@ Materialmatrix durchgeführt.
 
 In Abbildung~\ref{fig:pca_kum} ist die durch die Hauptkomponenten erklärte kumulative 
 Varianz dargestellt.
-Die ersten 10 Hauptkomponenten erklären bereits ungefähr 55\,\% der Varianz, 20 Komponenten etwa 80\,\%
-und 30 Komponenten ungefähr 90\,\%. Ab etwa 30 Komponenten nehmen zusätzliche Komponenten nur noch
-geringe Varianzanteile auf (z.\,B.\ ca.\ 97\,\% bei 40 Komponenten). Für die weitere Modellierung
-wurde daher ein Varianzschwellenwert von 90\,\% gewählt, was in diesem Datensatz etwa $k=30$
+Die ersten 5 Hauptkomponenten erklären bereits ungefähr 90\,\% der Varianz. 
+Ab etwa 20 Komponenten nehmen zusätzliche Komponenten nur noch
+geringe Varianzanteile auf. Für die weitere Modellierung
+wurde daher ein Varianzschwellenwert von 95\,\% gewählt, was in diesem Datensatz etwa $k=8$
 Hauptkomponenten entspricht. Dieser Wert ist ein Kompromiss zwischen Dimensionsreduktion
 und Informationsverlust. 
 
@@ -113,7 +118,7 @@ Hauptkomponenten wie folgt interpretieren:
 \end{itemize}
 
 Bemerkenswert ist, dass klassische Strukturmetalle wie Stahl oder Kupfer
-sowie Materialien wie Papier bzw.\ Karton in den ersten
+sowie Materialien wie Papier in den ersten
 Hauptkomponenten nicht mit den höchsten Ladungen auftreten. Das liegt daran,
 dass ihre Anteile über viele PEPs hinweg vergleichsweise stabil sind und
 dadurch weniger zur Gesamtvarianz beitragen als die stark schwankenden
@@ -126,8 +131,8 @@ drei Komponenten beschreiben vor allem verschiedene Kunststoffmischungen
 (PS, PE und andere Kunststoffe), während PC$_4$ und
 PC$_5$ Leiterplatten und Elektronik gegenüber PVC lastigen Gehäusen
 abgrenzen. Diese fünf Hauptkomponenten erklären zusammen knapp
-90\,\% der Varianz im Materialblock und bilden damit die prägendsten
+95\,\% der Varianz im Materialblock und bilden damit die prägendsten
 Materialmuster der PEPs ab. In den folgenden
-Regressionsmodellen werden sie als kompakte Materialindikatoren genutzt,
+Regressionsmodellen werden sie genutzt,
 um den Einfluss des Materialmixes auf die Umweltindikatoren zu erfassen,
-ohne alle einzelnen Materialspalten separat berücksichtigen zu müssen.
+ohne alle einzelnen Materialien separat berücksichtigen zu müssen.

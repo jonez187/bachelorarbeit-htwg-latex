@@ -13,8 +13,9 @@ Abschließend werden die Verteilungen der Umweltindikatoren
 untersucht, um erste strukturelle Muster und Auffälligkeiten innerhalb des
 Datensatzes zu identifizieren.
 
-
+\FloatBarrier
 \subsection{Vollständigkeit der Werte}
+\FloatBarrier
 
 Zur Bewertung der Datenvollständigkeit wurde der Anteil fehlender Werte
 pro Variable berechnet und in einem Balkendiagramm
@@ -49,7 +50,6 @@ ausgeschlossen, da keine belastbaren statistischen Aussagen getroffen werden kö
 \end{figure}
 
 
-
 Zusätzlich wurden die Erscheinungsjahre der PEP-Ecopassports untersucht. Die
 Veröffentlichungen reichen von 2020 bis 2025 und verteilen sich wie in
 Abb.~\ref{fig:erscheinungsjahr} dargestellt. Der deutliche Anstieg ab 2022 zeigt die
@@ -58,12 +58,12 @@ letzten Jahren.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.8\linewidth]{images/dateien_pro_jahr.png}
+  \includegraphics[width=0.9\linewidth]{images/dateien_pro_jahr.png}
   \caption{Erscheinungsjahre der analysierten PEP-Dokumente (\(N=233\) Produkte).}
   \label{fig:erscheinungsjahr}
 \end{figure}
 
-
+\FloatBarrier
 \subsection{Überblick der \emph{Input}-Variablen}
 
 Für die Input-Variablen werden robuste Kennzahlen (\textbf{Median}, \textbf{IQR})
@@ -100,7 +100,6 @@ Schraubenverdichter und Greenspeed\textsuperscript{TM}-Technologie}
 mehr als 13~t erreicht. Der Mittelwert liegt mit 278~kg weit über dem Median
 (2.18~kg), was die ausgeprägte Rechtsschiefe bestätigt.
 
-
 Auch der \emph{Stromverbrauch} weist eine extreme Streuung auf (ca.~86147~kWh), 
 mit Werten zwischen 0.026~kWh und über 8.2e6~kWh.
 Damit ist das kleinste Produkt nahezu stromlos im Betrieb, 
@@ -108,23 +107,56 @@ während das größte Produkt eine mehrjährige oder großtechnische Nutzung abb
 Der Mittelwert (228000~kWh) übersteigt den Median (327~kWh) um mehrere Größenordnungen, was 
 die starke Rechtsverschiebung der Verteilung verdeutlicht.
 
+Abbildung~\ref{fig:hist_weight} und Abbildung~\ref{fig:hist_elec} ergänzen
+Tab.~\ref{tab:basis} um eine visuelle Einordnung. Beide Verteilungen sind auf
+Originalskala stark rechtsschief. Wenige sehr große Werte dominieren die Skala,
+wodurch der Großteil der Beobachtungen im linken Randbereich zusammengefasst
+wird. Um die typische Größenordnung dennoch sichtbar zu machen, ist die
+Originalskala in den Histogrammen auf einen Maximalwert begrenzt. Die Anzahl der
+nicht dargestellten Werte oberhalb dieser Grenze ist jeweils in der Grafik
+angegeben.
 
-Die Zusammenhänge zwischen Stromverbrauch und Umweltauswirkungen hängen 
-maßgeblich von der Art der Stromerzeugung ab. 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{images/gewicht_orig_cap_vs_log1p.png}
+  \caption{Histogramme des Gesamtgewichts auf Originalskala (links, bis zu 1.000.000 kwh) und nach log1p-Transformation (rechts).}
+  \label{fig:hist_weight}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{images/stromverbrauch_orig_cap_vs_log1p.png}
+  \caption{Histogramme des Stromverbrauchs auf Originalskala (links, bis zu 1.000.000 g) und nach log1p-Transformation (rechts).}
+  \label{fig:hist_elec}
+\end{figure}
+
+Die log1p Transformation reduziert diese Skalenprobleme, indem große Werte
+komprimiert und Unterschiede im unteren Bereich besser aufgelöst werden. Dadurch
+wird die Verteilung zwar besser interpretierbar, sie wird jedoch nicht
+symmetrisch oder normalverteilt. Für die nachfolgenden Regressionsmodelle ist
+dies auch nicht erforderlich. Entscheidend ist hier vor allem, dass die extremen
+Ausreißer im Datensatz weniger dominieren und Beziehungen zwischen Variablen auf einer
+geeigneteren Skala modelliert werden können.
+
+
+
+\FloatBarrier
+Die Zusammenhänge zwischen Stromverbrauch und Umweltauswirkungen können 
+von der Art der Stromerzeugung abhängen. 
 Da sich die Strommixe regional unterscheiden, variieren auch 
 die resultierenden Emissionen je nach Herkunftsland des Energiebezugs.
 
-Im Datensatz zeigt sich, dass der Großteil der verwendeten Energiemodelle auf allgemeine europäische Strommixe 
-(EU27) und Frankreich entfällt. Besonders in den Phasen Nutzung und End-of-Life ist der Anteil
+Wie \ref{fig:iso_energy} zeigt, fällt der Großteil der verwendeten Energiemodelle auf allgemeine europäische Strommixe 
+(EU27) und Frankreich. Besonders in den Phasen Nutzung und End-of-Life ist der Anteil
 europäischer Modelle deutlich höher. Dies liegt vermutlich daran, dass die Produkte häufig europaweit 
 vertrieben und verwendet werden. Daher ist es schwierig, den tatsächlichen Energiebezug eines spezifischen Landes 
-realistisch abzubilden, weshalb in der Regel ein repräsentativer europäischer Durchschnitt angenommen wird.
+realistisch abzubilden, weshalb öfter ein europäischer Durchschnitt angenommen wird.
 
 Der hohe Anteil von Frankreich ist auf eine große Anzahl an PEP-Dokumenten aus Frankreich zurückzuführen,
 die zu national vermarkteten Produkten gehören.
 Von dort stammt die Association P.E.P und das Format ist dort am meisten etabliert.
 
-Auch in der Herstellungsphase dominiert ein europäischer Energiemix, ergänzt durch einzelne Modelle 
+Auch in der Her\-stel\-lungs\-phase dominiert ein europäischer Energiemix, ergänzt durch einzelne Modelle 
 aus Deutschland und China, was auf internationale Produktionsketten hinweist. 
 Insgesamt verdeutlicht die Verteilung, dass die meisten PEP-Deklarationen von europäischen 
 Strommixen ausgehen, wodurch die berechneten Umweltauswirkungen tendenziell niedrigere fossile Anteile aufweisen, als es bei 
@@ -132,15 +164,16 @@ stärker kohleabhängigen Regionen (z. B. China) der Fall wäre.
 
 Aufgrund der europäischen Prägung des Datensatzes ist die Aussagekraft der anschließenden Regression 
 für Produkte außerhalb Europas eingeschränkt.
-Entsprechende Auswertungen werden mit erhöhter Unsicherheit und geringerer Datenqualität verbunden sein.
-  
+Entsprechende Auswertungen werden mit erhöhter Unsicherheit und geringerer Datenqualität verbunden sein.  
+
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.8\linewidth]{images/energy_iso_grouped_count.png}
+  \includegraphics[width=1.0\textwidth]{images/energy_iso_grouped_count.png}
   \caption{Verteilung der verwendeten Energiemodelle (ISO-Regionen) über die Lebenszyklusphasen}
-  \label{fig:meinbild}
+  \label{fig:iso_energy}
 \end{figure}
 
+\FloatBarrier
 
 Eine weitere Variable, die die Umweltindikatoren stark beeinflussen, und damit in der zu entwickelnden Heuristik eine Rolle spielen muss,
 ist die Zusammensetzung des Produkts aus den verschiedenen Materialien.
@@ -155,19 +188,25 @@ die Gruppen \emph{Metalle, Plastik und andere} gegliedert.
 \begin{table}
   \centering
   {\captionsetup{font=small}
-   \caption{Durchschnittliche Materialanteile nach Hauptkategorien (Mittelwert in \%).}
+   \caption{Durchschnittliche Materialanteile über alle Produkte, gruppiert nach Hauptkategorien (Mittelwert in \%).}
    \label{tab:materials_threecols}
    \scriptsize
    \setlength{\tabcolsep}{3pt}
    \renewcommand{\arraystretch}{1.03}
 
+   \sisetup{
+     exponent-mode = fixed,
+     scientific-notation = false,
+     round-mode = places,
+     round-precision = 2
+   }
+
    \begin{adjustbox}{max width=\textwidth}
-   \begin{minipage}{\textwidth}
      % ==================== METALLE ====================
      \begin{subtable}[t]{0.315\textwidth}
        \centering
        \caption{Metalle}
-       \begin{tabular}{@{}L{0.60\linewidth} S r@{}}
+       \begin{tabular}{@{}L{0.40\linewidth} S[table-format=2.2] r@{}}
          \toprule
          Material & {Mittelwert} & {n} \\
          \midrule
@@ -189,7 +228,7 @@ die Gruppen \emph{Metalle, Plastik und andere} gegliedert.
      \begin{subtable}[t]{0.315\textwidth}
        \centering
        \caption{Kunststoffe}
-       \begin{tabular}{@{}L{0.60\linewidth} S r@{}}
+       \begin{tabular}{@{}L{0.4\linewidth} S[table-format=2.2] r@{}}
          \toprule
          Material & {Mittelwert} & {n} \\
          \midrule
@@ -221,7 +260,7 @@ die Gruppen \emph{Metalle, Plastik und andere} gegliedert.
      \begin{subtable}[t]{0.315\textwidth}
        \centering
        \caption{Andere}
-       \begin{tabular}{@{}L{0.60\linewidth} S r@{}}
+       \begin{tabular}{@{}L{0.40\linewidth} S[table-format=2.2] r@{}}
          \toprule
          Material & {Mittelwert} & {n} \\
          \midrule
@@ -253,7 +292,6 @@ die Gruppen \emph{Metalle, Plastik und andere} gegliedert.
          \bottomrule
        \end{tabular}
      \end{subtable}
-   \end{minipage}
    \end{adjustbox}
   }
 \end{table}
@@ -269,14 +307,14 @@ Die Kategorie \emph{Andere} enthält zahlreiche kleinvolumige Komponenten, deren
 summierter Anteil jedoch nicht vernachlässigbar ist. Insgesamt spiegelt sich in der
 Verteilung die Diversität der erfassten Produktgruppen wider.
 
-
+\FloatBarrier
 \subsection{Überblick der Umweltindikatoren}
+\FloatBarrier
 
 Die Umweltindikatoren bilden die Output-Variablen, auf deren Basis später die
 Heuristik entwickelt wird. Eine deskriptive Betrachtung verdeutlicht bereits die
 Verteilungsstruktur der Daten.
 
-% TODO: Übersetzen, einheitlich, Layout anpassen.
 
 \begin{table}[tbp]
   \centering
@@ -334,7 +372,7 @@ Vielfaches über dem Median. Besonders ausgeprägt ist die Schiefe bei
 Abbildung~\ref{fig:boxplot_indicators} ergänzt diese Zusammenfassung, indem sie die
 Streuung innerhalb der Indikatoren sowie die Ausreißerstruktur in Boxplots auf
 logarithmischer Skala zeigt. Bei den meisten Indikatoren erstreckt sich die
-Verteilung über mehrere Größenordnungen und es treten zahlreiche Ausreißer nach
+Verteilung über mehrere Größenordnungen. Alle Indikatoren weisen zahlreiche Ausreißer nach
 oben auf. Die logarithmische
 Skala komprimiert große Werte, weshalb extrem hohe Beobachtungen im Plot
 optisch näher zusammenrücken, obwohl sie sich in den Originaleinheiten stark
@@ -343,4 +381,4 @@ unterscheiden.
 Insgesamt bestätigt sich eine heterogene, rechtsschiefe Datenbasis mit
 einigen Produkten, die sehr hohe Umweltwirkungen aufweisen.
 
-
+\FloatBarrier

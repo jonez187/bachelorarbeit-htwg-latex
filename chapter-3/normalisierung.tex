@@ -1,0 +1,42 @@
+\section{Normalisierung der Daten}
+\label{subsec:normalisierung}
+Nach der Extraktion lag ein heterogener Datensatz mit uneinheitlichen Bezeichnungsformen
+für Länder, Materialien, Lebenszyklusphasen, Energiequellen und Einheiten vor.
+Um eine konsistente Auswertung zu ermöglichen, wurden sämtliche Schreibweisen vereinheitlicht.
+Ziel war es, strukturell vergleichbare Werte zu schaffen und gruppierte Analysen über
+mehrere PEPs hinweg zu ermöglichen.
+
+Zur systematischen Erfassung der vorhandenen Begriffe wurde ein Hilfsskript
+entwickelt, das die in den JSON-Dateien vorkommenden
+Rohwerte inventorisiert. Für jedes relevante Feld (z.\,B. Indikatoreinheiten,
+Materialbezeichnungen oder Energiequellen) werden die Häufigkeiten einzelner
+Strings erfasst und als Übersichtstabellen ausgegeben. 
+
+Für jede Datendomäne wurde darauf basierend eine Zu\-ord\-nungs\-tabelle 
+(\emph{Mapping-Datei}) erstellt, die reguläre Ausdrücke den vereinheitlichten
+Standardbegriffen zuordnet.
+Folgende Datendomänen wurden vereinheitlicht:
+Einheiten (z.\,B. \emph{„kg~CO$_2$-eq“}, \emph{„kg~CO2e“} und \emph{„kg~CO2~equiv“} zu \emph{„kg~CO2~eq“}),
+Materialien (z.\,B. \emph{„Paper“}, \emph{„Cardboard“} und \emph{„Carton“} zu \emph{„Paper“}),
+Lebenszyklusphasen (z.\,B. \emph{A1-A3} und \emph{Manufacturing} zu \emph{manufacturing})
+und Strommixe (z.\,B. \emph{France grid mix}, \emph{France Mix}, \emph{French grid} zu \emph{FR}).
+Diese Mappings wurden schrittweise verfeinert, bis alle identifizierten
+Abweichungen abgedeckt waren. 
+
+Bei der Vereinheitlichung wurden einige pragmatische Entscheidungen getroffen:
+\emph{Steel} und \emph{Iron} wurden beispielsweise zur Kategorie \emph{Steel} zusammengefasst,
+\emph{Carton} und \emph{Cardboard} werden zu \emph{Paper} zusammengefasst,
+da beide ähnliche Materialeigenschaften aufweisen. 
+Für Kunststoffe wurde eine vereinfachte Zusammenführung vorgenommen.
+
+Ein Python-Skript wendet diese Mapping-Dateien auf alle extrahierten JSON-Dateien an.
+
+Doppelte Materialeinträge, die durch das Mapping innerhalb eines Produkts entstanden sind, 
+werden, sofern sie identische Bezeichnungen aufweisen, mithilfe eines weiteren Python-Skripts zusammengeführt. 
+Dabei werden Prozentangaben und Gewichtsangaben bei Dubletten addiert.
+
+Durch die Vo\-kabular\-analyse und an\-schließen\-de Normalisierung entsteht so ein
+standardisierter Datensatz mit konsistenten Schreibweisen und eindeutiger
+Begriffssystematik. Diese Vereinheitlichung bildet die methodische Grundlage
+für die nachfolgende quantitative Auswertung.
+

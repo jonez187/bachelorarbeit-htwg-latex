@@ -1,7 +1,8 @@
-\section{Lineare Regression der CO$_2$-Äquivalente}
+\section{Lineare Regression des Indikators \emph{Climate change (total)}}
 \label{sec:regression_co2}
 
-Ziel der folgenden Analyse ist es zu untersuchen, inwieweit sich die in den PEPs
+Ziel der folgenden Analyse ist es entsprechend der
+Zielsetzung dieser Arbeit zu untersuchen, inwieweit sich die in den PEPs
 ausgewiesenen Treibhausgasemissionen (\emph{Climate Change, total})
 durch wenige, aus den Dokumenten verfügbare Produktmerkmale erklären lassen,
 die grundsätzlich auch für Produkte ohne PEP messbar sind.
@@ -10,9 +11,9 @@ lineares Regressionsmodell. Weitere Umweltindikatoren werden in späteren Abschn
 
 \subsection{Datenbasis und Transformation}
 
-Für die Regression werden nur Datensätze berücksichtigt, bei denen
+Für die Regres\-sion werden nur Daten\-sätze berück\-sich\-tigt, bei welchen
 \texttt{cc\_total}, \texttt{total\_weight} und
-\texttt{electricity\_consumption} vorhanden und positiv sind.
+\texttt{electricity\_consumption} vor\-handen und positiv sind.
 Nach dieser Filterung verbleiben insgesamt $n = 173$ PEPs.
 Die Materialinformationen liegen als Massenanteile vor.
 
@@ -33,7 +34,6 @@ Bei Bedarf lassen sich die Vorhersagen über die inverse Funktion
 \texttt{expm1} wieder auf die Originalskala der Emissionen zurückführen.
 
 \subsection{Modellformulierung}
-TODO: Klar machen, dass Materialien nicht geloggt werden
 
 Das endgültig betrachtete Modell nutzt drei Arten von erklärenden Variablen:
 das log-transformierte Gesamtgewicht, den log-transformierten, über die
@@ -50,7 +50,7 @@ In der log-transformierten Skala hat das Modell die Form
 \]
 wobei $\text{PC\_mat}_j$ die Material-Hauptkomponenten aus der PCA bezeichnen
 und k die Anzahl der verwendeten Komponenten ist.
-Wichtig ist, dass die Materialanteile selbst nicht log transformiert werden.
+Die Materialanteile selbst werden nicht log transformiert.
 Sie liegen als Massenanteile vor, werden skaliert und anschließend per PCA zu
 Hauptkomponenten zusammengefasst.
 Diese Hauptkomponenten fassen jeweils ein charakteristisches Muster aus
@@ -85,7 +85,7 @@ Root-Mean-Square-Error (RMSE) bewertet.
 Tabelle~\ref{tab:reg_co2_mainmodel} fasst die Testgüte 
 des CO$_2$ Regressionsmodells zusammen.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \caption{Gütekennzahlen des linearen Regressionsmodells
            (\texttt{Climate Change (total)} als Zielvariable).}
@@ -143,7 +143,7 @@ der verursachten CO$_2$-Äquivalente im Mittel korrekt einordnet.
 Eine präzise Abschätzung über alle Produkte hinweg ist mit dem verwendeten,
 bewusst kompakten Feature-Set nur eingeschränkt möglich.
 
-Eine weitere Auswertung der größten Abweichungen zeigt, dass diese vor allem bei
+Eine weitere Auswertung der größten absoluten Abweichungen zeigt, dass diese vor allem bei
 besonders schweren Produkten auftreten.
 Die fünf stärksten Ausreißer stammen aus PEPs mit einem Gesamtgewicht
 von mindestens $720\,\mathrm{kg}$.
@@ -157,7 +157,7 @@ ein Streudiagramm der vorhergesagten gegenüber den tatsächlichen Werten von
 Trainings- und Testdaten werden getrennt dargestellt, und eine Diagonale $y=x$
 markiert die ideale Übereinstimmung zwischen Vorhersage und Realität.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=1.0\textwidth]{images/regression_co2.png}
   \caption{Vorhergesagte und tatsächliche Werte von \texttt{Climate Change total} für einen
@@ -172,7 +172,7 @@ abbildet, ohne stark zu überanpassen.
 Gleichzeitig ist in einigen Wertebereichen sichtbar, dass der 
 Zielwert tendenziell
 unter- (z.\,B.\ Cluster bei $10^4$ bis $10^5\,\mathrm{kg}$) bzw. überschätzt 
-(z.\,B.\ Cluster bei $10^3,\mathrm{kg}$) werden.
+(z.\,B.\ Cluster bei $10^3,\mathrm{kg}$) wird.
 
 
 Eine genannte Annahme der linearen Regression ist, dass die Schätzfehler des Modells
@@ -186,7 +186,7 @@ Verteilungsschwänze hindeutet.
 Dies ist plausibel, da auf Originalskala einzelne sehr große Produkte die Fehler dominieren
 und Fehler häufig multiplikativ wirken, was auf Originalskala zu stark asymmetrischen Residuen führt.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_co2_qq_orig.png}
   \caption{QQ Plot der Residuen des CO$_2$-Modells auf Originalskala im Testset.}
@@ -199,7 +199,7 @@ was eine näherungsweise Normalität im mittleren Bereich unterstützt.
 In den äußeren Quantilen bleiben Abweichungen sichtbar, was auf eine erhöhte Wahrscheinlichkeit
 großer Fehler hinweist.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_co2_qq_trans.png}
   \caption{QQ Plot der Residuen des CO$_2$-Modells im Testset auf der Transformationsskala \texttt{log\_cc}.}
