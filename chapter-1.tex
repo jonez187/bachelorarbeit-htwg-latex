@@ -89,27 +89,56 @@ Produktkategorien und Nutzungsszenarien werden.
 \section{Wissenschaftliche Fragestellung}
 \label{sec:intro_research_questions}
 
-Aus der Zielsetzung ergibt sich die folgenden Fragestellung.
+Aus der Zielsetzung ergibt sich die folgenden zentrale Fragestellung:
 
 \emph{Wie lassen sich Umweltwirkungen von Produkten der Gebäudeautomatisierung auf Basis von PEP-Ecopassport-
 Deklarationen systematisch extrahieren und statistisch analysieren, und inwieweit lassen sich daraus
-robuste, interpretierbare Modelle ableiten, die Umweltindikatoren auch für Produkte ohne PEP
+robuste, in\-ter\-pre\-tier\-bare Modelle ableiten, die Um\-welt\-in\-di\-ka\-to\-ren auch für Produkte ohne PEP
 heuristisch abschätzen können?}
 
 
+Die Beantwortung dieser Fragestellung soll wissenschaftliche Erkenntnisse über die zentralen 
+Umweltindikatoren innerhalb einer heterogenen Produktgruppe liefern und zeigen,
+welche Produktmerkmale die größten Erklärungsbeiträge leisten. Gleichzeitig wird untersucht, unter
+welchen Voraussetzungen vereinfachte, interpretierbare Regressionsmodelle eine praktikable
+Erstabschätzung ermöglichen, und wo die Grenzen liegen. 
+Damit werden sowohl methodische Grundlagen für eine skalierbare Auswertung von
+PEP-Daten als auch praktische Anhaltspunkte für datenbasierte Nachhaltigkeitsbewertungen in frühen
+Entscheidungsphasen geschaffen
 
 
 \section{Aufbau der Arbeit}
 \label{sec:intro_structure}
 
-Die Arbeit gliedert sich wie folgt. Kapitel~\ref{chapter:methodik} beschreibt
-die Datenbasis und den Aufbau der Pipeline. von der PEP Recherche über Parsing,
-LLM gestützte Extraktion bis zur Normalisierung und Bereinigung der Daten.
-Kapitel~\ref{sec:regression_co2} untersucht anhand des Indikators
-\texttt{Climate change (total)} die Regressionspipeline, Transformationen und
-Fehlerdiagnostik. Kapitel~\ref{sec:reg_other_indicators} überträgt die
-Herangehensweise auf weitere Umweltindikatoren und vergleicht die
-resultierende Modellgüte. Kapitel~\ref{sec:discussion} ordnet die Ergebnisse
-ein, diskutiert Unsicherheiten sowie Grenzen der Daten und Modelle. Das Fazit
-fasst die zentralen Erkenntnisse zusammen und skizziert praktikable
-Weiterentwicklungen.
+Zur Beantwortung der Forschungsfrage wird ein methodischer Ablauf umgesetzt, der von der
+theoretischen Einordnung über den Aufbau einer belastbaren Datenbasis bis zur Modellierung
+und Diskussion der Ergebnisse reicht. Die Arbeit ist in sechs Kapitel gegliedert.
+
+Kapitel~\ref{chapter:theo} beschreibt die theo\-re\-tischen Grund\-lagen. Zu\-nächst werden der PEP-Eco\-pass\-port
+Standard und der typische Aufbau von PEP-Dokumenten erläutert. Anschließend werden
+Herausforderungen der strukturierten Informationsextraktion aus PDF-Dokumenten sowie
+geeignete Extraktionsansätze diskutiert. Das Kapitel schließt mit statistischen Grundlagen,
+die für die spätere explorative Analyse, Transformationen und Regressionsmodelle benötigt
+werden.
+
+Kapitel~\ref{chapter:methodik} stellt die entwickelte Pipeline und die erzeugte Datenbasis dar. Es beschreibt die
+Recherche und Auswahl geeigneter PEP-Dokumente, das PDF-Parsing und die Extraktion
+strukturierter Inhalte, die Normalisierung zentraler Begriffe und Einheiten sowie die
+Datenbereinigung und Validierung. Ziel ist eine konsistente, analysierbare Datenbasis als
+Grundlage der Modellierung.
+
+Kapitel~\ref{chapter:analyse} analysiert den erarbeiteten Datensatz und leitet daraus Modellentscheidungen ab.
+Zunächst werden Vollständigkeit und Verteilungen der Input-Variablen sowie zentrale
+Umweltindikatoren deskriptiv ausgewertet. Darauf aufbauend folgt eine explorative
+Modellentwicklung, in der Feature-Sets, PCA-Varianten und lineare Regressionsverfahren
+verglichen werden. Zusätzlich wird die Material-PCA beschrieben und interpretiert. Abschließend
+werden Regressionsmodelle für \emph{Climate change (total)} sowie für weitere 
+Indikatoren geschätzt und hinsichtlich Vorhersagegüte und Fehlerstruktur bewertet.
+
+Kapitel~\ref{chapter:discussion} diskutiert die Ergebnisse im Hinblick auf praktische Aussagekraft, Fehlermuster und
+Modellannahmen. Zudem werden Grenzen der Übertragbarkeit, der Einfluss von Datenheterogenität
+sowie mögliche Bias-Quellen reflektiert.
+
+Kapitel~\ref{chapter:fazit} fasst das methodische Vorgehen und die wichtigsten Ergebnisse zusammen und gibt
+einen Ausblick auf Weiterentwicklungen der Pipeline, zusätzliche Merkmale und möglichen
+weiteren Forschungsbedarf.
