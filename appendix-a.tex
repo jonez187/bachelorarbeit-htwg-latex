@@ -1,0 +1,353 @@
+% appendix-a.tex
+
+\chapter{Weitere Regressionsmodelle}
+\label{app:other_regressions}
+
+Die folgenden Abschnitte ergänzen die im Haupttext berichteten Ergebnisse um zusätzliche
+Indikatoren. Dargestellt sind jeweils die beste Zieltransformation, die Testgüte sowie
+Streudiagramme und QQ Plots zur Einordnung der Fehlerstruktur.
+
+\FloatBarrier
+\section{Regression des Indikators Hazardous waste disposed}
+\label{sec:reg_hazardous_waste}
+\FloatBarrier
+
+Für den Indikator \emph{Hazardous waste disposed} konnten $n = 168$ PEPs verwendet werden.
+Es wurden keine Transformation, \texttt{log1p} und eine Box-Cox-Transformation verglichen.
+Die beste Testgüte wird mit \texttt{log1p} erreicht, daher wird dieses Modell berichtet.
+Die Zielvariable ist damit
+$\text{log\_hwd} = \log(1 + \text{hazardous\_waste\_disposed}_{\text{total}})$.
+Tabelle~\ref{tab:reg_hazardous_waste} fasst die Testleistung nach Rücktransformation zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Hazardous waste disposed} als Zielvariable).}
+  \label{tab:reg_hazardous_waste}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$   & $0.813$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $18489.74\,\mathrm{kg}$ \\
+    \midrule
+    Median absoluter Fehler & $176.7890\,\mathrm{kg}$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0.6639$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $13.1431$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Das Modell erreicht eine gute Testgüte, allerdings ist die Fehlerverteilung stark schief.
+Der RMSE wird durch wenige große Abweichungen dominiert, während der Medianfehler deutlich kleiner ausfällt.
+Abbildung~\ref{fig:reg_hazardous_waste_scatter} zeigt die insgesamt gute Trendabbildung bei mittleren und großen Werten,
+während kleine Zielwerte zu großen relativen Fehlern führen können.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_h_w_d.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Hazardous waste disposed}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_hazardous_waste_scatter}
+\end{figure}
+
+Der QQ Plot in Abbildung~\ref{fig:reg_hazardous_waste_qq} zeigt eine näherungsweise Linearität im Zentrum,
+mit Abweichungen in den Randbereichen, was auf schwere Verteilungsschwänze hinweist.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_hwd_qq_new.png}
+  \caption{QQ Plot der Schätzfehler des \emph{Hazardous waste disposed} Modells auf der Transformationsskala.}
+  \label{fig:reg_hazardous_waste_qq}
+\end{figure}
+
+
+\FloatBarrier
+\section{Regression des Indikators Water use}
+\label{sec:reg_water_use}
+\FloatBarrier
+
+Für den Indikator \emph{Water use} wird dieselbe Regressionspipeline verwendet.
+Es wurden keine Transformation, \texttt{log1p} und eine Box-Cox-Transformation verglichen.
+Die beste Testgüte wird mit Box-Cox erreicht, daher wird dieses Modell berichtet.
+Tabelle~\ref{tab:reg_water_use} fasst die Testleistung nach Rücktransformation zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Water use} als Zielvariable).}
+  \label{tab:reg_water_use}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$   & $0{,}726$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $28682{,}36$ \\
+    \midrule
+    Median absoluter Fehler & $1353{,}5625$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0{,}9297$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $2{,}3278$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Die Testgüte ist moderat, mit deutlich größerer Streuung als bei den stärksten Indikatoren.
+Abbildung~\ref{fig:reg_water_use_scatter} zeigt eine tendenzielle Unterschätzung im oberen Wertebereich.
+Die Fehlerverteilung ist durch Ausreißer geprägt, was sich auch im QQ Plot widerspiegelt.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_water_use.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Water use}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_water_use_scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_water_use_qq.png}
+  \caption{QQ Plot der Residuen des \emph{Water use} Modells auf der Transformationsskala.}
+  \label{fig:reg_water_use_qq}
+\end{figure}
+
+
+\FloatBarrier
+\section{Regression des Indikators Photochemical ozone formation (HH)}
+\label{sec:reg_pof_hh}
+\FloatBarrier
+
+Für den Indikator \emph{Photochemical ozone formation, human health}
+(\texttt{photochemical\_ozone\_formation\_hh}) wurden keine Transformation, \texttt{log1p}
+und Box-Cox verglichen. Die beste Testgüte wird mit Box-Cox erreicht, daher wird dieses Modell berichtet.
+Es konnten $n = 171$ PEPs verwendet werden.
+Tabelle~\ref{tab:reg_pof_hh} fasst die Testleistung nach Rücktransformation zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Photochemical ozone formation, human health} als Zielvariable).}
+  \label{tab:reg_pof_hh}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$   & $0{,}802$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $109{,}1708\,\mathrm{kg\ C_2H_4}$ \\
+    \midrule
+    Median absoluter Fehler & $0{,}0255\,\mathrm{kg\ C_2H_4}$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0{,}6665$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $1{,}2811$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Die Vorhersagen erfassen den Haupttrend gut, mit größerer Streuung bei kleinen Werten
+und einer leichten Unterschätzung großer Zielwerte, vgl. Abbildung~\ref{fig:reg_pof_hh_scatter}.
+Die Residuen zeigen in den Randbereichen deutliche Abweichungen von Normalität, vgl. Abbildung~\ref{fig:reg_pof_hh_qq}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_pof.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Photochemical ozone formation, human health}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_pof_hh_scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_pof_qq.png}
+  \caption{QQ Plot der Residuen des \emph{Photochemical ozone formation, human health} Modells auf der Transformationsskala.}
+  \label{fig:reg_pof_hh_qq}
+\end{figure}
+
+
+\FloatBarrier
+\section{Regression des Indikators Resource use, fossils}
+\label{sec:reg_ruf}
+\FloatBarrier
+
+Für den Indikator \emph{Resource use, fossils} wurden keine Transformation, \texttt{log1p}
+und Box-Cox verglichen. Die beste Testgüte wird mit \texttt{log1p} erreicht, daher wird dieses Modell berichtet.
+Tabelle~\ref{tab:reg_ru_f} fasst die Testleistung nach Rücktransformation zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Resource use, fossils} als Zielvariable).}
+  \label{tab:reg_ru_f}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$   & $0{,}871$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $1119662{,}28\,\mathrm{MJ}$ \\
+    \midrule
+    Median absoluter Fehler & $14460{,}95\,\mathrm{MJ}$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0{,}6370$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $11{,}1394$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Die Testgüte ist hoch, der RMSE wird jedoch durch wenige große Abweichungen dominiert.
+Abbildung~\ref{fig:reg_ruf_scatter} zeigt eine enge Punktwolke entlang der Diagonalen
+mit einzelnen starken Überschätzungen. Der QQ Plot weist auf schwere Verteilungsschwänze hin, vgl. Abbildung~\ref{fig:reg_ruf_qq}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_ruf.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Resource use, fossils}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_ruf_scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_ruf_qq.png}
+  \caption{QQ Plot der Residuen des \emph{Resource use, fossils} Modells auf der Transformationsskala.}
+  \label{fig:reg_ruf_qq}
+\end{figure}
+
+
+\FloatBarrier
+\section{Regression des Indikators Eutrophication (terrestrial)}
+\label{sec:reg_eutrophication_terr}
+\FloatBarrier
+
+Für den Indikator \emph{Eutrophication, terrestrial} konnten $n = 107$ PEPs verwendet werden.
+Es wurden keine Transformation, \texttt{log1p} und Box-Cox verglichen. Die beste Testgüte wird mit Box-Cox erreicht.
+Tabelle~\ref{tab:reg_eutrophication_t} fasst die Testleistung nach Rücktransformation zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Eutrophication, terrestrial} als Zielvariable).}
+  \label{tab:reg_eutrophication_t}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$   & $0{,}793$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $99{,}33\,\mathrm{mol\ N}$ \\
+    \midrule
+    Median absoluter Fehler & $0{,}0854\,\mathrm{mol\ N}$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0{,}5611$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $1{,}1653$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Das Modell erreicht eine solide Testgüte, mit erhöhter Streuung bei kleinen Werten.
+Im oberen Wertebereich ist eine leichte Unterschätzung sichtbar, vgl. Abbildung~\ref{fig:reg_et_scatter}.
+Der QQ Plot zeigt Abweichungen in den Randbereichen, vgl. Abbildung~\ref{fig:reg_et_qq}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_et.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Eutrophication, terrestrial}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_et_scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_et_qq.png}
+  \caption{QQ Plot der Residuen des \emph{Eutrophication, terrestrial} Modells auf der Transformationsskala.}
+  \label{fig:reg_et_qq}
+\end{figure}
+
+
+\FloatBarrier
+\section{Regression des Indikators Ozone depletion}
+\label{sec:reg_ozone_depletion}
+\FloatBarrier
+
+Für den Indikator \emph{Ozone depletion} wurden keine Transformation, \texttt{log1p} und Box-Cox verglichen.
+Die beste Testgüte wird mit Box-Cox erreicht, daher wird dieses Modell berichtet.
+Es konnten $n = 170$ PEPs benutzt werden.
+Tabelle~\ref{tab:reg_ozone_depletion} fasst die Testleistung nach Rücktransformation zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Ozone depletion} als Zielvariable).}
+  \label{tab:reg_ozone_depletion}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$ & $0.858$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ & $0.0029$ \\
+    \midrule
+    Median absoluter Fehler & $0.0000$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0.8635$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $1.0411$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Der Indikator liegt auf einer sehr kleinen Skala, daher erscheinen absolute Fehler in gerundeter Darstellung teilweise als Null.
+Relativ betrachtet zeigen sich dennoch Ausreißer, insbesondere bei sehr kleinen Zielwerten.
+Abbildung~\ref{fig:reg_ozone_depletion_scatter} und Abbildung~\ref{fig:reg_ozone_depletion_qq} verdeutlichen die Streuung
+und eine rechtsschiefe Fehlerstruktur in den oberen Quantilen.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_od.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten von \texttt{Ozone depletion}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_ozone_depletion_scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_od_qq.png}
+  \caption{QQ Plot der Schätzfehler des \emph{Ozone depletion} Modells auf der Transformationsskala.}
+  \label{fig:reg_ozone_depletion_qq}
+\end{figure}
+
+
+\FloatBarrier
+\section{Regression des Indikators Resource use, minerals and metals}
+\label{sec:reg_ru_mm}
+\FloatBarrier
+
+Für den Indikator \emph{Resource use, minerals and metals} wurden keine Transformation, \texttt{log1p} und Box-Cox verglichen.
+Die beste Testgüte wurde mit Box-Cox erreicht, daher wird dieses Modell berichtet.
+Tabelle~\ref{tab:reg_ru_mm} fasst die Testleistung nach Rücktransformation auf die Originalskala zusammen.
+
+\begin{table}[h]
+  \centering
+  \caption{Gütekennzahlen des linearen Regressionsmodells
+           (\texttt{Resource use, minerals and metals} als Zielvariable).}
+  \label{tab:reg_ru_mm}
+  \begin{tabular}{lc}
+    \toprule
+    Größe & Wert (Test) \\
+    \midrule
+    $R^2_{\text{Test}}$ & $0.866$ \\
+    $\mathrm{RMSE}_{\text{Test}}$ (Originalskala) & $0.7218$ \\
+    \midrule
+    Median absoluter Fehler & $0.0010$ \\
+    $\mathrm{MdARE}_{\text{Test}}$ (Median rel. Fehler) & $0.7798$ \\
+    $\mathrm{MARE}_{\text{Test}}$ (Mittelwert rel. Fehler) & $1.0003$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Die Testgüte ist hoch und der Haupttrend wird gut abgebildet.
+Einzelne Ausreißer bleiben bestehen, vgl. Abbildung~\ref{fig:reg_ru_mm_scatter}, und die Residuen zeigen schwere Schwänze, vgl. Abbildung~\ref{fig:reg_ru_mm_qq}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/regression_rumm.png}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
+           \emph{Resource use, minerals and metals}. Beide Achsen sind logarithmisch skaliert.}
+  \label{fig:reg_ru_mm_scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_rumm_qq.png}
+  \caption{QQ Plot der Residuen des Modells für \emph{Resource use, minerals and metals} auf der Transformationsskala.}
+  \label{fig:reg_ru_mm_qq}
+\end{figure}
