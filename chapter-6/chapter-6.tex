@@ -1,25 +1,251 @@
-\chapter{Diskussion}
-\label{chapter:discussion}
+\chapter{Diskussion und Fazit}
+\label{chapter:diskussion}
 
 Aus den in Kapitel~\ref{sec:regression_co2} und 
 \ref{sec:reg_other_indicators} vorgestellten Regressionsmodellen 
 ergibt sich ein differenziertes Bild. Einige Indikatoren lassen sich 
-sehr gut, andere nur eingeschränkt durch Gewicht, Stromverbrauch und der benutzten 
-Materialien erklären. Dieses Kapitel ordnet die Ergebnisse ein und diskutiert Unsicherheiten und Grenzen.
+sehr gut, andere nur eingeschränkt durch Gewicht, Stromverbrauch und der  
+Materialinformationen erklären. Dieses Kapitel ordnet die Ergebnisse ein und diskutiert Unsicherheiten und Grenzen.
 
 
+\section{Vorgehen und Methodischer Beitrag}
+\label{sec:disc_method}
+
+Ziel der Arbeit war es, eine belast\-bare und skalier\-bare Da\-ten\-grund\-lage aus
+PEP-Ecopassport-Dokumenten aufzubauen und darauf aufbauend ein kompaktes, gut
+übertragbares Modell zur heuristischen Abschätzung zentraler Umweltindikatoren zu
+entwickeln. Im Vordergrund stand dabei nicht die exakte Reproduktion vollständiger
+Ökobilanzen, sondern eine schnelle Größenordnungsabschätzung, die auch dann möglich ist,
+wenn für ein neues Produkt kein PEP vorliegt und nur wenige robuste Produktmerkmale
+bekannt sind.
+
+Ausgangspunkt der Analyse war eine systematische Recherche nach geeigneten PEPs.
+Insgesamt wurden 252 PEP-Dokumente identifiziert. Nach Ausschluss fehlerhafter oder
+unbrauchbarer Dokumente verblieb ein Analysedatensatz von 234 PEPs. Für die
+Modellierung wurden je nach Zielindikator nur PEPs berücksichtigt, in denen
+die Zielgröße und die benötigten Eingangsvariablen numerisch verfügbar
+waren. Für \emph{Climate change (total)} ergibt sich dadurch beispielsweise eine
+Modellstichprobe von $n = 173$.
+ 
+Nach einer Kon\-ver\-tierung in struk\-turierte Mark\-down-Re\-präsen\-tatio\-nen 
+wurden die PEPs in eine konsistente, maschinenlesbare Datenrepräsentation überführt.
+Die eigentliche Extraktion der Variablen erfolgte schema-gesteuert mit einem
+Sprachmodell (LLM), das die gewünschten Felder in einem JSON-Format zurückgab.
+
+Um uneinheitliche Schreibweisen in Ländern, Materialien, Phasen, Energiequellen und Einheiten zu
+vereinheitlichen, wurden die Daten auf Basis einer Vokabularanalyse regelbasiert normalisiert.
+
+Auf der so erzeugten Datenbasis wurde ein bewusst kompakter Re\-gressions\-ansatz gewählt,
+der zum Modellierungsziel passt. Als Eingangsgrößen dienen Variablen, die auch ohne PEP
+typischerweise messbar oder abschätzbar sind, insbesondere Gesamtgewicht und über die
+Lebensdauer aggregierter Stromverbrauch, sowie PCA-verdichteten Materialinformationen.
+
+Die Mo\-dell\-güte wird konsequent über ge\-trennte Trai\-nings- und Test\-daten be\-ur\-teilt.
+Dieses Vorgehen ist für die Zielsetzung
+relevant, weil es die Aussagekraft zur Übertragbarkeit auf neue, bislang ungesehene
+Produkte stärkt und Überanpassung durch eine zu starke Optimierung auf die vorhandenen
+PEP-Daten reduziert.
+
+Der methodische Beitrag der Arbeit liegt damit in einem reproduzierbaren Prozess vom heterogenen
+PDF-Dokument bis zu einem konsistenten Datensatz und in einem Modellansatz, der mit wenigen,
+robust erfassbaren Eingangsgrößen eine plausible Einordnung von Umweltindikatoren ermöglicht.
+Die nachfolgenden Abschnitte ordnen die erzielten Ergebnisse vor diesem Hintergrund in Bezug auf die
+Forschungsfrage ein und diskutieren die Grenzen der Übertragbarkeit.
+
+
+\section{Einordnung der Ergebnisse im Kontext der Forschungsfrage}
+\label{sec:disc_results_context}
+
+Die For\-schungs\-fra\-ge zielt darauf ab, Um\-welt\-wir\-kungen von Pro\-duk\-ten der Ge\-bäu\-de\-au\-to\-ma\-tion
+systematisch auf Basis von PEP-Deklarationen zu analysieren und zugleich zu prüfen, inwieweit
+sich daraus ein Modell ableiten lässt, das auch für Produkte ohne PEP belastbare Schätzungen
+ermöglicht. Die Ergebnisse dieser Arbeit liefern hierzu ein differenziertes Bild.
+
+Erstens zeigt die Arbeit, dass eine systematische, vergleichbare Auswertung der in PEPs
+ausgewiesenen Umweltindikatoren grundsätzlich möglich ist. Sie setzt jedoch eine
+Standardisierung der heterogenen Dokumente und Begriffe voraus.
+
+Zweitens lassen die Modellresultate erkennen, dass einige Indikatoren mit wenigen,
+allgemein verfügbaren Produktmerkmalen gut erklärbar sind. Am deutlichsten gilt dies für
+\emph{Climate change (total)}. Gewicht, Stromverbrauch über die Lebensdauer sowie
+verdichtete Materialinformationen sind zentrale Treiber der Treibhauswirkung,
+sodass die Vorhersagen auf dem Testdatensatz vergleichsweise stabil ausfallen. Gleichzeitig
+zeigen die Fehlermaße, dass auch dieses Modell keine präzise Reproduktion einzelner PEP-Werte
+liefert, sondern vor allem eine Einordnung der Größenordnung ermöglicht.
+
+Für mehrere weitere Indikatoren lässt sich der Ansatz zwar übertragen, die Modelle
+erreichen jedoch nicht die Stabilität der CO$_2$-Regression. Dies betrifft insbesondere
+\emph{Acidification}, \emph{Hazardous waste disposed}, \emph{Water use},
+\emph{Photochemical ozone formation (HH)}, \emph{Resource use (fossils)},
+\emph{Eutrophication (terrestrial)}, \emph{Ozone depletion} sowie
+\emph{Resource use (minerals and metals)}. Für diese Zielgrößen werden in der Regel noch
+brauchbare Ergebnisse erzielt, die Streuung der Vorhersagefehler ist jedoch größer und die
+erklärte Varianz fällt geringer aus als bei \emph{Climate change (total)}.
+
+Für \emph{Eutrophication (freshwater)}, \emph{Eutrophication (marine)} und
+\emph{Radioactive waste disposed} gelingt es dagegen nur, einen begrenzten Anteil der Varianz
+zu erklären. Dies deutet darauf hin, dass die verwendeten Eingangsgrößen (Gewicht,
+Stromverbrauch und Materialmuster) wesentliche Einflussfaktoren dieser Indikatoren nicht
+abbilden, oder dass die PEP-Daten für diese Zielgrößen stärker durch unterschiedliche
+Systemgrenzen, Berechnungsannahmen und verwendete Hintergrunddatensätze geprägt sind.
+
+
+Die stark rechtsschiefen Verteilungen der Inputgrößen und Indikatoren unterstreichen zudem,
+dass Transformationen für eine robuste Modellierung notwendig sind.
+
+Vor diesem Hintergrund ist der Begriff \emph{belastbare Schätzung} in dieser Arbeit als
+\emph{heuristische Abschätzung} zu verstehen. Das Modell eignet sich insbesondere für eine
+schnelle, datengetriebene Orientierung, etwa zur Vorpriorisierung von Produkten oder Varianten,
+zur groben Einordnung erwartbarer Größenordnungen und zur Plausibilitätsprüfung von PEP-Angaben.
+Als Ersatz für eine vollständige Ökobilanz oder für feingranulare Vergleiche ähnlicher
+Produkte ist der Ansatz dagegen nicht geeignet.
+
+Insgesamt beantwortet die Arbeit die Forschungsfrage somit in zwei Teilen. Die PEP-Daten können
+durch die entwickelte Pipeline systematisch ausgewertet und in eine konsistente Datenbasis
+überführt werden. Auf dieser Grundlage lassen sich für ausgewählte Indikatoren, insbesondere
+\emph{Climate change (total)}, aus wenigen, ohne PEP erfassbaren Produktmerkmalen Modelle ableiten,
+die eine robuste Einordnung der Umweltauswirkungen in Größenordnungen ermöglichen. Für andere
+Indikatoren zeigt sich hingegen, dass zusätzliche erklärende Variablen oder alternative
+Modellierungsstrategien erforderlich wären, um vergleichbare Schätzqualität zu erreichen.
+
+
+
+\section{Grenzen und Limitationen}
+\label{sec:disc_limits}
+
+Trotz der erzielten Ergebnisse ist die Aussagekraft der Modelle durch mehrere
+Faktoren begrenzt. Ein zentraler Punkt ist die Datengrundlage selbst. Die
+234 recherchierten PEPs stellen keine zufällige Stichprobe aller Produkte der
+Gebäudeautomation dar, sondern spiegeln nur Produktgruppen und
+Hersteller wider, für die PEP-Deklarationen verfügbar sind. Entsprechend sind
+die abgeleiteten Zusammenhänge primär innerhalb des beobachteten Datenraums
+belastbar. Für Produktarten, die in der Stichprobe nur selten oder gar nicht
+vorkommen, ist mit deutlich größeren Prognosefehlern zu rechnen.
+
+\iffalse
+Ein wesentlicher Unsicherheitsfaktor ist zudem die Heterogenität der PEPs.
+Obwohl der PEP-Standard eine formale Vergleichbarkeit anstrebt, beruhen
+Deklarationen in der Praxis auf unterschiedlichen PCR-Versionen,
+Systemgrenzen, Hintergrunddatensätzen und Modellannahmen. Das Modell lernt
+damit nicht ausschließlich physikalische Zusammenhänge zwischen Gewicht,
+Stromverbrauch, Materialmix und Indikatorwerten, sondern bildet auch diese
+methodischen Unterschiede der Deklarationen ab. Diese Unterschiede wirken wie
+eingebautes Rauschen und begrenzen die erreichbare Modellgüte auch
+wenn die zugrunde liegenden Eingangsgrößen korrekt erfasst sind.
+\fi
+
+Ein Teil der verbleibenden Modellunsicherheit ist nicht durch das Regressionsverfahren,
+sondern durch die Struktur der PEP-Daten selbst bedingt. Besonders relevant ist die
+Abbildung des Strommixes. In vielen PEPs ist der verwendete Strommix entweder nur grob
+(z.\,B.\ als Länder- oder Regionenmix) angegeben oder es fehlen Referenzjahre des Mixes. 
+Gleichzeitig kann sich die Emissionsintensität der
+Stromerzeugung über die Zeit deutlich verändern. Dadurch entsteht eine zusätzliche,
+nicht beobachtbare Varianz in der Zielgröße, die mit den verfügbaren Inputvariablen
+(Gewicht, Stromverbrauch, Materialmix) nicht erklärt werden kann. 
+
+Ähnliche Effekte treten auf, wenn PEPs unterschiedliche Annahmen zu
+Nutzungsszenarien, Systemgrenzen oder Methodenversionen verwenden.
+Beispielsweise treten in den Daten verschiedene PEF-Versionen auf (PEF~3.0 vs.\ PEF~3.1). 
+Bei einem Wechsel der PEF-Version ändern sich die Berechnungsmethoden,
+was zu systematischen Änderungen der Indikatorwerte führen kann. Solche methodisch bedingten
+Unterschiede sind mit den hier genutzten Eingangsgrößen nicht
+verknüpft. Das Regressionsmodell kann sie deshalb nicht als physikalische
+Beziehungen zwischen Gewicht, Stromverbrauch, Materialmix und
+Indikatorwerten lernen, sondern nur als zusätzliches Rauschen
+wiederfinden. Dies begrenzt die maximal erreichbare Vorhersagegüte, selbst wenn
+das Modell formal eine hohe erklärte Varianz auf Teilen der Stichprobe erzielt.
+
+
+Auch die Fehlerstruktur der Modelle setzt Grenzen. Die Verteilungen der
+Zielgrößen sind stark rechtsschief und enthalten Ausreißer. Transformationen
+wie \texttt{log1p} oder Box-Cox stabilisieren die Modellierung, führen jedoch
+nicht zu vollständig normalverteilten Schätzungsfehlern. Damit sind klassische
+Schlussfolgerungen der OLS-Theorie, etwa Standardfehler oder p-Werte, nur
+eingeschränkt belastbar. Für die Zielsetzung dieser Arbeit ist aber die
+testbasierte Generalisierung zentral. Ergänzend zu $R^2$ und RMSE werden
+robuste Fehlermaße wie der Median absoluter Fehler sowie Median und Mittelwert
+der relativen absoluten Fehler genutzt, um die typische Modellleistung trotz
+Ausreißern nachvollziehbar zu charakterisieren.
+
+Die Materialmodellierung ist ebenfalls mit einem Trade-off verbunden. Die
+Nutzung einer PCA auf dem Materialblock erhöht die Stabilität, reduziert
+Multikollinearität und verhindert Überanpassung durch viele korrelierte
+Materialspalten. Gleichzeitig sinkt die Interpretierbarkeit einzelner
+Materialeffekte, da die Hauptkomponenten eher Muster im Materialmix abbilden
+als direkte kausale Beiträge einzelner Materialien.
+
+Schließlich bestehen technische Limitationen in der Extraktionspipeline.
+Rastertabellen können ohne OCR nicht zuverlässig ausgelesen werden, was zu
+fehlenden Werten oder zum Ausschluss einzelner PEPs führt. Darüber hinaus kann
+es trotz robuster Layoutanalyse in Einzelfällen zu Extraktionsfehlern kommen,
+die sich bis in die Auswertung fortpflanzen. Die schema-gesteuerte Extraktion
+mit einem Sprachmodell garantiert keine vollständige
+Deterministik und Transparenz einzelner Extraktionsentscheidungen.
+
+Insgesamt eignen sich die Modelle insbesondere zur
+Einordnung typischer Produkte innerhalb des betrachteten Datenraums.
+
+
+\section{Ausblick und zukünftiger Forschungsbedarf}
+\label{sec:disc_outlook}
+
+Ein naheliegender nächster Schritt ist eine Ka\-te\-go\-ri\-sie\-rung nach
+Pro\-dukt\-grup\-pen und eine getrennte Modellierung je Kategorie. Viele der
+beobachteten Streuungen dürften dadurch reduziert werden, da sich
+Zusammenhänge zwischen Gewicht, Stromverbrauch, Material und Indikatoren in
+homogeneren Teilmengen stabiler verhalten. Eine solche Segmentierung könnte
+über PEP-Metadaten oder Produktbeschreibungen
+erfolgen und würde gleichzeitig die Grundidee eines kompakten Feature-Sets beibehalten.
+
+Metho\-disch bietet sich außerdem an, ro\-bus\-te\-re Mo\-dell\-klas\-sen zu testen,
+die mit Aus\-reißern und He\-te\-ro\-ge\-ni\-tät besser umgehen können, ohne die
+Interpretierbarkeit vollständig zu verlieren. Beispiele wären robuste lineare
+Modelle (z.\,B.\ Huber-Regressoren oder Quantilsregression) oder auch 
+baumbasierte Verfahren als Vergleichsbasis. 
+Dabei sollte die Evaluation weiterhin strikt über getrennte
+Trainings- und Testdaten erfolgen, um die Generalisierbarkeit auf neue
+Produkte abzusichern.
+
+Auf Pipe\-line-Ebe\-ne kann der gezielte Einsatz
+von OCR für Ras\-ter\-ta\-bel\-len eine sinnvolle Erweiterung sein. Damit ließen sich zusätzliche PEPs und
+insbesondere schwer zugängliche Tabellenwerte erschließen, was die
+Vollständigkeit der Datenbasis verbessern würde. Gleichzeitig erhöht OCR den
+Rechenaufwand und kann neue Fehlerquellen einführen. Ein sinnvoller Kompromiss
+wäre eine fallweise Aktivierung nur dann, wenn Docling keine verwertbaren
+Tabellenextrakte liefert.
+
+Schließlich ist für die Zukunft eine automatisierte Standardisierung und
+Validierung der Datenbasis relevant. Dazu gehören Plausibilitätschecks,
+Einheitenprüfungen und konsistente Aggregationsregeln. 
+
+Die systematische Dokumentation von PCR-Versionen, Systemgrenzen und Datenbankbezügen,
+könnte die Modelle zusätzlich verbessern. Damit ließe sich besser trennen, ob
+Streuung primär aus echten Produktunterschieden oder aus methodischen
+Unterschieden zwischen PEPs resultiert.
+Eine Aufnahme in das Feature-Set widerspricht allerdings einem kompakten, messbaren
+Modell. Zudem tauchen diese Informationen in den PEPs nur unregelmäßig auf. 
+
+Insgesamt zeigt der Ansatz ein praktikables Potenzial für eine schnelle,
+datengetriebene Einordnung von Umweltwirkungen. Zukünftige Forschungen können
+darauf aufbauen, indem sie die Pipeline um zusätzliche Datenquellen erweitern,
+die Modelle stärker segmentieren und die Robustheit gegenüber Heterogenität
+systematisch erhöhen, ohne die Übertragbarkeit auf Produkte ohne PEP zu
+verlieren.
+
+
+\iffalse
 \section{Einordnung der Ergebnisse}
 \label{sec:disc_interpretation}
 
 Die höchste und stabilste Modellgüte wird für den Indikator
 \emph{Climate change (total)} erreicht. 
-Insgesamt kann die CO$_2$ Regression als obere Schranke der erreichbaren
+Insgesamt kann die CO$_2$-Regression als obere Schranke der erreichbaren
 Genauigkeit unter den gegebenen Featureeinschränkungen interpretiert werden.
 
-Das gewählte Feature-Set kann etwas 90\% der Vaianz der CO$_2$-Werte erklären,
+Das gewählte Feature-Set kann etwa 90\% der Vaianz der CO$_2$-Werte erklären,
 was eine hohe Modellgüte beschreibt.
-Da die geschätzten Werte im Mittel trotzdem um 120\% abweichen, ist auch dieses Modell 
-nicht präzise. 
+Da die geschätzten Werte durchschnittlich einen relativen Fehler von 120\% aufweisen, 
+ist auch dieses Modell nicht präzise. 
 Für die anderen Indikatoren wurde die Pipeline im Wesentlichen nur über die
 Transformation der Zielvariablen angepasst. 
 Eine ähnlich ausführliche
@@ -81,3 +307,4 @@ Gleichzeitig bedeutet die Produktvielfalt, dass Produkte ohne vergleichbare Vert
 deutlich größeren Prognosefehlern gerechnet werden muss. Das Modell ist somit
 vor allem als Näherung für typische Produkte innerhalb des betrachteten
 Datenraums zu verstehen.
+\fi

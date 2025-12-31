@@ -1,4 +1,4 @@
-\section{Deskriptive Annäherung an die PEP-Daten}
+\section{Deskriptive Analyse der PEP-Daten}
 
 Wie bereits in Kapitel~\ref{sec:stat_grundlagen} erläutert, ist eine
 deskriptive Betrachtung der Daten ein notwendiger erster Schritt, um die
@@ -39,16 +39,30 @@ weiteren Analyse stehen somit nur die PEPs mit explizit angegebenem
 Stromverbrauch zur Verfügung, was den Stichprobenumfang für die Regression
 reduziert.
 
-Der Indikator \emph{Wasserknappheit} wird aufgrund der hohen Ausfallrate von der Auswertung
-ausgeschlossen, da keine belastbaren statistischen Aussagen getroffen werden können.
+Ein Sonderfall betrifft die Indikatoren, die sich auf den Wasserverbrauch beziehen. 
+In den PEP-Daten
+werden hierfür nicht durchgängig dieselben Indikatorbezeichnungen berichtet.
+Ein Teil der Dokumente beinhaltet den Indikator \emph{Water use}, während andere
+stattdessen \emph{Water scarcity} enthalten. Dadurch entsteht in der
+Vollständigkeitsanalyse zunächst der Eindruck fehlender Werte, obwohl in vielen
+Fällen lediglich ein alternativer, methodisch anders definierter Indikator
+vorliegt.
 
-\begin{figure}[H]
+Diese Indikatoren sind nicht ohne Weiteres miteinander vergleichbar, wenn sie
+auf unterschiedlichen Versionen des \emph{Product Environmental Footprint} (PEF)
+basieren. Konkret wurden PEPs identifiziert, die auf PEF~3.0 und andere, die auf
+PEF~3.1 beruhen. PEF~3.1 verwendet für die Wassermethode aktualisierte
+Charakterisierungsfaktoren, wodurch sich die resultierenden Indikatorwerte
+systematisch unterscheiden. Aus diesem Grund werden \emph{Water use} und
+\emph{Water scarcity} im Folgenden nicht zusammengeführt, und Analysen von 
+\emph{Water scarcity} aufgrund zu weniger Daten nicht durchgeführt.
+
+\begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/missingness_bar.png}
   \caption{Anteil fehlender Werte pro Umweltindikator (\%, \(N=233\) Produkte).}
   \label{fig:missingness}
 \end{figure}
-
 
 Zusätzlich wurden die Erscheinungsjahre der PEP-Ecopassports untersucht. Die
 Veröffentlichungen reichen von 2020 bis 2025 und verteilen sich wie in

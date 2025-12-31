@@ -69,17 +69,6 @@ angepasst und anschließend auf dem unabhängigen Testset ausgewertet.
 Auf diese Weise erhält man Gütemaße, die angeben, wie gut das Modell
 auf die nie zuvor gesehenen Testdaten generalisieren kann.
 
-\iffalse
-Zusätzlich wird auf dem Trainingsset eines äußeren Splits ein innerer
-Wiederholungssplit durchgeführt:
-In jeweils $200$ Wiederholungen wird das Trainingsset erneut in Trainings-
-und Validierungsdaten aufgeteilt, die Pipeline wird gefittet und die
-Gütemaße werden auf beiden Teilmengen berechnet.
-Dieser innere Loop dient ausschließlich der Stabilitätsanalyse der linearen
-Regression und der gewählten Features; es werden keine Hyperparameter
-optimiert.
-\fi
-
 Die Modelle werden über das Bestimmtheitsmaß $R^2$ und den
 Root-Mean-Square-Error (RMSE) bewertet.
 Tabelle~\ref{tab:reg_co2_mainmodel} fasst die Testgüte 

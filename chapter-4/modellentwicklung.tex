@@ -97,12 +97,12 @@ zeigt die erzielten Ergebnisse.
     \toprule
     Modellvariante                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
     \midrule
-    Basis (Gewicht, Strom)             & 0.817 & \textbf{0.770} & 1.904 \\
-    Basis + Energiemodelle             & 0.668 & \textbf{0.501} & 2.302 \\
-    Basis + Rohmaterialien             & 0.904 & \textbf{0.567} & 2.140 \\
-    Basis + Rohmaterialien ($n >=10$)  & 0.842 & \textbf{0.832} & 1.152 \\
-    Basis + PCA-Materialien ($n >=10$) & 0.887 & \textbf{0.882} & 1.095 \\
-    PCA auf alle Variablen             & 0.822 & \textbf{0.738} & 1.579 \\
+    Basis (Gewicht, Strom)             & 0.817 & \textbf{0.770} & $50104.33\,\mathrm{kg\ CO_2}$ \\
+    Basis + Energiemodelle             & 0.668 & \textbf{0.501} & $159778.91\,\mathrm{kg\ CO_2}$ \\
+    Basis + Rohmaterialien             & 0.904 & \textbf{0.567} & $101227.08\,\mathrm{kg\ CO_2}$ \\
+    Basis + Rohmaterialien ($n >=10$)  & 0.842 & \textbf{0.832} & $41910.11\,\mathrm{kg\ CO_2}$ \\
+    Basis + PCA-Materialien ($n >=10$) & 0.887 & \textbf{0.882} & $33106.20\,\mathrm{kg\ CO_2}$ \\
+    PCA auf alle Variablen             & 0.822 & \textbf{0.738} & $53991.70\,\mathrm{kg\ CO_2}$ \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -181,9 +181,9 @@ zeigen, damit deutlich bedeutend als der Einfluss des Feature-Sets.
     \toprule
     Regressionsverfahren                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
     \midrule
-    LinearRegression                   & 0.887 & \textbf{0.882} & 77565.84 \\
-    Ridge                              & 0.906 & \textbf{0.896} & 59635.57 \\
-    Lasso                              & 0.906 & \textbf{0.896} & 59636.03 \\
+    LinearRegression                   & 0.887 & \textbf{0.882} & $33106.20\,\mathrm{kg\ CO_2}$ \\
+    Ridge                              & 0.906 & \textbf{0.896} & $25117.31\,\mathrm{kg\ CO_2}$ \\
+    Lasso                              & 0.906 & \textbf{0.896} & $25116.20\,\mathrm{kg\ CO_2}$ \\
     \bottomrule
   \end{tabular}
 \end{table}

@@ -40,7 +40,7 @@ Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
   \item \textbf{Regelbasierter Filter:}
       Um Kontextverluste des nachgelagerten Sprachmodells zu vermeiden,
       wurde ein regelbasierter Python-Filter auf die aus Docling generierten
-      Markdown-Dateien angewendet. Irrelevante Segmente (z.,B.\ Kopf- und Fußzeilen, Unternehmensinformationen)
+      Markdown-Dateien angewendet. Irrelevante Segmente (z.,B.\ Kopf- und Fußzeilen, Unternehmensinformationen, Titelblätter)
       werden über eine Blacklist entfernt.
   \item \textbf{LLM-basierte Extraktion:} Der kon\-ver\-tierte Text wird in Ab\-schnit\-ten
         an ein Sprachmodell übergeben, das definierte Variablen extrahiert und im

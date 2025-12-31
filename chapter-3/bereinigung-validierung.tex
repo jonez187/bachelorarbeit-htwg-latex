@@ -2,7 +2,7 @@
 
 Nach der automatischen Extraktion und Normalisierung werden zuerst
 fehlerhafte oder unvollständige
-Datensätze mithilfe eines Python-Skripts \emph{sort\_out\_unusable.py} ausgeschlossen. 
+Datensätze mithilfe eines Python-Skripts ausgeschlossen. 
 Ein Datensatz galt als unbrauchbar, wenn sämtliche
 Umweltindikatoren fehlten oder ausschließlich Nullwerte enthielten, oder wenn
 die zentralen Felder \texttt{total\_weight}, \texttt{electricity\_consumption},
@@ -49,8 +49,8 @@ Eine Hierarchisierung der Materialien (z.\,B. \emph{Iron} als Unterkategorie von
 \emph{Metals}) oder eine gesonderte Behandlung von Verpackungsmaterialien wurde
 aus Gründen der Vergleichbarkeit nicht umgesetzt.
 
-Die bereinigten JSON-Dateien wurden anschließend mit \texttt{flatten\_jsons.py}
-in ein flaches, tabellenbasiertes Format überführt. 
+Die bereinigten JSON-Dateien werden anschließend
+in ein flaches, ta\-bel\-len\-ba\-sier\-tes Format überführt. 
 Während die ursprünglichen JSON-Strukturen sowohl menschen- als auch maschinenlesbar
 angelegt waren, wurde das Format nun in eine einheitliche, analysierbare
 Datenstruktur überführt, die sich für statistische Auswertungen und Visualisierungen
