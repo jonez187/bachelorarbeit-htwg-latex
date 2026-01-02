@@ -48,7 +48,7 @@ Modellentwicklung insbesondere folgende Fragestellungen ab:
         Stabilität und erzielbarer Gütemaße bei den vorhandenen PEP-Daten?
   \item \textbf{Wahl der Zieltransformation:}
         Führt eine Log-Transformation (\texttt{log1p}) oder eine Box-Cox-Transformation zu 
-        besserer Vorhersagegüte und plausibleren Residuen?
+        besserer Vorhersagegüte und plausibleren Schätzfehler?
 \end{enumerate}
 
 Die nachfolgenden Abschnitte stellen die dafür durchgeführten Experimente vor und 
@@ -182,8 +182,8 @@ zeigen, damit deutlich bedeutend als der Einfluss des Feature-Sets.
     Regressionsverfahren                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
     \midrule
     LinearRegression                   & 0.887 & \textbf{0.882} & $33106.20\,\mathrm{kg\ CO_2}$ \\
-    Ridge                              & 0.906 & \textbf{0.896} & $25117.31\,\mathrm{kg\ CO_2}$ \\
-    Lasso                              & 0.906 & \textbf{0.896} & $25116.20\,\mathrm{kg\ CO_2}$ \\
+    Ridge                              & 0.891 & \textbf{0.896} & $25117.31\,\mathrm{kg\ CO_2}$ \\
+    Lasso                              & 0.891 & \textbf{0.896} & $25116.20\,\mathrm{kg\ CO_2}$ \\
     \bottomrule
   \end{tabular}
 \end{table}

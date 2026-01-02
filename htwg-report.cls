@@ -190,6 +190,10 @@
     \renewcommand*\familydefault{\rmdefault}
 \fi
 
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+
 
 %%%%%%%%%%%%
 %% HTWG CI Colors

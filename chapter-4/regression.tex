@@ -64,7 +64,7 @@ Mess- und Rundungsfehler.
 
 Zur Bewertung der Modellgüte wird ein Train/Test-Split mit einem
 Testanteil von 10\,\% verwendet.
-Das Modell wird ausschließlich durch weitere AUfteilungen der 90\% Trainingsdaten 
+Das Modell wird ausschließlich durch weitere Aufteilungen der 90\% Trainingsdaten 
 angepasst und anschließend auf dem unabhängigen Testset ausgewertet.
 Auf diese Weise erhält man Gütemaße, die angeben, wie gut das Modell
 auf die nie zuvor gesehenen Testdaten generalisieren kann.
@@ -173,16 +173,16 @@ Hier sind deutliche Abweichungen von der Referenzgeraden sichtbar,
 insbesondere in den Rändern, was auf Schiefe und schwere 
 Verteilungsschwänze hindeutet.
 Dies ist plausibel, da auf Originalskala einzelne sehr große Produkte die Fehler dominieren
-und Fehler häufig multiplikativ wirken, was auf Originalskala zu stark asymmetrischen Residuen führt.
+und Fehler häufig multiplikativ wirken, was auf Originalskala zu stark asymmetrischen Schätzfehler führt.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_co2_qq_orig.png}
-  \caption{QQ Plot der Residuen des CO$_2$-Modells auf Originalskala im Testset.}
+  \caption{QQ Plot der Schätzfehler des CO$_2$-Modells auf Originalskala im Testset.}
   \label{fig:regression_co2_qq_orig}
 \end{figure}
 
-Abbildung~\ref{fig:regression_co2_qq_trans} zeigt den QQ Plot der Residuen auf der Transformationsskala.
+Abbildung~\ref{fig:regression_co2_qq_trans} zeigt den QQ Plot der Schätzfehler auf der Transformationsskala.
 Hier liegen die Punkte deutlich näher an der Referenzgeraden als auf Originalskala,
 was eine näherungsweise Normalität im mittleren Bereich unterstützt.
 In den äußeren Quantilen bleiben Abweichungen sichtbar, was auf eine erhöhte Wahrscheinlichkeit
@@ -191,7 +191,7 @@ großer Fehler hinweist.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_co2_qq_trans.png}
-  \caption{QQ Plot der Residuen des CO$_2$-Modells im Testset auf der Transformationsskala \texttt{log\_cc}.}
+  \caption{QQ Plot der Schätzfehler des CO$_2$-Modells im Testset auf der Transformationsskala \texttt{log\_cc}.}
   \label{fig:regression_co2_qq_trans}
 \end{figure}
 

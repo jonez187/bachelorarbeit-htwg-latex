@@ -19,7 +19,7 @@ Muster oder Auffälligkeiten zu erkennen \cite{Fisher2009}. Der Schwerpunkt lieg
 Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten \cite{Dimić2019}. 
 
 Die deskriptive Statistik umfasst numerische Verfahren zur Beschreibung
-der \emph{Lage} und der \emph{Streuungskennzahlen} von Daten. \cite{Fisher2009}
+der \emph{Lage} und der \emph{Streuungskennzahlen} von Daten \cite{Fisher2009}. 
 Ziel ist die Abbildung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
 Zu den typischen Lagemaßen gehören \emph{Mittelwert} und \emph{Median}.
 Der Mittelwert beschreibt die durchschnittliche Ausprägung, während der Median die geordnete Verteilung 
@@ -110,7 +110,7 @@ nach der Transformation $\log(1+x)$ und rechts nach einer Box-Cox-Transformation
 \end{figure}
 
 In dieser Arbeit wird vor allem die Transformation $\log(1+x)$ verwendet
-(\texttt{log1p}), um Indikatorwerte und Residuen auf einer besser interpretierbaren
+(\texttt{log1p}), um Indikatorwerte und Schätzfehler auf einer besser interpretierbaren
 Skala zu analysieren.
 
 
@@ -165,8 +165,10 @@ Die lineare Regression dient in dieser Arbeit als methodische Grundlage zur
 Modellierung der Umweltwirkungen von Produkten auf Basis quantitativer Einflussgrößen. 
 Ziel ist es, Zusammenhänge zwischen erklärenden Variablen wie \emph{Produktgewicht}, 
 \emph{Materialzusammensetzung}, \emph{Stromverbrauch} und \emph{verwendetem Energiemix}
-und den resultierenden \emph{Umweltindikatoren} zu quantifizieren und zur Abschätzung unbekannter 
+und den resultierenden \emph{Umweltindikatoren} zu erkennen und zur Abschätzung unbekannter 
 Werte nutzbar zu machen.
+
+\subsubsection{Regressionsmodell und Grundannahmen}
 
 Das Regressionsmodell beschreibt den linearen Zusammenhang zwischen einer abhängigen Variable 
 \( y \) (z.\,B.\ einem Umweltindikator)
@@ -194,7 +196,7 @@ Für explorative Anwendungen, wie sie in dieser Arbeit verfolgt werden, steht je
 Struk\-tur\-ent\-deckung im Vor\-der\-grund.
 Moderate Abweichungen von den Idealannahmen sind daher akzeptabel, sofern sie dokumentiert werden.
 
-
+\subsubsection{Schätzung der Regressionskoeffizienten}
 Die Schätzung der Regressionskoeffizienten erfolgt nach der Methode der kleinsten Quadrate (\emph{Ordinary Least Squares}, OLS). 
 Dabei werden die Parameter so bestimmt, dass die Summe der quadrierten Abweichungen zwischen 
 beobachteten und modellierten Werten minimal wird:
@@ -208,6 +210,36 @@ $\hat{y}_i$ die Modellvorhersage für Beobachtung $i$.
 Die Koeffizienten \(\beta_i\) geben an, wie stark sich der Zielindikator \(y\) im Mittel verändert, 
 wenn sich die Einflussgröße \(x_i\) um eine Einheit ändert, während alle anderen Variablen konstant bleiben.
 
+In praktischen Anwendungen können die OLS-Schätzer trotz unverzerrter Erwartung
+eine hohe Varianz aufweisen, insbesondere bei Multikollinearität.
+In diesen Fällen können \emph{Regularisierungsverfahren} die Vorhersagegüte verbessern,
+indem sie große Koeffizienten gezielt bestrafen und dadurch stabilere Modelle erzeugen \cite{XiaogangSu2012}.
+
+Die \emph{Ridge-Regression} (L2-Regularisierung) erweitert das OLS-Kriterium um einen
+quadratischen Strafterm:
+\[
+\min_{\boldsymbol{\beta}}\ \sum_{i=1}^{n}(y_i - \hat{y}_i)^2\ +\ \lambda \sum_{j=1}^{k}\beta_j^2 .
+\]
+Der Regularisierungsparameter $\lambda \ge 0$ steuert die Stärke der Schrumpfung.
+Mit wachsendem $\lambda$ werden die Koeffizienten stärker in Richtung null gezogen,
+bleiben jedoch typischerweise ungleich null. Dies reduziert die Varianz der Schätzung,
+akzeptiert dafür eine geringe Verzerrung und kann den Testfehler senken \cite{Montgomery2022}.
+
+Die \emph{Lasso-Regression} (L1-Regularisierung) verwendet einen absoluten Strafterm:
+\[
+\min_{\boldsymbol{\beta}}\ \sum_{i=1}^{n}(y_i - \hat{y}_i)^2\ +\ \lambda \sum_{j=1}^{k}|\beta_j| .
+\]
+Durch die L1-Struktur können Koeffizienten exakt null werden.
+Lasso ermöglicht damit zusätzlich eine implizite Variablenselektion und führt häufig zu
+sparsameren, leichter interpretierbaren Modellen \cite{XiaogangSu2012}.
+
+Der Parameter $\lambda$ wird in der Regel in beiden Re\-gu\-la\-ri\-sierungs\-me\-tho\-den da\-ten\-getrieben
+bestimmt, etwa mittels
+Cross Validation auf Trainingsdaten. Dadurch wird ein Kompromiss zwischen
+Unteranpassung bei zu großer Regularisierung und Überanpassung bei $\lambda = 0$ gewählt \cite{XiaogangSu2012}.
+
+
+\subsubsection{Gütemaße}
 Das \emph{Bestimmtheitsmaß} \(R^2\) beschreibt den Anteil der Varianz des Zielindikators, der durch die 
 erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte \cite{Montgomery2022}. 
 Der \emph{Root Mean Square Error} (RMSE) misst die durchschnittliche Abweichung zwischen 

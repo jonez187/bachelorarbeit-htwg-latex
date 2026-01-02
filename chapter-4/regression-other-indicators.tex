@@ -5,7 +5,7 @@ Die für \emph{Climate change (total)} aufgebaute Regressionspipeline wird im Fo
 Umweltindikatoren angewendet, um zu prüfen, in welchem Umfang sich diese mit denselben
 Produktmerkmalen erklären lassen. Die zentralen Gütemaße aller Indikatoren sind in
 Tabelle~\ref{tab:reg_other_overview} zusammengefasst. Ergänzende Streudiagramme und QQ-Plots
-für die einzelnen Indikatoren sind in Anhang~\ref{app:regression_plots} dargestellt.
+für die einzelnen Indikatoren sind in Anhang~\ref{app:other_regressions} dargestellt.
 
 \begin{table}[ht]
   \centering
@@ -19,12 +19,12 @@ für die einzelnen Indikatoren sind in Anhang~\ref{app:regression_plots} dargest
     \midrule
     Acidification & 177 & log1p & 0.845 & $490.87\,\mathrm{kg\ SO_2}$ & $0.2864\,\mathrm{kg\ SO_2}$ & 0.9579 & 3.8258 \\
     Hazardous waste disposed & 168 & log1p & 0.813 & $18489.74\,\mathrm{kg}$ & $176.7890\,\mathrm{kg}$ & 0.6639 & 13.1431 \\
-    Water use & 169 & Box-Cox & 0.726 & 28682.36 & 1353.5625 & 0.9297 & 2.3278 \\
+    Water use & 169 & Box-Cox & 0.726 & $28682.36\,\mathrm{m^3}$ & $1353.56\,\mathrm{m^3}$ & 0.9297 & 2.3278 \\
     Photochemical ozone formation (HH) & 171 & Box-Cox & 0.802 & $109.1708\,\mathrm{kg\ C_2H_4}$ & $0.0255\,\mathrm{kg\ C_2H_4}$ & 0.6665 & 1.2811 \\
     Resource use, fossils & 171 & log1p & 0.871 & $1119662.28\,\mathrm{MJ}$ & $14460.95\,\mathrm{MJ}$ & 0.6370 & 11.1394 \\
     Eutrophication (terrestrial) & 107 & Box-Cox & 0.793 & $99.33\,\mathrm{mol\ N}$ & $0.0854\,\mathrm{mol\ N}$ & 0.5611 & 1.1653 \\
-    Ozone depletion & 170 & Box-Cox & 0.858 & 0.0029 & 0.0000 & 0.8635 & 1.0411 \\
-    Resource use, minerals and metals & 175 & Box-Cox & 0.866 & 0.7218 & 0.0010 & 0.7798 & 1.0003 \\
+    Ozone depletion & 170 & Box-Cox & 0.858 & $0.0029\,\mathrm{kg\ CFC-11}$ & $0.00001\,\mathrm{kg\ CFC-11}$ & 0.8635 & 1.0411 \\
+    Resource use, minerals and metals & 175 & Box-Cox & 0.866 & $0.7218\,\mathrm{kg\ Sb}$ & $0.0010\,\mathrm{kg\ Sb}$ & 0.7798 & 1.0003 \\
     \bottomrule
   \end{tabular}
   }
@@ -131,7 +131,7 @@ geprägt sind.
 \end{figure}
 
 Eine ausführliche Visualisierung der übrigen Indikatoren, einschließlich QQ-Plots, ist in
-Anhang~\ref{app:regression_plots} dokumentiert.
+Anhang~\ref{app:other_regressions} dokumentiert.
 
 
 \FloatBarrier
@@ -139,20 +139,18 @@ Anhang~\ref{app:regression_plots} dokumentiert.
 
 Neben den in Tabelle~\ref{tab:reg_other_overview} aufgeführten Indikatoren mit moderater bis hoher Modellgüte wurden
 alle weiteren Umweltindikatoren mit derselben Regressionspipeline geschätzt.
-Für einige Zielgrößen bleibt das erreichte Test-$R^2$ jedoch unter $0{,}5$, so dass hier
+Für einige Zielgrößen bleibt das erreichte Test-$R^2$ jedoch unter $0{,}5$, sodass hier
 nicht von einem zuverlässigen Vorhersagemodell gesprochen werden kann.
 Tabelle~\ref{tab:weak_indicators} fasst diese Indikatoren zusammen.
 
-Für diese schwächer er\-klär\-ba\-ren Ziel\-größen wurden ebenfalls verschiedene
-Trans\-for\-mationen der Zielvariable verglichen. Box-Cox kann die Testgüte für alle 
-restlichen Indikatoren leicht
-verbessern, die Zugewinne bleiben jedoch insgesamt begrenzt und reichen nicht aus,
+Für diese schwächer erklärbaren Zielgrößen wurden ebenfalls verschiedene
+Transformationen der Zielvariable verglichen. Box-Cox kann die Testgüte für alle
+restlichen Indikatoren leicht verbessern, die Zugewinne bleiben jedoch insgesamt begrenzt und reichen nicht aus,
 um die Indikatoren in den Bereich stabiler Vorhersagegüte zu überführen.
 
 \begin{table}[h]
   \centering
-  \caption{Indikatoren und Gütemaße mit geringer Modellgüte
-           ($R^2_{\text{Test, mean}} < 0{,}5$).}
+  \caption{Indikatoren und Gütemaße mit geringer Modellgüte.}
   \label{tab:weak_indicators}
   \resizebox{\textwidth}{!}{
   \begin{tabular}{lccc}
@@ -169,25 +167,38 @@ um die Indikatoren in den Bereich stabiler Vorhersagegüte zu überführen.
   }
 \end{table}
 
-Abbildung~\ref{fig:reg_rwd} zeigt
-den Indikator \emph{Radioactive Waste Disposed} als besonders kritisches Beispiel. 
-Obwohl die absoluten Fehler aufgrund
-der sehr kleinen Werte gering bleiben, liegen viele Punkte weit von der
-Diagonalen entfernt und die Streuung ist hoch. Entsprechend ist das
-durchschnittliche Test-$R^2$ klein. Eine Box-Cox Transformation kann die Verteilung
-der Fehler nicht glätten.
+Abbildung~\ref{fig:reg_rwd} zeigt den Indikator \emph{Radioactive waste disposed} als ein
+Beispiel. Der Indikator ist nur eingeschränkt erklärbar
+($R^2_{\text{Test}}\approx 0{,}49$), und sowohl der RMSE im Verhältnis zum Mittelwert
+(Rel.\ RMSE $\approx 3{,}31$) als auch die relativen Fehlermaße
+($\mathrm{MdARE}\approx 1{,}85$, $\mathrm{MARE}\approx 19{,}01$) weisen auf eine stark
+instabile Vorhersage hin.
+Gleichzeitig bleibt der Median des absoluten Fehlers mit $0{,}5193$ vergleichsweise klein,
+was zur sehr kleinen Größenordnung des Indikators passt und zeigt, dass die extremen relativen Fehler
+vor allem bei kleinen Zielwerten entstehen.
+Insgesamt wird die Streuung im Streudiagramm nicht ausreichend abgebildet, und eine Box-Cox-Transformation
+kann die Fehlerstruktur nicht stabilisieren.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_rwd.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Radioactive Waste Disposed}.}
+           \emph{Radioactive waste disposed}.}
   \label{fig:reg_rwd}
 \end{figure}
 
-Ähnliche Muster zeigen sich bei den weiteren in Tabelle~\ref{tab:weak_indicators}
-aufgezählten Indikatoren. Die zugehörigen Scatter- und QQ-Plots sind ebenfalls im
-Anhang~\ref{app:regression_plots} dokumentiert.
+Der QQ Plot in Abbildung~\ref{fig:reg_rwd_qq} zeigt die Residuen auf der Transformationsskala.
+Im Zentrum liegen die Quantile nur näherungsweise auf der Referenzgeraden, während die äußeren Bereiche
+deutlich abweichen. Dies weist auf schwere Verteilungsschwänze und systematische Modellfehler hin.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/regression_rwd_qq.png}
+  \caption{QQ Plot der Schätzfehler des Modells für \emph{Radioactive waste disposed}
+           auf der Transformationsskala.}
+  \label{fig:reg_rwd_qq}
+\end{figure}
 
-\FloatBarrier 
+Ähnliche Muster zeigen sich auch bei den beiden Eutrophication-Indikatoren in
+Tabelle~\ref{tab:weak_indicators}. Sie sind im Anhang~\ref{app:other_regressions_weak} 
+ebenfalls visualisiert.
