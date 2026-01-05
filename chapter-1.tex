@@ -3,7 +3,7 @@
 \section{Motivation und Relevanz}
 \label{sec:motivation}
 
-Gebäudeautomation und IoT-Komponenten gewinnen stark an Bedeutung. Sensoren, Gateways
+Gebäudeautomatisierung und IoT-Komponenten gewinnen stark an Bedeutung. Sensoren, Gateways
 und Steuerungen werden in Gebäuden zunehmend eingesetzt, um Energieflüsse zu optimieren,
 Komfort zu erhöhen und Prozesse zu automatisieren. Mit der wachsenden Verbreitung solcher
 Geräte steigt auch ihr Anteil an Materialverbrauch, Energieeinsatz und Abfallaufkommen
@@ -13,24 +13,26 @@ Der Gebäudesektor zählt neben Verkehr und der industriellen Produktion zu den 
 Verursachern von CO$_2$-Emissionen. 
 In einer Studie von Bitkom e.V., dem Branchenverband der 
 deutschen Informations- und Telekommunikationsbranche,
-wird ein Anteil von etwa einem Drittel dem Ge\-bäu\-de\-sektor zugerechnet \cite{studie-einleitung}. 
+wird ein Drittel der Emissionen in Deutschland 
+dem Ge\-bäu\-de\-sektor zugerechnet \cite{studie-einleitung}. 
 Di\-gi\-tale Ge\-bäu\-de\-tech\-no\-lo\-gien werden in dieser Studie als relevanter Hebel betrachtet, 
-durch bedarfsgerechte, intelligente Steuerung und fortgeschrittenem Monitoring 
+durch bedarfsgerechte, intelligente Steuerung und Monitoring 
 den Energieverbrauch und die Emissionen von Gebäuden zu senken.
 
-Neben eines erhöhten Komforts können Gebäudeautomation und IoT-Komponenten somit tatsächlich 
+Neben erhöhtem Komfort können Gebäudeautomatisierung und IoT-Komponenten somit tatsächlich 
 ökonomischen und ökologischen Nutzen liefern.
 
 Die Größen\-ordnung dieses Potenzials lässt sich anhand einer Szenariorechnung aus der
-Bitkom-Studie verdeutlichen. Abbildung~\ref{fig:bitkom_potential} zeigt die modellierten
-CO$_2$-Min\-derungs\-poten\-ziale di\-gi\-taler Ge\-bäu\-de\-tech\-no\-logi\-en im Ge\-bäu\-de\-sek\-tor in Deutschland,
+Bitkom-Studie verdeutlichen. Abbildung~\ref{fig:bitkom_potential} zeigt das modellierten
+Potential zur Einsparung von thermischer Energie 
+di\-gi\-taler Ge\-bäu\-de\-tech\-no\-logi\-en im Ge\-bäu\-de\-sek\-tor in Deutschland,
 wobei die Ge\-bäu\-de\-au\-to\-mation gemäß DIN~EN~15232 in Ef\-fi\-zienz\-klassen eingeteilt wird.
 Klasse~D dient dabei als Referenz und entspricht Gebäuden ohne automatische Regelung. 
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/studie-grafik.png}
-  \caption{Einsparungen thermischer Energie nach Automationsklassen, relativ zur Klasse D (Zahlen aus der Studie \cite{studie-einleitung}).}
+  \caption{Einsparungen thermischer Energie nach Automationsklassen, relativ zur Klasse D (Zahlen aus der Studie \cite{studie-einleitung}). [Eigene Darstellung]}
   \label{fig:bitkom_potential}
 \end{figure}
 
@@ -38,7 +40,7 @@ Gleichzeitig sind die eingesetzten Geräte und die dadurch ermöglichten
 Einsparungen ökologisch nicht „gratis“. Herstellung,
 Materialeinsatz, Transport sowie die Nutzung verursachen eigene
 Treibhausgasemissionen und weitere Umweltwirkungen. Damit entsteht ein Zielkonflikt:
-Einerseits besteht ein Einsparpotenzial auf Gebäudeebene, andererseits müssen die
+Einerseits besteht ein Einsparpotenzial auf Gebäudeebene. Andererseits müssen die
 zusätzlichen Umweltwirkungen der Hardware transparent und vergleichbar quantifiziert
 werden, um ökologische Hotspots zu identifizieren und fundierte Ent\-schei\-dungen in
 Entwicklung, Beschaffung und Port\-folio\-manage\-ment zu er\-mög\-lichen. Besonders in frühen
@@ -47,7 +49,7 @@ Phasen liegen jedoch oft nur wenige robuste Produktmerkmale vor, während vollst
 
 PEP-Ecopassport-Dokumente liefern standardisierte Umweltindikatoren und stellen damit
 eine wertvolle Datenquelle dar. In der Praxis sind sie jedoch heterogen aufgebaut und
-sind als PDF-Dateien veröffentlicht. Dadurch werden automatisierte Auswertung, Skalierung auf
+als PDF-Dateien veröffentlicht. Dadurch werden automatisierte Auswertung, Skalierung auf
 größere Datenmengen und konsistente Vergleichbarkeit erschwert. Es entsteht eine Lücke
 zwischen dem Bedarf an schnellen, nachvollziehbaren Umweltabschätzungen und der
 tatsächlich verfügbaren Datengrundlage.
@@ -57,7 +59,7 @@ Extraktionspipeline, mit der relevante Daten aus PEP-Ecopassport-PDF-Dateien aut
 ausgelesen und strukturiert gespeichert werden können, und führte erste statistische
 Analysen durch. Die vorliegende Arbeit knüpft an diese Vorarbeit an, erweitert die
 Pipeline für eine größere und robustere Datenbasis und nutzt die extrahierten Variablen
-für eine vertiefte quantitative Analyse und einer Modellentwicklung. 
+für eine vertiefte quantitative Analyse sowie die Entwicklung eines Modells. 
 
 
 \FloatBarrier
@@ -80,7 +82,7 @@ Umweltauswirkungen ermöglicht.
 
 Die Genauigkeit des Modells soll analysiert und bewertet werden.
 Ergänzend sollen die Grenzen dieser Herangehensweise diskutiert, insbesondere im Hinblick
-auf Datenheterogenität, Ausreißer sowie die eingeschränkte Übertragbarkeit auf einzelne
+auf Datenheterogenität, Ausreißer und die eingeschränkte Übertragbarkeit auf einzelne
 Produktkategorien und Nutzungsszenarien werden.
 
 
@@ -89,13 +91,14 @@ Produktkategorien und Nutzungsszenarien werden.
 \section{Wissenschaftliche Fragestellung}
 \label{sec:intro_research_questions}
 
-Aus der Zielsetzung ergibt sich die folgenden zentrale Fragestellung:
+Aus der Zielsetzung ergibt sich die folgende zentrale Fragestellung:
 
 \begin{quote}
-\emph{Wie lassen sich Umweltwirkungen von Produkten der Gebäudeautomatisierung auf Basis von PEP-Ecopassport-
-Deklarationen systematisch extrahieren und statistisch analysieren, und inwieweit lassen sich daraus
-robuste, in\-ter\-pre\-tier\-bare Modelle ableiten, die Um\-welt\-in\-di\-ka\-to\-ren auch für Produkte ohne PEP
-heuristisch abschätzen können?}      
+\emph{Wie können Umweltindikatoren aus PEP-Ecopassport-Deklarationen für 
+Produkte der Gebäudeautomatisierung robust extrahiert und analysiert 
+werden, und inwieweit lassen sich daraus interpretierbare Modelle 
+ableiten, die Umweltauswirkungen für Produkte ohne PEP heuristisch 
+abschätzen?}      
 \end{quote}
 
 Die Beantwortung dieser Fragestellung soll wissenschaftliche Erkenntnisse über die zentralen 
@@ -105,7 +108,7 @@ welchen Voraussetzungen vereinfachte, interpretierbare Regressionsmodelle eine p
 Erstabschätzung ermöglichen, und wo die Grenzen liegen. 
 Damit werden sowohl methodische Grundlagen für eine skalierbare Auswertung von
 PEP-Daten als auch praktische Anhaltspunkte für datenbasierte Nachhaltigkeitsbewertungen in frühen
-Entscheidungsphasen geschaffen
+Entscheidungsphasen geschaffen.
 
 
 \section{Aufbau der Arbeit}
@@ -117,7 +120,7 @@ und Diskussion der Ergebnisse reicht. Die Arbeit ist in fünf Kapitel gegliedert
 
 Kapitel~\ref{chapter:theo} beschreibt die theo\-re\-tischen Grund\-lagen. Zu\-nächst werden der PEP-Eco\-pass\-port
 Standard und der typische Aufbau von PEP-Dokumenten erläutert. Anschließend werden
-Herausforderungen der strukturierten Informationsextraktion aus PDF-Dokumenten sowie
+Herausforderungen der strukturierten Informationsextraktion aus PDF-Dokumenten und
 geeignete Extraktionsansätze diskutiert. Das Kapitel schließt mit statistischen Grundlagen,
 die für die spätere explorative Analyse, Transformationen und Regressionsmodelle benötigt
 werden.
@@ -129,15 +132,15 @@ Datenbereinigung und Validierung. Ziel ist eine konsistente, analysierbare Daten
 Grundlage der Modellierung.
 
 Kapitel~\ref{chapter:analyse} analysiert den erarbeiteten Datensatz und leitet daraus Modellentscheidungen ab.
-Zunächst werden Vollständigkeit und Verteilungen der Input-Variablen sowie zentrale
+Zunächst werden Vollständigkeit, Verteilungen der Input-Variablen und zentrale
 Umweltindikatoren deskriptiv ausgewertet. Darauf aufbauend folgt eine explorative
 Modellentwicklung, in der Feature-Sets, PCA-Varianten und lineare Regressionsverfahren
 verglichen werden. Zusätzlich wird die Material-PCA beschrieben und interpretiert. Abschließend
-werden Regressionsmodelle für \emph{Climate change (total)} sowie für weitere 
+werden Regressionsmodelle für \emph{Climate change (total)} und für weitere 
 Indikatoren geschätzt und hinsichtlich Vorhersagegüte und Fehlerstruktur bewertet.
 
 Kapitel~\ref{chapter:diskussion} fasst die zentralen Ergebnisse zusammen und ordnet sie im Kontext der
 Forschungsfrage ein. Darüber hinaus werden Limitationen der Datenbasis und des Modellansatzes,
 methodische und technische Grenzen sowie die Übertragbarkeit der heuristischen Schätzung
 diskutiert. Das Kapitel schließt mit einem Ausblick auf mögliche Erweiterungen der Pipeline
-und weiterführende Forschungsfragen.
+und weiteren Forschungsbedarf.

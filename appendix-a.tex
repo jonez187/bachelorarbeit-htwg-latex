@@ -22,7 +22,7 @@ während kleine Zielwerte zu großen relativen Fehlern führen können.
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_h_w_d.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Hazardous waste disposed}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Hazardous waste disposed}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_hazardous_waste_scatter}
 \end{figure}
 
@@ -32,7 +32,7 @@ mit Abweichungen in den Randbereichen, was auf schwere Verteilungsschwänze hinw
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_hwd_qq_new.png}
-  \caption{QQ Plot der Schätzfehler des \emph{Hazardous waste disposed} Modells auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des \emph{Hazardous waste disposed} Modells auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_hazardous_waste_qq}
 \end{figure}
 
@@ -51,14 +51,14 @@ Die Fehlerverteilung ist durch Ausreißer geprägt, was sich auch im QQ Plot wid
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_water_use.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Water use}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Water use}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_water_use_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_water_use_qq.png}
-  \caption{QQ Plot der Schätzfehler des \emph{Water use} Modells auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des \emph{Water use} Modells auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_water_use_qq}
 \end{figure}
 
@@ -71,20 +71,20 @@ Die zugehörigen Gütekennzahlen und die gewählte Zieltransformation sind in Ta
 
 Die Vorhersagen erfassen den Haupttrend gut, mit größerer Streuung bei kleinen Werten
 und einer leichten Unterschätzung großer Zielwerte, vgl. Abbildung~\ref{fig:reg_pof_hh_scatter}.
-Die Schätzfehler zeigen in den Randbereichen deutliche Abweichungen von Normalität, vgl. Abbildung~\ref{fig:reg_pof_hh_qq}.
+Die Residuen zeigen in den Randbereichen deutliche Abweichungen von Normalität, vgl. Abbildung~\ref{fig:reg_pof_hh_qq}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_pof.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Photochemical ozone formation, human health}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Photochemical ozone formation, human health}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_pof_hh_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_pof_qq.png}
-  \caption{QQ Plot der Schätzfehler des \emph{Photochemical ozone formation, human health} Modells auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des \emph{Photochemical ozone formation, human health} Modells auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_pof_hh_qq}
 \end{figure}
 
@@ -102,14 +102,14 @@ mit einzelnen starken Überschätzungen. Der QQ Plot weist auf schwere Verteilun
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_ruf.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Resource use, fossils}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Resource use, fossils}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_ruf_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_ruf_qq.png}
-  \caption{QQ Plot der Schätzfehler des \emph{Resource use, fossils} Modells auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des \emph{Resource use, fossils} Modells auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_ruf_qq}
 \end{figure}
 
@@ -128,14 +128,14 @@ Der QQ Plot zeigt Abweichungen in den Randbereichen, vgl. Abbildung~\ref{fig:reg
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_et.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Eutrophication, terrestrial}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Eutrophication, terrestrial}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_et_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_et_qq.png}
-  \caption{QQ Plot der Schätzfehler des \emph{Eutrophication, terrestrial} Modells auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des \emph{Eutrophication, terrestrial} Modells auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_et_qq}
 \end{figure}
 
@@ -155,14 +155,14 @@ und eine rechtsschiefe Fehlerstruktur in den oberen Quantilen.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_od.png}
-  \caption{Vorhergesagte gegenüber tatsächlichen Werten von \texttt{Ozone depletion}. Beide Achsen sind logarithmisch skaliert.}
+  \caption{Vorhergesagte gegenüber tatsächlichen Werten von \texttt{Ozone depletion}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_ozone_depletion_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_od_qq.png}
-  \caption{QQ Plot der Schätzfehler des \emph{Ozone depletion} Modells auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des \emph{Ozone depletion} Modells auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_ozone_depletion_qq}
 \end{figure}
 
@@ -175,21 +175,21 @@ Die zugehörigen Gütekennzahlen und die gewählte Zieltransformation sind in Ta
 
 
 Die Testgüte ist hoch und der Haupttrend wird gut abgebildet.
-Einzelne Ausreißer bleiben bestehen, vgl. Abbildung~\ref{fig:reg_ru_mm_scatter}, und die Schätzfehler
+Einzelne Ausreißer bleiben bestehen, vgl. Abbildung~\ref{fig:reg_ru_mm_scatter}, und die Residuen
 zeigen schwere Schwänze, vgl. Abbildung~\ref{fig:reg_ru_mm_qq}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_rumm.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Resource use, minerals and metals}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Resource use, minerals and metals}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_ru_mm_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_rumm_qq.png}
-  \caption{QQ Plot der Schätzfehler des Modells für \emph{Resource use, minerals and metals} auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des Modells für \emph{Resource use, minerals and metals} auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_ru_mm_qq}
 \end{figure}
 
@@ -230,20 +230,20 @@ Spannweite der Daten, was zur geringen erklärten Varianz und zu den hohen relat
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_efw.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Eutrophication (freshwater)}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Eutrophication (freshwater)}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_efw_scatter}
 \end{figure}
 
 Abbildung~\ref{fig:reg_efw_qq} zeigt den QQ Plot der Residuen auf der Transformationsskala.
 Ein Teil der Punkte folgt im Zentrum näherungsweise der Referenzgeraden. Die meisten weichen jedoch, 
 insbesondere in den äußeren Quantilen, deutlich ab. Dies spricht gegen eine
-Normalverteilung der Fehler und deutet auf schwere Verteilungsschwänze sowie ausgeprägte Ausreißer hin.
+Normalverteilung der Fehler und deutet auf schwere Verteilungsschwänze und Ausreißer hin.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_efw_qq.png}
-  \caption{QQ Plot der Schätzfehler des Modells für \emph{Eutrophication (freshwater)}
-           auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des Modells für \emph{Eutrophication (freshwater)}
+           auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_efw_qq}
 \end{figure}
 
@@ -294,14 +294,14 @@ Modellfehler hinweist.
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_em.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Eutrophication (marine)}. Beide Achsen sind logarithmisch skaliert.}
+           \emph{Eutrophication (marine)}. Beide Achsen sind logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_em_scatter}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_em_qq.png}
-  \caption{QQ Plot der Schätzfehler des Modells für \emph{Eutrophication (marine)}
-           auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des Modells für \emph{Eutrophication (marine)}
+           auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_em_qq}
 \end{figure}

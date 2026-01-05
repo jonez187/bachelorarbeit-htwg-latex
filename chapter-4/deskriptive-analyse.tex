@@ -4,7 +4,7 @@ Wie bereits in Kapitel~\ref{sec:stat_grundlagen} erläutert, ist eine
 deskriptive Betrachtung der Daten ein notwendiger erster Schritt, um die
 Qualität und Aussagekraft des Datensatzes zu beurteilen. 
 Ziel dieses Abschnitts ist es, einen Überblick über die Vollständigkeit der
-vorliegenden Daten sowie über zentrale Eingangs- und Ausgangsvariablen zu geben. 
+vorliegenden Daten zu geben. 
 Dazu werden zunächst die Anteile der fehlenden Werte analysiert,
 gefolgt von einer Beschreibung der
 Input-Variablen Gesamtgewicht, Stromverbrauch, Materialzusammensetzung und
@@ -19,12 +19,12 @@ Datensatzes zu identifizieren.
 
 Zur Bewertung der Datenvollständigkeit wurde der Anteil fehlender Werte
 pro Variable berechnet und in einem Balkendiagramm
-dargestellt (Abb.~\ref{fig:missingness}). Die Missingness umfasst sowohl Nullwerte
-aus der Datenpipeline als auch Indikatoren, die in den PEPs nicht berichtet werden.
+dargestellt (Abb.~\ref{fig:missingness}). Die Missingness umfasst sowohl Werte,
+die die Datenpipeline nicht extrahieren konnte, als auch Werte, die in den PEPs nicht berichtet werden.
 
 Die Analyse zeigt deutliche Unterschiede zwischen den Indikatoren: Für
 \emph{Wasserknappheit} fehlen rund 78~\% der Werte, während mehrere weitere
-Indikatoren wie \emph{Eutrophierung marines Gewässer}, \emph{Klimawandel (fossil,
+Indikatoren wie \emph{Eutrophierung mariner Gewässer}, \emph{Klimawandel (fossil,
 total)} und \emph{Eutrophierung terrestrisch} Fehlstände von etwa 30~\% aufweisen.
 
 Für den in der Regression verwendeten Stromverbrauch (\texttt{electricity\_consumption})
@@ -50,7 +50,7 @@ vorliegt.
 
 Diese Indikatoren sind nicht ohne Weiteres miteinander vergleichbar, wenn sie
 auf unterschiedlichen Versionen des \emph{Product Environmental Footprint} (PEF)
-basieren. Konkret wurden PEPs identifiziert, die auf PEF~3.0 und andere, die auf
+basieren. Konkret wurden PEPs identifiziert, die auf PEF~3.0 und weitere, die auf
 PEF~3.1 beruhen. PEF~3.1 verwendet für die Wassermethode aktualisierte
 Charakterisierungsfaktoren, wodurch sich die resultierenden Indikatorwerte
 systematisch unterscheiden. Aus diesem Grund werden \emph{Water use} und
@@ -60,7 +60,7 @@ systematisch unterscheiden. Aus diesem Grund werden \emph{Water use} und
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/missingness_bar.png}
-  \caption{Anteil fehlender Werte pro Umweltindikator (\%, \(N=233\) Produkte).}
+  \caption{Anteil fehlender Werte pro Umweltindikator (\%, \(N=234\) Produkte). [Eigene Darstellung]}
   \label{fig:missingness}
 \end{figure}
 
@@ -73,7 +73,7 @@ letzten Jahren.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.9\linewidth]{images/dateien_pro_jahr.png}
-  \caption{Erscheinungsjahre der analysierten PEP-Dokumente (\(N=233\) Produkte).}
+  \caption{Erscheinungsjahre der analysierten PEP-Dokumente (\(N=233\) Produkte). [Eigene Darstellung]}
   \label{fig:erscheinungsjahr}
 \end{figure}
 
@@ -102,7 +102,8 @@ Einflüsse spiegeln sich im Mittelwert wider.
   \label{tab:basis}
 \end{table}
 
-Die in Tab.~\ref{tab:basis} dargestellten Basisvariablen zeigen deutlich
+Die Kennzahlen in Tabelle~\ref{tab:basis} beziehen sich jeweils auf die verfügbaren, nicht fehlenden Werte der entsprechenden Variable.
+Sie zeigen deutlich
 \textbf{rechtsschiefe Verteilungen} mit großen Interquartilsabständen (IQR). Beim
 \emph{Gesamtgewicht} reicht die Spannweite von 0.04~kg bis über 13\,000~kg, was die
 starke Heterogenität der betrachteten Produkte verdeutlicht. Das kleinste Produkt ist
@@ -133,14 +134,14 @@ angegeben.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/gewicht_orig_cap_vs_log1p.png}
-  \caption{Histogramme des Gesamtgewichts auf Originalskala (links, bis zu 1.000.000 kwh) und nach log1p-Transformation (rechts).}
+  \caption{Histogramme des Gesamtgewichts auf Originalskala (links, bis zu 1.000.000 g) und nach log1p-Transformation (rechts). [Eigene Darstellung]}
   \label{fig:hist_weight}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/stromverbrauch_orig_cap_vs_log1p.png}
-  \caption{Histogramme des Stromverbrauchs auf Originalskala (links, bis zu 1.000.000 g) und nach log1p-Transformation (rechts).}
+  \caption{Histogramme des Stromverbrauchs auf Originalskala (links, bis zu 1.000.000 kWh) und nach log1p-Transformation (rechts). [Eigene Darstellung]}
   \label{fig:hist_elec}
 \end{figure}
 
@@ -183,17 +184,18 @@ Entsprechende Auswertungen werden mit erhöhter Unsicherheit und geringerer Date
 \begin{figure}[h] 
   \centering
   \includegraphics[width=1.0\textwidth]{images/energy_iso_grouped_count.png}
-  \caption{Verteilung der verwendeten Energiemodelle (ISO-Regionen) über die Lebenszyklusphasen}
+  \caption{Verteilung der verwendeten Energiemodelle (ISO-Regionen) über die Lebenszyklusphasen. [Eigene Darstellung]}
   \label{fig:iso_energy}
 \end{figure}
 
 \FloatBarrier
 
-Eine weitere Variable, die die Umweltindikatoren stark beeinflussen, und damit in der zu entwickelnden Heuristik eine Rolle spielen muss,
+Eine weitere Variable, die die Umweltindikatoren stark beeinflussen, und damit in der zu entwickelnden Heuristik eine Rolle spielt,
 ist die Zusammensetzung des Produkts aus den verschiedenen Materialien.
 In der Tabelle \ref{tab:materials_threecols} wird aufgeführt, aus welchen Materialien das 
 durchschnittliche PEP-Produkt aus dem Datensatz besteht.
-Dazu wurde der Mittelwert jedes Materials über alle Produkte hinweg berechnet.
+Für die Mittelwerte wurde pro Produkt ein fehlendes Material als Anteil 0~\% behandelt, 
+sodass die Kennzahlen die durchschnittliche Zusammensetzung über den gesamten Datensatz abbilden.
 \emph{N} gibt zusätzlich die Anzahl der Produkte an, in welchen das aufgeführte Material auftaucht. 
 Wie in den meisten PEP-Dokumenten werden die modularen Materialien in
 die Gruppen \emph{Metalle, Plastik und andere} gegliedert. 
@@ -373,7 +375,7 @@ Verteilungsstruktur der Daten.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\linewidth]{images/boxplots_indicators.png}
-  \caption{Boxplots der Total-Werte je Indikator auf logarithmischer Skala.}
+  \caption{Boxplots der Total-Werte je Indikator auf logarithmischer Skala. [Eigene Darstellung]}
   \label{fig:boxplot_indicators}
 \end{figure}
 

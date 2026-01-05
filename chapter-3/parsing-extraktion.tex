@@ -1,11 +1,11 @@
 \section{PDF-Parsing und Extraktion}
 
-Die Extraktion strukturierter Daten aus PEP-PDFs stellte den technisch anspruchsvollsten
+Die Extraktion strukturierter Daten aus PEP-PDFs stellt einen technisch anspruchsvollen
 Teil der Arbeit dar. Ziel ist es, aus den heterogenen Dokumenten eine konsistente,
 maschinenlesbare Repräsentation der Umweltindikatoren, Gerätedaten und
 Metadaten zu erzeugen, welche entsprechend der Zielsetzung der Arbeit analysiert werden können. 
 Die finale Lösung kombiniert eine robuste Layoutanalyse mit
-Docling und eine LLM-basierte, schema­gesteuerte Inhaltsinterpretation.
+Docling und eine LLM-basierte, schema­\-gesteuerte Inhalts\-interpretation.
 
 Zu Beginn wurde eine auf \texttt{pdfplumber} basierende Pipeline eingesetzt, 
 die auf der von Selg \cite{Selg2025} entwickelten Pipeline aufbaut.
@@ -40,7 +40,7 @@ Die Pipeline trennt klar zwischen Layoutanalyse und Inhaltsinterpretation:
   \item \textbf{Regelbasierter Filter:}
       Um Kontextverluste des nachgelagerten Sprachmodells zu vermeiden,
       wurde ein regelbasierter Python-Filter auf die aus Docling generierten
-      Markdown-Dateien angewendet. Irrelevante Segmente (z.,B.\ Kopf- und Fußzeilen, Unternehmensinformationen, Titelblätter)
+      Markdown-Dateien angewendet. Irrelevante Segmente (z.\,B.\ Kopf- und Fußzeilen, Unternehmensinformationen, Titelblätter)
       werden über eine Blacklist entfernt.
   \item \textbf{LLM-basierte Extraktion:} Der kon\-ver\-tierte Text wird in Ab\-schnit\-ten
         an ein Sprachmodell übergeben, das definierte Variablen extrahiert und im
@@ -53,7 +53,7 @@ Für die semantische Extraktion wurde \emph{GPT-5} verwendet, angesprochen über
 Ausgaben und optional eine Schema-Validierung. Durch einen Aufruf im
 \texttt{response\_format=json\_object}-Modus, werden nur gültige JSON-Formate geliefert, 
 was den Post-Processing-Aufwand erheblich senkt. GPT-5 konnte
-Numerische Werte und Einheiten stabil erkennen, sowie Module (A1–A3, A4, A5,
+Numerische Werte mit zugehörigen Einheiten stabil erkennen und Module (A1–A3, A4, A5,
 B*, C*, D) zuverlässig zuordnen. 
 Die Temperatur des LLMs wurde auf 0 gesetzt, um Zufälligkeit und Kreativität möglichst zu vermeiden.
 

@@ -4,7 +4,7 @@
 Aus den in Kapitel~\ref{sec:regression_co2} und 
 \ref{sec:reg_other_indicators} vorgestellten Regressionsmodellen 
 ergibt sich ein differenziertes Bild. Einige Indikatoren lassen sich 
-sehr gut, andere nur eingeschränkt durch Gewicht, Stromverbrauch und der  
+sehr gut, andere nur eingeschränkt durch Gewicht, Stromverbrauch und  
 Materialinformationen erklären. Dieses Kapitel ordnet die Ergebnisse ein und diskutiert Unsicherheiten und Grenzen.
 
 
@@ -27,8 +27,8 @@ die Zielgröße und die benötigten Eingangsvariablen numerisch verfügbar
 waren. Für \emph{Climate change (total)} ergibt sich dadurch beispielsweise eine
 Modellstichprobe von $n = 173$.
  
-Nach einer Kon\-ver\-tierung in struk\-turierte Mark\-down-Re\-präsen\-tatio\-nen 
-wurden die PEPs in eine konsistente, maschinenlesbare Datenrepräsentation überführt.
+Nach der Konvertierung der PDFs in strukturierte Markdown-Segmente wurden 
+die Inhalte schema-gesteuert in JSON extrahiert.
 Die eigentliche Extraktion der Variablen erfolgte schema-gesteuert mit einem
 Sprachmodell (LLM), das die gewünschten Felder in einem JSON-Format zurückgab.
 
@@ -38,7 +38,7 @@ vereinheitlichen, wurden die Daten auf Basis einer Vokabularanalyse regelbasiert
 Auf der so erzeugten Datenbasis wurde ein bewusst kompakter Re\-gressions\-ansatz gewählt,
 der zum Modellierungsziel passt. Als Eingangsgrößen dienen Variablen, die auch ohne PEP
 typischerweise messbar oder abschätzbar sind, insbesondere Gesamtgewicht und über die
-Lebensdauer aggregierter Stromverbrauch, sowie PCA-verdichteten Materialinformationen.
+Lebensdauer aggregierter Stromverbrauch, sowie PCA-verdichtete Materialinformationen.
 
 Die Mo\-dell\-güte wird konsequent über ge\-trennte Trai\-nings- und Test\-daten be\-ur\-teilt.
 Dieses Vorgehen ist für die Zielsetzung
@@ -67,7 +67,7 @@ Standardisierung der heterogenen Dokumente und Begriffe voraus.
 
 Zweitens lassen die Modellresultate erkennen, dass einige Indikatoren mit wenigen,
 allgemein verfügbaren Produktmerkmalen gut erklärbar sind. Am deutlichsten gilt dies für
-\emph{Climate change (total)}. Gewicht, Stromverbrauch über die Lebensdauer sowie
+\emph{Climate change (total)}. Gewicht, Stromverbrauch über die Lebensdauer und
 verdichtete Materialinformationen sind zentrale Treiber der Treibhauswirkung,
 sodass die Vorhersagen auf dem Testdatensatz vergleichsweise stabil ausfallen. Gleichzeitig
 zeigen die Fehlermaße, dass auch dieses Modell keine präzise Reproduktion einzelner PEP-Werte
@@ -77,7 +77,7 @@ Für mehrere weitere Indikatoren lässt sich der Ansatz zwar übertragen, die Mo
 erreichen jedoch nicht die Stabilität der CO$_2$-Regression. Dies betrifft insbesondere
 \emph{Acidification}, \emph{Hazardous waste disposed}, \emph{Water use},
 \emph{Photochemical ozone formation (HH)}, \emph{Resource use (fossils)},
-\emph{Eutrophication (terrestrial)}, \emph{Ozone depletion} sowie
+\emph{Eutrophication (terrestrial)}, \emph{Ozone depletion} und
 \emph{Resource use (minerals and metals)}. Für diese Zielgrößen werden in der Regel noch
 brauchbare Ergebnisse erzielt, die Streuung der Vorhersagefehler ist jedoch größer und die
 erklärte Varianz fällt geringer aus als bei \emph{Climate change (total)}.
@@ -90,8 +90,8 @@ abbilden, oder dass die PEP-Daten für diese Zielgrößen stärker durch untersc
 Systemgrenzen, Berechnungsannahmen und verwendete Hintergrunddatensätze geprägt sind.
 
 
-Die stark rechtsschiefen Verteilungen der Inputgrößen und Indikatoren unterstreichen zudem,
-dass Transformationen für eine robuste Modellierung notwendig sind.
+Die stark rechtsschiefen Verteilungen der Inputgrößen und Indikatoren unterstreichen, 
+dass Transformationen für eine stabilere Modellierung hilfreich sind..
 
 Vor diesem Hintergrund ist der Begriff \emph{belastbare Schätzung} in dieser Arbeit als
 \emph{heuristische Abschätzung} zu verstehen. Das Modell eignet sich insbesondere für eine
@@ -139,7 +139,7 @@ sondern durch die Struktur der PEP-Daten selbst bedingt. Besonders relevant ist 
 Abbildung des Strommixes. In vielen PEPs ist der verwendete Strommix entweder nur grob
 (z.\,B.\ als Länder- oder Regionenmix) angegeben oder es fehlen Referenzjahre des Mixes. 
 Gleichzeitig kann sich die Emissionsintensität der
-Stromerzeugung über die Zeit deutlich verändern. Dadurch entsteht eine zusätzliche,
+Stromerzeugung über die Zeit verändern. Dadurch entsteht eine zusätzliche,
 nicht beobachtbare Varianz in der Zielgröße, die mit den verfügbaren Inputvariablen
 (Gewicht, Stromverbrauch, Materialmix) nicht erklärt werden kann. 
 
@@ -159,7 +159,7 @@ das Modell formal eine hohe erklärte Varianz auf Teilen der Stichprobe erzielt.
 Auch die Fehlerstruktur der Modelle setzt Grenzen. Die Verteilungen der
 Zielgrößen sind stark rechtsschief und enthalten Ausreißer. Transformationen
 wie \texttt{log1p} oder Box-Cox stabilisieren die Modellierung, führen jedoch
-nicht zu vollständig normalverteilten Schätzungsfehlern. Damit sind klassische
+nicht zu vollständig normalverteilten Residuen. Damit sind klassische
 Schlussfolgerungen der OLS-Theorie, etwa Standardfehler oder p-Werte, nur
 eingeschränkt belastbar. Für die Zielsetzung dieser Arbeit ist aber die
 testbasierte Generalisierung zentral. Ergänzend zu $R^2$ und RMSE werden
@@ -167,7 +167,7 @@ robuste Fehlermaße wie der Median absoluter Fehler sowie Median und Mittelwert
 der relativen absoluten Fehler genutzt, um die typische Modellleistung trotz
 Ausreißern nachvollziehbar zu charakterisieren.
 
-Die Materialmodellierung ist ebenfalls mit einem Trade-off verbunden. Die
+Die Materialmodellierung ist ebenfalls mit einer Abwägung verbunden. Die
 Nutzung einer PCA auf dem Materialblock erhöht die Stabilität, reduziert
 Multikollinearität und verhindert Überanpassung durch viele korrelierte
 Materialspalten. Gleichzeitig sinkt die Interpretierbarkeit einzelner

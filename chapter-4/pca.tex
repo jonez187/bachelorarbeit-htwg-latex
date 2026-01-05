@@ -7,7 +7,7 @@ Benutzt wurde die Python-Bibliothek \emph{scikit-learn} \cite{scikit-learn-pca}.
 Alle Materialien, die in einem Produkt nicht vorkommen, wurden als 0 interpretiert.
 
 Vor der PCA wurden die Verteilungen der Materialanteile 
-grafisch untersucht. Die Histogramme, von welchen die 3 häufigsten Materialien 
+grafisch untersucht. Die Histogramme, von welchen die drei häufigsten Materialien 
 in Abbildung~\ref{fig:material_hists}
 dargestellt sind,
 zeigen, dass die Daten teilweise multimodal verteilt sind und viele Beobachtungen 
@@ -16,12 +16,12 @@ wäre die Verteilung durch
 Ausreißer weiterhin stark beeinflusst.
 
 Für die PCA der Materialien wird daher der \emph{scikit-learn RobustScaler} \cite{sklearn-robust}
-verwendet. Dieser zentriert jede Materialspalte um den Median und skaliert durch die
-Interquartilsbreite (IQR), wobei die Quantile standardmäßig als
+verwendet. Dieser zentriert jede Materialspalte um den Median und skaliert durch den
+IQR, wobei die Quantile standardmäßig als
 $Q_{0.25}$ und $Q_{0.75}$ definiert sind (\texttt{quantile\_range=(25,75)}).
 Im Gegensatz zur z-Standardisierung wird damit die Skalierung deutlich weniger durch
 Ausreißer beeinflusst.
-Die PCA wird anschließend auf der robust skalierten Materialmatrix durchgeführt.
+Die PCA wird anschließend auf den robust skalierten Materialien durchgeführt.
 In den nachfolgenden Regressionsmodellen werden die Skalierungsparameter jeweils nur auf den
 Trainingsdaten geschätzt und anschließend auf Validierungs- bzw.\ Testdaten angewendet, um
 Data Leakage zu vermeiden.
@@ -31,7 +31,7 @@ Data Leakage zu vermeiden.
 \begin{figure}[h]
   \centering
   \includegraphics[width=1.0\textwidth]{images/material_histograms.png}
-  \caption{Histogramme der Materialien mit den größten Anteilen über alle Podukte.}
+  \caption{Histogramme der Materialien mit den größten Anteilen über alle Produkte. [Eigene Darstellung]}
   \label{fig:material_hists}
 \end{figure}
 
@@ -42,7 +42,7 @@ Data Leakage zu vermeiden.
 \begin{figure}[H]
   \centering
   \includegraphics[width=1.0\textwidth]{images/pca_kum_robust.png}
-  \caption{Kumulative erklärte Varianz}
+  \caption{Kumulative erklärte Varianz. [Eigene Darstellung]}
   \label{fig:pca_kum}
 \end{figure}
 
@@ -118,7 +118,7 @@ Hauptkomponenten wie folgt interpretieren:
 \end{itemize}
 
 Bemerkenswert ist, dass klassische Strukturmetalle wie Stahl oder Kupfer
-sowie Materialien wie Papier in den ersten
+und Materialien wie Papier in den ersten
 Hauptkomponenten nicht mit den höchsten Ladungen auftreten. Das liegt daran,
 dass ihre Anteile über viele PEPs hinweg vergleichsweise stabil sind und
 dadurch weniger zur Gesamtvarianz beitragen als die stark schwankenden
@@ -131,7 +131,7 @@ drei Komponenten beschreiben vor allem verschiedene Kunststoffmischungen
 (PS, PE und andere Kunststoffe), während PC$_4$ und
 PC$_5$ Leiterplatten und Elektronik gegenüber PVC lastigen Gehäusen
 abgrenzen. Diese fünf Hauptkomponenten erklären zusammen knapp
-90,\% der Varianz im Materialblock und bilden damit die prägendsten
+90\,\% der Varianz im Materialblock und bilden damit die prägendsten
 Materialmuster der PEPs ab. In den folgenden
 Regressionsmodellen werden sie genutzt,
 um den Einfluss des Materialmixes auf die Umweltindikatoren zu erfassen,

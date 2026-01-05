@@ -7,7 +7,7 @@ Ein Datensatz galt als unbrauchbar, wenn sämtliche
 Umweltindikatoren fehlten oder ausschließlich Nullwerte enthielten, oder wenn
 die zentralen Felder \texttt{total\_weight}, \texttt{electricity\_consumption},
 \texttt{material\_composition} und \texttt{energy\_model} gleichzeitig leer waren.
-Diese Kriterien führten zur Aussonderung von 8 der insgesamt 242 Datensätze.
+Diese Kriterien führten zur Aussonderung von 8 der insgesamt 252 Datensätze.
 Diese PEPs enthielten zwar Metadaten, jedoch keine quantitativen Werte
 und wurden daher nicht in die Analyse einbezogen.
 
@@ -33,11 +33,11 @@ Finaler Analysedatensatz & 234 \\
 
 
 Die Datenbereinigung wurde durch automatisierte Prüfmechanismen begleitet.
-Dazu zählten Validierungen auf fehlende oder ungültige Einheiten, numerische
-Typfehler (z.\,B. String statt numerischer Wert) sowie Plausibilitätsprüfungen,
+Dazu zählten Validierungen hinsichtlich fehlender oder ungültiger Einheiten, numerische
+Typfehler (z.\,B. String statt numerischer Wert) und Plausibilitätsprüfungen,
 etwa auf Null- oder Extremwerte bei zentralen Variablen.
 Ein zusätzlicher Kontrolllauf identifizierte Datensätze mit nicht plausiblen
-Summen oder Flatline-Indikatoren (identische Werte in allen Phasen), die von der
+Summen (z.\,B. Summe der Materialanteile) oder Flatline-Indikatoren (identische Werte in allen Phasen), die von der
 weiteren Analyse ausgeschlossen wurden.
 
 Mehrere alternative Ansätze wurden im Verlauf der Datenbereinigung geprüft und

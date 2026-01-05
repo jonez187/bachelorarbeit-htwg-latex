@@ -5,7 +5,7 @@ Dieses Kapitel beschreibt die Wahl des Regressionsmodells.
 Im Mittelpunkt steht die
 explorative Entwicklung und Auswertung verschiedener
 Modellvarianten, aus denen das in Abschnitt~\ref{sec:regression_co2}
-eingesetzte Hauptmodell für die CO$_2$-Äquivalente sowie die übrigen
+eingesetzte Hauptmodell für die CO$_2$-Äquivalente und die übrigen
 Indikatoren abgeleitet wird.
 
 Die Modellentwicklung erfolgte iterativ und datengetrieben: Unterschiedliche
@@ -40,15 +40,15 @@ Modellentwicklung insbesondere folgende Fragestellungen ab:
   \item \textbf{Rohmaterialien vs.\ Material-PCA:}
         Ist es günstiger, die zahlreichen Materialspalten direkt zu verwenden,
       oder führt eine PCA des Materialblocks zu stabileren Modellen?
-  \item \textbf{Beitrg der Energiemodelle:}
-        Verbessert sich die Vorhersagegüte wenn zusätzlich Energiemodelle 
+  \item \textbf{Beitrag der Energiemodelle:}
+        Verbessert sich die Vorhersagegüte, wenn zusätzlich Energiemodelle 
         einbezogen werden?
   \item \textbf{Wahl des Regressionsverfahrens und Regularisierung:}
         Unterscheiden sich OLS, \texttt{Ridge} und \texttt{Lasso} hinsichtlich 
         Stabilität und erzielbarer Gütemaße bei den vorhandenen PEP-Daten?
   \item \textbf{Wahl der Zieltransformation:}
         Führt eine Log-Transformation (\texttt{log1p}) oder eine Box-Cox-Transformation zu 
-        besserer Vorhersagegüte und plausibleren Schätzfehler?
+        besserer Vorhersagegüte und plausibleren Residuen?
 \end{enumerate}
 
 Die nachfolgenden Abschnitte stellen die dafür durchgeführten Experimente vor und 
@@ -65,7 +65,7 @@ welchen Beitrag unterschiedliche Eingangsmerkmale zur Vorhersage von
 $n = 173$ PEPs, für die Gesamtgewicht, Stromverbrauch
 und die CO$_2$-Äquivalente vollständig vorliegen.
 
-Verglichen wurden drei Feature-Sets, jeweils in einem linearen
+Verglichen wurden mehrere Feature-Sets, jeweils in einem linearen
 Regressionsmodell auf der Transformationsskala
 $\log(1+\text{CO2}_\text{total})$:
 
@@ -83,7 +83,7 @@ $\log(1+\text{CO2}_\text{total})$:
         wird auf alle Features global angewendet.
 \end{itemize}
 
-Für alle drei Varianten wurden dieselben Train/Test-Splits verwendet,
+Für alle Varianten wurden dieselben Train/Test-Aufteilungen verwendet,
 so dass die Gütemaße direkt vergleichbar sind. Tabelle~\ref{tab:reg_exp_feature_sets}
 zeigt die erzielten Ergebnisse.
 
@@ -91,14 +91,14 @@ zeigt die erzielten Ergebnisse.
   \centering
   \caption{Vergleich verschiedener Feature-Sets für den Indikator
            \emph{Climate change (total)} auf der Skala
-           $\log(1+\text{CO2}_\text{total})$.}
+           $\log(1+\text{CO2}_\text{total})$. RMSE nach Rücktransformation}
   \label{tab:reg_exp_feature_sets}
   \begin{tabular}{lccc}
     \toprule
     Modellvariante                     & $R^2_{\text{Train}}$ & \textbf{$R^2_{\text{Test}}$} & RMSE\textsubscript{Test} \\
     \midrule
     Basis (Gewicht, Strom)             & 0.817 & \textbf{0.770} & $50104.33\,\mathrm{kg\ CO_2}$ \\
-    Basis + Energiemodelle             & 0.668 & \textbf{0.501} & $159778.91\,\mathrm{kg\ CO_2}$ \\
+    Basis + Energiemodelle             & 0.810 & \textbf{0.501} & $159778.91\,\mathrm{kg\ CO_2}$ \\
     Basis + Rohmaterialien             & 0.904 & \textbf{0.567} & $101227.08\,\mathrm{kg\ CO_2}$ \\
     Basis + Rohmaterialien ($n >=10$)  & 0.842 & \textbf{0.832} & $41910.11\,\mathrm{kg\ CO_2}$ \\
     Basis + PCA-Materialien ($n >=10$) & 0.887 & \textbf{0.882} & $33106.20\,\mathrm{kg\ CO_2}$ \\
@@ -119,7 +119,7 @@ um deren Effekt zuverlässig zu schätzen.
 Ein weiterer Grund ist die unzureichende Abdeckung der Jahreszahlen der benutzten Strommixe in den PEPs.
 Sie sind nur in wenigen Datensätzen vorhanden und können daher nicht
 robust als erklärende Variable modelliert werden.
-Gleichzeitig kann sich die Stromerzeugungsstruktur zwischen Jahren deutlich verändern.
+Gleichzeitig kann sich die Stromerzeugungsstruktur zwischen Jahren deutlich verändern \cite{fr-energy-mix}.
 Wenn unterschiedliche Jahre im Datensatz vermischt werden, entsteht zusätzliche Varianz in den
 Zielwerten, die durch das benutzte Feature-Set nicht erklärt werden kann und sich als Rauschen im
 Modell zeigt.
@@ -160,9 +160,10 @@ mit einer klassischen linearen Regression auf Basis der der \texttt{LinearRegres
 Im nächsten Schritt wird das lineare Modell anschließend mit 
 \texttt{Ridge} und \texttt{Lasso}
 implementiert,
-die über einen Regularisierungsparameter $\alpha$ die Modellkomplexität steuern und 
+die über einen Regularisierungsparameter $\lambda$ die Modellkomplexität steuern und 
 dadurch insbesondere bei vielen, korrelierten Regressoren stabilere Schätzungen 
 liefern können.
+In \texttt{scikit-learn} entspricht dies dem Parameter \texttt{alpha} (\(\alpha \equiv \lambda\)).
 
 Bei festem Feature-Set
 (Gewicht, Stromverbrauch, PCA-Materialkomponenten) lieferten

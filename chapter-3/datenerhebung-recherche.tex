@@ -1,27 +1,27 @@
 \section{Datenerhebung und PEP-Recherche}
 
-Ziel der Datenerhebung ist die Identifikation und Extraktion von PEP-Ecopassport-Dokumenten,
-die sich auf Geräte der Gebäudeautomatisierung oder IoT Komponenten beziehen. Die PEP-Datenbank (\cite{PEPDB}) bildet dabei
+Ziel der Datenerhebung ist die Identifikation von PEP-Ecopassport-Dokumenten,
+die sich auf Geräte der Gebäudeautomatisierung oder IoT-Komponenten beziehen. Die PEP-Datenbank bildet dabei
 die Quelle der Untersuchung. Für jedes gefundene Dokument wurden Produktinformationen,
-Material- und Energiedaten sowie Metadaten in strukturierter Form erfasst.
+Material- und Energiedaten sowie Metadaten in strukturierter Form erfasst \cite{PEPDB}.
 
 Im ersten Schritt wurden die Dokumente automatisiert recherchiert, die zugehörigen PDFs
 heruntergeladen, analysiert und nach Relevanz für den Smart-Home- bzw. IoT-Bereich klassifiziert. 
-Das Ergebnis wurde in CSV-Formaten gespeichert und diente als Grundlage für die weitergehende Analyse.
+Das Ergebnis wurde in CSV-Dateien gespeichert und diente als Grundlage für die weitergehende Analyse.
 
 Zur Ermittlung der verfügbaren PEP-Dokumente wurde zunächst die Suchfunktion der
 PEP-Datenbank analysiert. Über die Browser-Entwicklertools konnten die zugrunde liegenden
 Netzwerkanfragen identifiziert werden. 
 Dadurch konnte mithilfe von \emph{JavaScript} HTML-Snippets der Produkte 
 mit den gesuchten Daten abgefragt, geparst und in CSV-Dateien gespeichert werden.
-Um dabei gezielt IoT relevante Produkte zu erfassen, wurden die Abfragen mit spezifischen
+Um dabei gezielt IoT-relevante Produkte zu erfassen, wurden die Abfragen mit spezifischen
 Suchbegriffen in den Parametern erweitert (z.\,B.\ \emph{controller}, \emph{sensor}, \emph{gateway},
 \emph{wifi}, \emph{knx}, \emph{zigbee}, \emph{cloud}). 
 Anschließend erfolgte eine manuelle Prüfung und Klassifikation
-der Ergebnisse, da die Suchbegriffe im Produktitel nicht direkt 
-auf Komponenten der Gebäudeautomation schließen können.
+der Ergebnisse, da die Suchbegriffe im Produkttitel nicht direkt 
+auf Komponenten der Gebäudeautomation schließen lassen.
 Zudem wendet die Suchfunktion der PEP-Plattform nicht alle Filter korrekt
-an und es treten Überschneidungen zwischen den Seiten auf.
+an und die Produkte auf verschiedenen Ergebnisseiten überschneiden sich teilweise.
 
 Die ermittelten Produkte wurden in einer Excel-Datei manuell kategorisiert.
 Die Zuordnung erfolgte nach folgenden Kriterien:
@@ -35,4 +35,4 @@ Zusätzlich zur halbautomatisierten Suche wurden IoT-relevante Unternehmen gezie
 identifiziert (z.\,B.\ ABB, Siemens, Schneider Electric, Legrand, Somfy, Daikin,
 Bosch, Honeywell). Deren PEP-Dokumente wurden manuell durchsucht und ergänzt. 
 Dieses Vorgehen ist aufwändiger als die automatisierte Suche über Netzwerkabfragen,
-konnte die Datenbasis aber enorm vergrößern.
+konnte die Datenbasis aber deutlich vergrößern.

@@ -3,7 +3,7 @@ Da die PEP\--Ecopassport\--Umweltdaten ausschließlich in PDF\--Dateien veröffe
 besteht der erste Schritt darin, die Informationen zu extrahieren, um sie 
 für die quantitative Analyse in ein
 einheitlich strukturiertes und maschinenlesbares Format zu bringen. 
-Dieser Prozess ist nicht trivial und bildet die Grundlage für die weitere Verarbeitung,
+Dieser Prozess bildet die Grundlage für die weitere Verarbeitung,
 Strukturierung und Analyse der Umweltindikatoren. 
 
 
@@ -58,14 +58,14 @@ Explizit ergeben sich dabei vier typische Problemklassen:
 
 \subsection{Extraktionsansätze}
 Da diese Probleme weit verbreitet und bekannt sind, gibt es mehrere 
-Extraktionsansätze, um PDF-Dateien in ein strukturierts Format zu bringen,
-mit dem Ziel sie anschließend weiter zu analysieren. 
+Extraktionsansätze, um PDF-Dateien in ein strukturiertes Format zu bringen,
+mit dem Ziel, sie anschließend weiter zu analysieren. 
 
 
 \paragraph{Klassische Verfahren (regelbasierte Parser)}
 Regelbasierte PDF\--Parsing\--Methoden arbeiten mit
 fest definierten Regeln und benötigen kein Training. 
-Mehrere weit verbereutete Softwarebibliotheken implementieren regelbasierte Parser, 
+Mehrere weit verbreitete Softwarebibliotheken implementieren regelbasierte Parser, 
 darunter \emph{pdfplumber}, \emph{pypdfium2} und \emph{pypdf}.
 Da die Arbeit von Selg auf \emph{pdfplumber} aufbaut, wird diese Bibliothek näher besprochen \cite{Selg2025}. 
 
@@ -106,7 +106,7 @@ wie den PEP-Ecopassports an ihre methodischen Grenzen stoßen.
 Neben klas\-sischen re\-gel\-ba\-sier\-ten Parsern etablierten sich  
 moderne, KI-gestützte Dokumentenanalyse-Frameworks. 
 Dazu gehören komplexe Layout-Modelle wie \emph{LayoutParser} \cite{layout-parser}, 
-\emph{GROBID} \cite{grobid}, sowie \emph{Docling}. 
+\emph{GROBID} \cite{grobid} und \emph{Docling}. 
 Sie kombinieren visuelle Merkmale, Textinformationen und 
 semantische Modelle, um Dokumente mit anspruchsvoller Struktur automatisch 
 zu analysieren und in maschinenlesbare Formate zu überführen.
@@ -117,12 +117,14 @@ End-to-End-Pipeline für Layout-Analyse, Strukturerkennung und Tabellensegmentie
 
 Die Funktion und Hintergründe von \emph{Docling} werden in der Dokumentation (vgl. \cite{Auer2024, Auer2025}) 
 ausführlich beschrieben und im Folgenden zusammengefasst:
+
 Im Gegensatz zu regelbasierten Werkzeugen wie \emph{pdfplumber}, 
 kombiniert \emph{Docling} klassische Parsing-Verfahren mit 
 tiefen neuronalen Modellen für Layout- und Strukturerkennung. 
 
 \emph{Docling} verarbeitet Dokumente in einer linearen Pipeline. 
-Das Layoutmodell \emph{DocLayNet} ist Teil dieser Pipeline und detektiert Seitenelemente wie Absätze,
+Ein auf \emph{DocLayNet} trainiertes Layoutmodell ist Teil dieser 
+Pipeline und detektiert Seitenelemente wie Absätze,
 Überschriften, Listen, Abbildungen und Tabellen, die anschließend mit den
 extrahierten Text-Tokens zu einer konsistenten Dokumentstruktur
 zusammengeführt werden. Tabellen werden mit
@@ -153,12 +155,12 @@ eindeutig und konsistent zuzuordnen. Für die quantitative, automatisierte Auswe
 ist daher ein fest definiertes, maschinenlesbares Zielformat erforderlich.
 
 Als Zielformat wird \emph{JavaScript Object Notation (JSON)} verwendet, das sich
-als Standard für strukturierten Datenaustausch etabliert hat \cite{Pezoa2016}.
-JSON bildet Daten über einfache Typen sowie hierarchische Strukturen wie
-Objekte und Arrays ab und eignet sich damit für verschachtelte Informationen
-\cite{Pezoa2016}. In dieser Arbeit dient JSON als einheitliche Repräsentation
+als Standard für strukturierten Datenaustausch etabliert hat.
+JSON bildet Daten über einfache Typen und hierarchische Strukturen wie
+Objekte und Arrays ab und eignet sich damit für verschachtelte Informationen \cite{Pezoa2016}. 
+In dieser Arbeit dient JSON als einheitliche Repräsentation
 der extrahierten PEP-Daten und ermöglicht eine reproduzierbare Weiterverarbeitung
-in Analyseumgebungen wie Python oder R \cite{Pezoa2016}.
+in Analyseumgebungen wie Python oder R.
 
 
 
@@ -179,7 +181,7 @@ Analyse, Koreferenzauflösung und Relations\-extraktion. Ein Vorteil dieser
 Pipeline-Ansätze ist die hohe Nachvollziehbarkeit und die weitgehend
 deterministische Verarbeitung. Bei heterogenen Textformaten können allerdings Fehler aus frühen Stufen leicht
 in spätere Schritte übertragen werden und die Entwicklung robuster Regeln
-oder Feature-Sets ist mit erheblichen Aufwand verbunden.
+oder Feature-Sets ist mit erheblichem Aufwand verbunden.
 
 In \cite{Nadeem2024} werden große Sprachmodelle (LLMs) als neuere Möglichkeit
 beschrieben, Informationsextraktion semantisch zu lösen. 
@@ -201,4 +203,5 @@ heterogenen und layoutbedingt uneinheitlichen PEP-Texten jedoch schnell an
 Grenzen. LLM-basierte Methoden sind flexibler und können Inhalte direkt in das
 vorgegebene JSON-Schema überführen, erfordern dafür aber Validierungsschritte.
 Da diese Arbeit auf eine quantitative Analyse der PEP-Ecopassport PDFs abzielt, wird trotzdem
-ein LLM für die Extraktion und Überführung in das harmonisierte JSON-Zielformat eingesetzt.
+ein LLM für die Extraktion und Überführung in das harmonisierte JSON-Zielformat eingesetzt, 
+ergänzt durch Plausibilitätsprüfungen und Validierung.

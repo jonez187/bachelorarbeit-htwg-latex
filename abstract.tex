@@ -7,17 +7,17 @@ Abschätzung zentraler Umweltindikatoren für Produkte der Gebäudeautomation. P
 standardisierte Umweltkennzahlen, liegen in der Praxis jedoch als heterogene PDF-Dokumente
 vor und sind daher nur eingeschränkt automatisiert auswertbar.
 
-Auf Basis des aufbereiteten Datensatzes wird ein kompakter Re\-gres\-sions\-an\-satz entwickelt, der
+Auf Basis des aufbereiteten Datensatzes wird ein Re\-gres\-sions\-an\-satz entwickelt, der
 ausschließlich Merkmale nutzt, die auch ohne PEP typischerweise verfügbar oder abschätzbar
 sind. Dazu zählen insbesondere Gesamtgewicht, über die Lebensdauer aggregierter
-Stromverbrauch sowie verdichtete Materialinformationen, die über eine PCA aus dem
-Materialblock abgeleitet werden. Die Modellgüte wird mit strikt getrennten Trainings- und
+Stromverbrauch und verdichtete Materialinformationen, die durch eine PCA aus dem
+verwendeten Material abgeleitet werden. Die Modellgüte wird mit strikt getrennten Trainings- und
 Testdaten und zusätzlichen robusten Fehlermaßen bewertet.
 
 Die stabilsten Ergebnisse werden für \emph{Climate change (total)} erzielt. Für mehrere
-weitere Indikatoren ergeben sich brauchbare Schätzungen, während \emph{Eutrophication
+weitere Indikatoren ergeben sich ebenfalls gute Schätzungen, während \emph{Eutrophication
 (freshwater)}, \emph{Eutrophication (marine)} und \emph{Radioactive waste disposed} nur
-eingeschränkt erklärbar sind. Methodische Unterschiede zwischen PEPs, wie verschiedene Berechnungsmethoden, 
+eingeschränkt erklärbar sind. Methodische Unterschiede zwischen den PEPs, wie verschiedene Berechnungsmethoden, 
 begrenzen die Vergleichbarkeit und wirken
 als Rauschen. Insgesamt ermöglicht der Ansatz eine schnelle, datengetriebene Einordnung
 für neue Produkte ohne PEP und kann frühe Entscheidungen in Entwicklung und

@@ -2,7 +2,7 @@
 \label{sec:stat_grundlagen}
 
 Die in dieser Arbeit verwendeten statistischen Verfahren bilden 
-die methodische Grundlage zur Analyse und Modellierung der aus PEP-Ecopassports extrahierten Daten. 
+die methodische Grundlage zur Analyse und Modellierung der aus PEPs extrahierten Daten. 
 Dazu werden zunächst \emph{deskriptive und explorative} Verfahren eingesetzt, um Strukturen, 
 Streuungen und Ausreißer in den Daten sichtbar zu machen. 
 Darauf aufbauend wird die \emph{lineare Regression} als einfaches, interpretierbares Modell genutzt, 
@@ -19,7 +19,7 @@ Muster oder Auffälligkeiten zu erkennen \cite{Fisher2009}. Der Schwerpunkt lieg
 Hypothesentests, sondern auf dem Verständnis der vorhandenen Daten \cite{Dimić2019}. 
 
 Die deskriptive Statistik umfasst numerische Verfahren zur Beschreibung
-der \emph{Lage} und der \emph{Streuungskennzahlen} von Daten \cite{Fisher2009}. 
+der \emph{Lage-} und \emph{Streuungskennzahlen} von Daten \cite{Fisher2009}. 
 Ziel ist die Abbildung großer Datenmengen auf wenige aussagekräftige Kennzahlen. 
 Zu den typischen Lagemaßen gehören \emph{Mittelwert} und \emph{Median}.
 Der Mittelwert beschreibt die durchschnittliche Ausprägung, während der Median die geordnete Verteilung 
@@ -60,14 +60,14 @@ und eignet sich für den Vergleich mehrerer Merkmale \cite{Kaur2018}.
 \emph{QQ-Plots (Quantile-Quantile-Plots)} untersuchen grafisch, wie gut ein Datensatz einer bestimmten 
 theoretischen Verteilung folgt \cite{Seltman2018}. 
 In dieser Arbeit werden sie eingesetzt, um zu prüfen, 
-ob die Schätzfehler eines Modells normalverteilt sind. 
+ob die Residuen eines Modells normalverteilt sind. 
 
 \FloatBarrier
 \subsection{Mathematische Transformationen}
 Transformationen dienen nach \cite{Marshall2010} und \cite{Fisher2009} dazu, 
 Schiefe zu reduzieren, Varianz zu stabilisieren und parametrische Tests zu ermöglichen, 
 damit die Modellierung auf der Transformationsskala sinnvoller wird. 
-Eine gängige Transformation um Rechtsschiefe zu korrigieren, ist die 
+Als eine gängige Transformation, um Rechtsschiefe zu korrigieren, wird die 
 logarithmische Transformation (Log-Transformation) erwähnt.
 Da der Logarithmus extrem hohe Werte stärker staucht als kleine Werte, 
 kann die Transformation nach \cite{Marshall2010} den 
@@ -105,12 +105,12 @@ nach der Transformation $\log(1+x)$ und rechts nach einer Box-Cox-Transformation
   \centering
   \includegraphics[width=\textwidth]{images/transform_demo_log1p_vs_boxcox_kde.png}
   \caption{Beispiel einer rechtsschiefen Verteilung vor und nach Transformationen. 
-  Die überlagerte Dichtekurve verdeutlicht die Form der Verteilung.}
+  Die überlagerte Dichtekurve verdeutlicht die Form der Verteilung. [Eigene Darstellung]}
   \label{fig:log_transform_hist}
 \end{figure}
 
 In dieser Arbeit wird vor allem die Transformation $\log(1+x)$ verwendet
-(\texttt{log1p}), um Indikatorwerte und Schätzfehler auf einer besser interpretierbaren
+(\texttt{log1p}), um Indikatorwerte und Residuen auf einer besser interpretierbaren
 Skala zu analysieren.
 
 
@@ -138,7 +138,7 @@ Achse $v_2$ steht senkrecht dazu und beschreibt die Reststreuung.
   \centering
   \includegraphics[width=0.85\textwidth]{images/pca_basiswechsel.png}
   \caption{PCA als Basiswechsel: Standardachsen $(x_1,x_2)$ und Hauptachsen
-  $(v_1,v_2)$ der Punktwolke.}
+  $(v_1,v_2)$ der Punktwolke. [Eigene Darstellung]}
   \label{fig:pca_basiswechsel}
 \end{figure}
 
@@ -150,7 +150,7 @@ Informationsverdichtung und Strukturanalyse der Variablen
 beschrieben.
 
 In dieser Arbeit wird PCA als Baustein für die Principal Component Regression
-(PCR) genutzt. Dabei werden korrelierte Regressoren, hier insbesondere
+genutzt. Dabei werden korrelierte Regressoren, hier insbesondere
 Materialanteile, durch unkorrelierte Hauptkomponenten ersetzt. In
 \cite{Jolliffe1982} wird dieses Vorgehen damit begründet, dass die Regression
 durch orthogonale Prädiktoren stabiler werden kann. Dadurch lässt sich
@@ -239,9 +239,16 @@ Cross Validation auf Trainingsdaten. Dadurch wird ein Kompromiss zwischen
 Unteranpassung bei zu großer Regularisierung und Überanpassung bei $\lambda = 0$ gewählt \cite{XiaogangSu2012}.
 
 
-\subsubsection{Gütemaße}
+\subsubsection{Residuen und Gütemaße}
+Ein \emph{Residuum} \(e_i\) ist die Abweichung zwischen einem beobachteten Wert \(y_i\) und dem vom Modell vorhergesagten
+(angepassten) Wert \(\hat{y}_i\) und wird definiert als
+\[
+e_i = y_i - \hat{y}_i .
+\]
+Residuen können als beobachtbare Werte der Modellfehler verstanden.
+
 Das \emph{Bestimmtheitsmaß} \(R^2\) beschreibt den Anteil der Varianz des Zielindikators, der durch die 
-erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte \cite{Montgomery2022}. 
+erklärenden Variablen erklärt wird, und dient als zentrales Maß der Modellgüte. 
 Der \emph{Root Mean Square Error} (RMSE) misst die durchschnittliche Abweichung zwischen 
 beobachteten und vorhergesagten Werten. Er hat die gleiche Einheit wie die Zielvariable und 
 ist dadurch leicht interpretierbar und ebenfalls ein Indikator für die Modellgüte \cite{Montgomery2022}. 

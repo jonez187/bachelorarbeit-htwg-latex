@@ -64,13 +64,18 @@ Mess- und Rundungsfehler.
 
 Zur Bewertung der Modellgüte wird ein Train/Test-Split mit einem
 Testanteil von 10\,\% verwendet.
-Das Modell wird ausschließlich durch weitere Aufteilungen der 90\% Trainingsdaten 
+Das Modell wird ausschließlich durch die 90\% Trainingsdaten 
 angepasst und anschließend auf dem unabhängigen Testset ausgewertet.
+Als Regressor wird \texttt{Ridge} (L2-Regularisierung) verwendet, 
+wobei der Regularisierungsparameter \(\lambda\) ausschließlich auf den Trainingsdaten durch 
+Cross-Validation bestimmt wird.
 Auf diese Weise erhält man Gütemaße, die angeben, wie gut das Modell
 auf die nie zuvor gesehenen Testdaten generalisieren kann.
 
 Die Modelle werden über das Bestimmtheitsmaß $R^2$ und den
 Root-Mean-Square-Error (RMSE) bewertet.
+Der RMSE wird nach Rücktransformation der Vorhersagen 
+auf der Originalskala berichtet.
 Tabelle~\ref{tab:reg_co2_mainmodel} fasst die Testgüte 
 des CO$_2$ Regressionsmodells zusammen.
 
@@ -89,8 +94,8 @@ des CO$_2$ Regressionsmodells zusammen.
   \end{tabular}
 \end{table}
 
-Das Modell erklärt damit etwa 90\% der Varianz von \texttt{log\_cc}
-auf dem Testset und lässt nur etwa 10\% unerklärt. Dieser Wert spricht
+Das Modell erklärt damit etwa 90\,\% der Varianz von \texttt{log\_cc}
+auf dem Testset und lässt nur etwa 10\,\% unerklärt. Dieser Wert spricht
 für eine hohe Modellgüte.
 
 Der absolute RMSE-Wert von $25116.20\,\mathrm{kg\ CO_2}$ erscheint hoch.
@@ -118,10 +123,19 @@ Daher werden im Folgenden neben $R^2$ und RMSE auch robuste und relative
 Fehlermaße berichtet, um die Modellgüte über verschiedene Größenordnungen
 hinweg nachvollziehbar zu interpretieren.
 
-Der Median der absoluten Fehler liegt bei $2220.80\,\mathrm{kg}$ und beschreibt die
+Folgende Maße werden definiert:
+\begin{itemize}
+  \item \textbf{Median abs.\ Fehler (MdAE):} \(\mathrm{MdAE}=\mathrm{median}\!\left(|y_i-\hat{y}_i|\right)\).
+  \item \textbf{MdARE (Median relative Errors):} \(\mathrm{MdARE}=\mathrm{median}\!\left(\frac{|y_i-\hat{y}_i|}{y_i}\right)\) (für \(y_i>0\)).
+  \item \textbf{MARE (Mean relative Errors):} \(\mathrm{MARE}=\frac{1}{n}\sum_{i=1}^{n}\frac{|y_i-\hat{y}_i|}{y_i}\) (für \(y_i>0\)).
+\end{itemize}
+Der MdAE weird auf Originalskala in der jeweiligen Einheit angegeben. MdARE und MARE sind einheitenlos und können als 
+Anteil interpretiert werden (z.\,B.\ \(0.66\approx66\,\%\)).
+
+Der MdAE liegt bei $2220.80\,\mathrm{kg\ CO_2}$ und beschreibt die
 typische absolute Abweichung eines repräsentativen Produkts.
-Der Median der relativen Fehler liegt bei $51.49\%$.
-Der Mittelwert des relativen Fehlers beträgt $120.27\%$ und fällt deutlich höher aus,
+Der MdARE liegt bei $51.49\%$.
+Der MARE beträgt $120.27\%$ und fällt deutlich höher aus,
 was auf einzelne sehr große relative Abweichungen hinweist.
 Diese Kombination aus Median und Mittelwert zeigt, dass die Fehlerverteilung
 durch Ausreißer geprägt ist und eine rein RMSE-basierte Interpretation
@@ -150,7 +164,7 @@ markiert die ideale Übereinstimmung zwischen Vorhersage und Realität.
   \centering
   \includegraphics[width=1.0\textwidth]{images/regression_co2.png}
   \caption{Vorhergesagte und tatsächliche Werte von \texttt{Climate Change total} für einen
-           exemplarischen Train und Test Split des CO$_2$-Modells.}
+           exemplarischen Train und Test Split des CO$_2$-Modells. [Eigene Darstellung]}
   \label{fig:regression_scatter}
 \end{figure}
 
@@ -164,25 +178,27 @@ unter- (z.\,B.\ Cluster bei $10^4$ bis $10^5\,\mathrm{kg}$) bzw. überschätzt
 (z.\,B.\ Cluster bei $10^3,\mathrm{kg}$) wird.
 
 
-Eine genannte Annahme der linearen Regression ist, dass die Schätzfehler des Modells
-näherungsweise normalverteilt sind.
+Für die OLS Theorie wird angenommen, 
+dass die Fehler auf der Modellskala näherungsweise normalverteilt sind. 
+Für die hier verfolgte Vorhersage und Fehleranalyse ist diese Annahme jedoch 
+nicht zwingend erforderlich, dient aber als diagnostischer Hinweis.
 
-Abbildung~\ref{fig:regression_co2_qq_orig} zeigt einen QQ Plot der Schätzfehler auf der 
+Abbildung~\ref{fig:regression_co2_qq_orig} zeigt einen QQ Plot der Residuen auf der 
 Originalskala, nach Rücktransformation verglichen mit den theoretischen Quantilen der Normalverteilung.
 Hier sind deutliche Abweichungen von der Referenzgeraden sichtbar, 
 insbesondere in den Rändern, was auf Schiefe und schwere 
 Verteilungsschwänze hindeutet.
 Dies ist plausibel, da auf Originalskala einzelne sehr große Produkte die Fehler dominieren
-und Fehler häufig multiplikativ wirken, was auf Originalskala zu stark asymmetrischen Schätzfehler führt.
+und Fehler häufig multiplikativ wirken, was auf Originalskala zu stark asymmetrischen Residuen führt.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_co2_qq_orig.png}
-  \caption{QQ Plot der Schätzfehler des CO$_2$-Modells auf Originalskala im Testset.}
+  \caption{QQ Plot der Residuen des CO$_2$-Modells auf Originalskala im Testset. [Eigene Darstellung]}
   \label{fig:regression_co2_qq_orig}
 \end{figure}
 
-Abbildung~\ref{fig:regression_co2_qq_trans} zeigt den QQ Plot der Schätzfehler auf der Transformationsskala.
+Abbildung~\ref{fig:regression_co2_qq_trans} zeigt den QQ Plot der Residuen auf der Transformationsskala.
 Hier liegen die Punkte deutlich näher an der Referenzgeraden als auf Originalskala,
 was eine näherungsweise Normalität im mittleren Bereich unterstützt.
 In den äußeren Quantilen bleiben Abweichungen sichtbar, was auf eine erhöhte Wahrscheinlichkeit
@@ -191,7 +207,7 @@ großer Fehler hinweist.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_co2_qq_trans.png}
-  \caption{QQ Plot der Schätzfehler des CO$_2$-Modells im Testset auf der Transformationsskala \texttt{log\_cc}.}
+  \caption{QQ Plot der Residuen des CO$_2$-Modells im Testset auf der Transformationsskala \texttt{log\_cc}. [Eigene Darstellung]}
   \label{fig:regression_co2_qq_trans}
 \end{figure}
 

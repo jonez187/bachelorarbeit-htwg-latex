@@ -7,6 +7,18 @@ Produktmerkmalen erklären lassen. Die zentralen Gütemaße aller Indikatoren si
 Tabelle~\ref{tab:reg_other_overview} zusammengefasst. Ergänzende Streudiagramme und QQ-Plots
 für die einzelnen Indikatoren sind in Anhang~\ref{app:other_regressions} dargestellt.
 
+Insgesamt zeigen die meisten Indikatoren eine moderate bis hohe Testgüte (\(R^2_{\text{Test}}\approx 0.73\) bis \(0.87\)).
+Die Kombination aus RMSE und Median absoluter Fehler verdeutlicht eine typische Schiefe der Fehlerverteilungen.
+Der RMSE wird von wenigen sehr großen Abweichungen dominiert, 
+während der Median den typischen Fehler eines repräsentativen Produkts beschreibt.
+
+Die relativen Fehlermaße \(\mathrm{MdARE}\) und \(\mathrm{MARE}\) sind einheitenlos und als Anteil interpretierbar, 
+zum Beispiel entspricht \(\mathrm{MdARE}=0.66\) einer typischen relativen Abweichung von etwa \(66\,\%\).
+Dass \(\mathrm{MARE}\) in allen aufgezeigten Fällen deutlich größer als \(\mathrm{MdARE}\) ist, weist auf eine stark 
+rechtsschiefe Verteilung der relativen Fehler hin.
+Dies tritt insbesondere bei sehr kleinen Zielwerten auf, 
+da dort bereits kleine absolute Abweichungen zu sehr großen relativen Fehlern führen.
+
 \begin{table}[ht]
   \centering
   \caption{Übersicht der Testgüte der Regressionsmodelle für weitere Indikatoren.
@@ -38,13 +50,8 @@ für die einzelnen Indikatoren sind in Anhang~\ref{app:other_regressions} darges
 Als repräsentatives Beispiel für Indikatoren mit hoher Modellgüte wird im Folgenden
 \emph{Acidification} detaillierter dargestellt. Es wurden keine Transformation, \texttt{log1p} und
 eine Box-Cox Transformation verglichen. Die beste Testgüte wird mit \texttt{log1p} erreicht.
-Die Zielvariable ist damit $\log(1+\text{acidification}_{\text{total}})$, und es konnten $n=177$ PEPs
+Die Zielvariable ist damit $\log(1+\text{acidification}_{\text{total}})$. Es konnten $n=177$ PEPs
 verwendet werden.
-Die beste Testgüte wird mit \texttt{log1p} erreicht, 
-daher wird im Folgenden dieses Modell berichtet.
-Die Zielvariable ist dabei der
-log-transformierte Gesamtwert des Indikators
-$\text{log\_acid} = \log(1 + \text{acidification}_\text{total})$.
 Tabelle~\ref{tab:reg_acidification} fasst die Testleistung nach Rücktransformation 
 zusammen.
 
@@ -76,8 +83,7 @@ Die robusten Fehlermaße ergänzen dieses Bild.
 Der Median des absoluten Fehlers liegt weit unter dem RMSE 
 bei etwa $0{,}29\,\mathrm{kg\ SO_2}$ und beschreibt damit die typische 
 Abweichung eines repräsentativen Produkts.
-Der Median der relativen Fehler ($\mathrm{MdARE} \approx 0{,}96$) zeigt, dass die 
-Vorhersage für ein typisches Produkt häufig in der Größenordnung des wahren Werts liegt.
+\(\mathrm{MdARE}\approx 0{,}96\) bedeutet, dass die typische Abweichung in der Größenordnung des Zielwerts liegt.
 Der deutlich größere Mittelwert der relativen Fehler ($\mathrm{MARE} \approx 3{,}83$) weist 
 zugleich auf eine stark schiefe Fehlerverteilung mit einzelnen sehr großen 
 relativen Abweichungen hin.
@@ -95,14 +101,14 @@ tatsächlichen Werten von \texttt{Acidification}.
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_acid.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Acidification-Werten. Beide Achsen sind 
-  logarithmisch skaliert.}
+  logarithmisch skaliert. [Eigene Darstellung]}
   \label{fig:reg_acidification_scatter}
 \end{figure}
 
 Die meisten Punkte liegen in der Nähe der Diagonalen, insbesondere im
 Bereich mittlerer Acidification-Werte, was auf eine gute
 Abbildung des allgemeinen Trends hinweist. Hohe Werte werden tendenziell
-leicht unterschätzt und im Bereich von $10^1$ gibt es ein Cluster, der überschätzt wird.
+leicht unterschätzt und im Bereich von $10^1$ ist ein Cluster sichtbar, der tendenziell überschätzt wird..
 Im Bereich der sehr kleinen Werte schätzt das Modell relativ betrachtet sehr ungenau, 
 die absoluten
 Fehler bleiben dort jedoch gering. Das Fehlerverhalten von Trainings- und
@@ -112,9 +118,9 @@ ist. Insgesamt bestätigt die Analyse, dass das aus dem CO$_2$-Fall
 plausible Vorhersagen liefert.
 
 Abbildung~\ref{fig:regression_acid_qq} zeigt
-einen QQ Plot der Schätzfehler des Modells im Vergleich zu einer Normalverteilung.
-Wie beim CO$_2$ Indikator zeigen sich auf der Originalskala der Fehler 
-typischerweise sehr starke Abweichungen, die eine schwache Interpretationsebene bereitstellen.
+einen QQ Plot der Residuen des Modells im Vergleich zu einer Normalverteilung.
+Wie beim CO$_2$ Indikator zeigen sich auf der Originalskala 
+typischerweise starke Abweichungen, weshalb die Fehlerdiagnostik hier auf der Transformationsskala berichtet wird.
 Daher wird hier nur die Transformationsskala dargestellt.
 Im mittleren Bereich liegen die Punkte nah an der Referenzgeraden, was darauf hindeutet,
 dass der Großteil der Fehler näherungsweise normalverteilt ist.
@@ -126,7 +132,7 @@ geprägt sind.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_acid_qq.png}
-  \caption{QQ Plot der Schätzfehler des Acidification Modells (Test- und Trainingsset).}
+  \caption{QQ Plot der Residuen des Acidification Modells (Test- und Trainingsset). [Eigene Darstellung]}
   \label{fig:regression_acid_qq}
 \end{figure}
 
@@ -144,9 +150,8 @@ nicht von einem zuverlässigen Vorhersagemodell gesprochen werden kann.
 Tabelle~\ref{tab:weak_indicators} fasst diese Indikatoren zusammen.
 
 Für diese schwächer erklärbaren Zielgrößen wurden ebenfalls verschiedene
-Transformationen der Zielvariable verglichen. Box-Cox kann die Testgüte für alle
-restlichen Indikatoren leicht verbessern, die Zugewinne bleiben jedoch insgesamt begrenzt und reichen nicht aus,
-um die Indikatoren in den Bereich stabiler Vorhersagegüte zu überführen.
+Transformationen der Zielvariable verglichen. Box-Cox verbessert die Testgüte teilweise leicht. 
+Insgesamt bleiben die Zugewinne jedoch begrenzt und führen nicht zu stabilen Vorhersagen.
 
 \begin{table}[h]
   \centering
@@ -169,8 +174,7 @@ um die Indikatoren in den Bereich stabiler Vorhersagegüte zu überführen.
 
 Abbildung~\ref{fig:reg_rwd} zeigt den Indikator \emph{Radioactive waste disposed} als ein
 Beispiel. Der Indikator ist nur eingeschränkt erklärbar
-($R^2_{\text{Test}}\approx 0{,}49$), und sowohl der RMSE im Verhältnis zum Mittelwert
-(Rel.\ RMSE $\approx 3{,}31$) als auch die relativen Fehlermaße
+($R^2_{\text{Test}}\approx 0{,}49$), und die relativen Fehlermaße
 ($\mathrm{MdARE}\approx 1{,}85$, $\mathrm{MARE}\approx 19{,}01$) weisen auf eine stark
 instabile Vorhersage hin.
 Gleichzeitig bleibt der Median des absoluten Fehlers mit $0{,}5193$ vergleichsweise klein,
@@ -183,7 +187,7 @@ kann die Fehlerstruktur nicht stabilisieren.
   \centering
   \includegraphics[width=0.9\textwidth]{images/regression_rwd.png}
   \caption{Vorhergesagte gegenüber tatsächlichen Werten des Indikators
-           \emph{Radioactive waste disposed}.}
+           \emph{Radioactive waste disposed}. [Eigene Darstellung]}
   \label{fig:reg_rwd}
 \end{figure}
 
@@ -194,8 +198,8 @@ deutlich abweichen. Dies weist auf schwere Verteilungsschwänze und systematisch
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.95\textwidth]{images/regression_rwd_qq.png}
-  \caption{QQ Plot der Schätzfehler des Modells für \emph{Radioactive waste disposed}
-           auf der Transformationsskala.}
+  \caption{QQ Plot der Residuen des Modells für \emph{Radioactive waste disposed}
+           auf der Transformationsskala. [Eigene Darstellung]}
   \label{fig:reg_rwd_qq}
 \end{figure}
 
